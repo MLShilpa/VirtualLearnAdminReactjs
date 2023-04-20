@@ -13,18 +13,26 @@ export const LoginAsyncThunk = createAsyncThunk(
   'Login/LoginAsyncThunk',
   async (arg, { rejectWithValue }) => {
     console.log('arg', arg)
+    const body = {
+      userName: arg.userName,
+      password: arg.password,
+    }
     try {
-      const fetchedData = await axios({
-        method: 'put',
-        url: `http://virtuallearnadmin-env.eba-vvpawj4n.ap-south-1.elasticbeanstalk.com/admin/login`,
-        data: {
-          userName: arg.userName,
+      const fetchedData = await fetch({
+        method: 'post',
+        url: `virtual-learing-admin-sumukh-robosoft.vercel.app/api/v1/admin_login`,
+        body: JSON.stringify({
+          name: arg.userName,
           password: arg.password,
-        },
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
       })
-      console.log('fetchedData', fetchedData)
+      // const data = await fetchedData.json()
+      // console.log(data)
+      return fetchedData;
 
-      return fetchedData
     } catch (err) {
       let error = err
       console.log('error.response.data', error.response.data)
@@ -100,6 +108,6 @@ export const LoginSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const {} = LoginSlice.actions
+export const { } = LoginSlice.actions
 
 export default LoginSlice
