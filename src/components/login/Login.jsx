@@ -8,48 +8,49 @@
 //   "password"  :   "Jeelan@123"
 // }
 
-import './Login.css'
-import { useFormik } from 'formik'
-import { useNavigate } from 'react-router-dom'
-import * as Yup from 'yup'
-import { useDispatch, useSelector } from 'react-redux'
-import { LoginAsyncThunk } from '../../redux/reducers/LoginSlice'
-import { useEffect, useState } from 'react'
-import { showOtp } from '../../redux/reducers/showOtp'
-import { showNewPW } from '../../redux/reducers/showNewPW'
+import "./Login.css";
+import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { LoginAsyncThunk } from "../../redux/reducers/LoginSlice";
+import { useEffect, useState } from "react";
+import { showOtp } from "../../redux/reducers/showOtp";
+import { showNewPW } from "../../redux/reducers/showNewPW";
+import axios from "axios";
+import { Base_Url } from "../../utils/baseUrl";
 
 const Login = () => {
-  const [response, setResponse] = useState(false)
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const [response, setResponse] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(showOtp(false))
-    dispatch(showNewPW(false))
-  }, [])
+    dispatch(showOtp(false));
+    dispatch(showNewPW(false));
+  }, []);
 
-  const loginData = useSelector((state) => state.Login)
+  const loginData = useSelector((state) => state.Login);
 
   const formik = useFormik({
     initialValues: {
-      userName: '',
-      password: '',
+      userName: "",
+      password: "",
     },
 
     validationSchema: Yup.object({
-      userName: Yup.string().required('Required*'),
-      password: Yup.string().required('Required*'),
+      userName: Yup.string().required("Required*"),
+      password: Yup.string().required("Required*"),
     }),
 
     onSubmit: (values) => {
       // console.log('sads', values)
     },
-  })
+  });
 
   const submitHandler = (e) => {
-    e.preventDefault()
-    setResponse(true)
-
+    e.preventDefault();
+    setResponse(true);
     dispatch(
       LoginAsyncThunk({
         userName: formik.values.userName,
@@ -57,14 +58,14 @@ const Login = () => {
       }),
       // navigate('/dashBoard'),
     )
-  }
+  };
 
-  const loginSubmitHandler = () => {}
+  const loginSubmitHandler = () => {};
   useEffect(() => {
-    response && loginSubmitHandler()
+    response && loginSubmitHandler();
     console.log('response', response)
     console.log('loginData', loginData)
-  }, [response, loginData])
+  }, [response, loginData]);
 
   // console.log(formik.errors)
   return (
@@ -73,13 +74,14 @@ const Login = () => {
         action=""
         className="login-loginContainer"
         onSubmitCapture={(e) => {
-          formik.handleSubmit()
-          submitHandler(e)
+          formik.handleSubmit();
+          submitHandler(e);
         }}
       >
         <input
           type="text"
           name="userName"
+          id="userName"
           placeholder=" "
           className="login-input"
           autoComplete="off"
@@ -88,7 +90,7 @@ const Login = () => {
           onBlur={formik.handleBlur}
         />
         <label htmlFor="userName" className="login-lable">
-          Email Id
+          User Name
         </label>
         {formik.errors.userName ? (
           <p className="error-msg">{formik.errors.userName}</p>
@@ -114,29 +116,11 @@ const Login = () => {
           <div
             className="login-forgotPassword"
             onClick={() => {
-              navigate('/forgotPassword')
+              navigate("/forgotPassword");
             }}
           >
             Forgot Password ?
           </div>
-          {/* <div className="button-loginContainer">
-            <div className="login-buttonContainer">
-              <button type="submit" className="login-loginButtonn">
-                Login
-              </button>
-            </div>
-            <div className="login-buttonContainer">
-              <button
-                type="button"
-                className="login-signUpButton"
-                onClick={() => {
-                  navigate('/signUp')
-                }}
-              >
-                Sign Up
-              </button>
-            </div>
-          </div> */}
           <div className="login-buttonContainer">
             <button type="submit" className="login-loginButton">
               Login
@@ -147,7 +131,7 @@ const Login = () => {
             <span
               className="span-btn"
               onClick={() => {
-                navigate('/signUp')
+                navigate("/signUp");
               }}
             >
               Sign&nbsp;Up
@@ -156,7 +140,7 @@ const Login = () => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
