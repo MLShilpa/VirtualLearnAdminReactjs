@@ -1,0 +1,1 @@
+export const Base_Url: string = "https://virtual-learing-admin-git-main-sumukh-robosoft.vercel.app";
