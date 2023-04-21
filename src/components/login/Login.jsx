@@ -56,11 +56,11 @@ const Login = () => {
         userName: formik.values.userName,
         password: formik.values.password,
       }),
-      // navigate('/dashBoard'),
+      navigate('/dashBoard'),
     )
   };
 
-  const loginSubmitHandler = () => {};
+  const loginSubmitHandler = () => { };
   useEffect(() => {
     response && loginSubmitHandler();
     // console.log('response', response)

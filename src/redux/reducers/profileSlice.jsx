@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { Base_Url } from '../../utils/baseUrl'
 
 const initialState = {
   message: '',
@@ -16,12 +17,12 @@ export const profileAsyncThunk = createAsyncThunk(
     try {
       const fetchedData = await axios.request({
         method: 'get',
-        url: `http://virtuallearnadmin-env.eba-vvpawj4n.ap-south-1.elasticbeanstalk.com/admin/getProfile`,
+        url: `${Base_Url}/api/v1/admin_details`,
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
       })
-
+      // console.log(fetchedData)
       return fetchedData
     } catch (err) {
       console.log('error', err)
