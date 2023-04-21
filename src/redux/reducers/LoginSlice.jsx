@@ -12,11 +12,11 @@ const initialState = {
 
 export const LoginAsyncThunk = createAsyncThunk(
   'Login/LoginAsyncThunk',
-  async (arg , { rejectWithValue }) => {
+  async (arg, { rejectWithValue }) => {
     // console.log('arg', arg)
     const body = {
-        name: arg.userName,
-        password: arg.password,
+      name: arg.userName,
+      password: arg.password,
     }
     // console.log('body', body)
     try {
@@ -47,7 +47,7 @@ export const LoginSlice = createSlice({
   name: 'Login',
   initialState,
   reducers: {},
-  extraReducers:  (builder) => {
+  extraReducers: (builder) => {
     builder.addCase(LoginAsyncThunk.pending, (state, action) => {
       console.log('fetching Data...')
     })
@@ -60,7 +60,7 @@ export const LoginSlice = createSlice({
         action.payload.data.message &&
         action.payload.data.message === 'Admin login successful'
       ) {
-        console.log("login",action.payload.data)
+        console.log("login", action.payload.data)
         // if (action.payload.data.role === '[ROLE_ADMIN]') {
         //   toast.success('Successfully Logged In as admin', {
         //     position: 'top-center',
@@ -119,6 +119,6 @@ export const LoginSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const {} = LoginSlice.actions
+export const { } = LoginSlice.actions
 
 export default LoginSlice

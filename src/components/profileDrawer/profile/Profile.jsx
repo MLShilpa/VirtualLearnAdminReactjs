@@ -12,7 +12,7 @@ const Profile = () => {
     dispatch(profileAsyncThunk())
   }, [])
   const profileData = useSelector((state) => state.profile.data)
-
+  // console.log(profileData);
   return (
     <div>
       <div className="profile-container">
@@ -43,15 +43,17 @@ const Profile = () => {
             className="profile-imgPic"
           /> */}
           {profileData &&
-          profileData.data &&
-          profileData.data.profilePhoto &&
-          profileData.data.profilePhoto ? (
+            profileData.data &&
+            profileData.data.Admin &&
+            profileData.data.Admin.profile &&
+            profileData.data.Admin.profile ? (
             <img
               src={
                 profileData &&
                 profileData.data &&
-                profileData.data.profilePhoto &&
-                profileData.data.profilePhoto
+                profileData.data.Admin &&
+                profileData.data.Admin.profile &&
+                profileData.data.Admin.profile
               }
               alt=""
               className="profile-imgPic"
@@ -67,8 +69,9 @@ const Profile = () => {
         <div className="profile-picText profile-capitalize">
           {profileData &&
             profileData.data &&
-            profileData.data.fullName &&
-            profileData.data.fullName}
+            profileData.data.Admin &&
+            profileData.data.Admin.name &&
+            profileData.data.Admin.name}
         </div>
       </div>
       <div className="profile-body">
@@ -78,8 +81,9 @@ const Profile = () => {
             <div className="profile-NameEnd profile-capitalize">
               {profileData &&
                 profileData.data &&
-                profileData.data.fullName &&
-                profileData.data.fullName}
+                profileData.data.Admin &&
+                profileData.data.Admin.name &&
+                profileData.data.Admin.name}
             </div>
           </div>
           <div className="profile-nameContent">
@@ -87,8 +91,9 @@ const Profile = () => {
             <div className="profile-NameEnd">
               {profileData &&
                 profileData.data &&
-                profileData.data.emailId &&
-                profileData.data.emailId}
+                profileData.data.Admin &&
+                profileData.data.Admin.email &&
+                profileData.data.Admin.email}
             </div>
           </div>
           <div className="profile-nameContent">
@@ -96,8 +101,9 @@ const Profile = () => {
             <div className="profile-NameEnd">
               {profileData &&
                 profileData.data &&
-                profileData.data.mobileNumber &&
-                profileData.data.mobileNumber}
+                profileData.data.Admin &&
+                profileData.data.Admin.phone &&
+                profileData.data.Admin.phone}
             </div>
           </div>
           <div className="profile-nameContent">
