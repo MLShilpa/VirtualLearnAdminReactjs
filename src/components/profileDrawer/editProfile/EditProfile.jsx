@@ -11,6 +11,7 @@ import { showProfileFn } from '../../../redux/showProfile'
 
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { Base_Url } from "../../../utils/baseUrl"
 
 const EditProfile = () => {
   const dispatch = useDispatch()
@@ -31,26 +32,44 @@ const EditProfile = () => {
       theme: 'colored',
     })
 
+  const AlreadyExist = () =>
+    toast.warning('Incorrect Password', {
+      position: 'bottom-center',
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'colored',
+    })
+
   const editData = useSelector((state) => state.profile.data)
 
   const name =
-    editData &&
     editData.data &&
-    editData.data.fullName &&
-    editData.data.fullName
+    editData &&
+    editData.data.Admin.name &&
+    editData.data.Admin &&
+    editData.data.Admin.name
 
   const [fullName, setfullName] = useState(name)
 
   const email =
-    editData && editData.data && editData.data.emailId && editData.data.emailId
+    editData &&
+    editData.data &&
+    editData.data.Admin &&
+    editData.data.Admin.email &&
+    editData.data.Admin.email
 
   const [emailId, setEmailId] = useState(email)
 
   const mobileNo =
     editData &&
     editData.data &&
-    editData.data.mobileNumber &&
-    editData.data.mobileNumber
+    editData.data.Admin &&
+    editData.data.Admin.phone &&
+    editData.data.Admin.phone
 
   const [mobile, setMobile] = useState(mobileNo)
   const [image, setImage] = useState('')
@@ -65,32 +84,38 @@ const EditProfile = () => {
     e.preventDefault()
     const form = document.getElementById('form')
     const formData = new FormData(form)
-    formData.append('fullName', fullName)
-    formData.append('mobileNumber', mobile)
-    image !== '' && formData.append('profilePhoto', image)
+    formData.append('name', fullName)
+    formData.append('phone', mobile)
+    image !== '' && formData.append('image', image)
 
     axios
       .request(
-        `http://virtuallearnadmin-env.eba-vvpawj4n.ap-south-1.elasticbeanstalk.com/admin/save`,
+        // `${Base_Url}/api/v1/update_profile`,
         {
           method: 'post',
+          url: `${Base_Url}/api/v1/update_profile`,
           headers: {
             Accept: 'application/json, text/plain, */*',
-            'Content-type': ' multipart/form-date',
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${sessionStorage.getItem('token')}`,
           },
           data: formData,
         },
       )
       .then((res) => {
+        // if ((res && res.status && res.status) === 200) {
+        console.log(res);
         updatedSuccessfully()
         dispatch(profileAsyncThunk())
         dispatch(showProfileFn('profile'))
+        // }
       })
       .catch((err) => {
-        // alert(err.response.data)
-        alert('error')
-        console.log('edit error', err)
+        if ((err && err.status && err.status) === 403 && (err && err.response && err.response.data && err.response.data.message && err.response.data.message) === 'Details already exists') {
+          AlreadyExist();
+          console.log('edit error', err)
+        }
+        // alert('error')
       })
   }
 
@@ -99,9 +124,10 @@ const EditProfile = () => {
   console.log(
     'dkjhbu',
     editData &&
-      editData.data &&
-      editData.data.profilePhoto &&
-      editData.data.profilePhoto,
+    editData.data &&
+    editData.data.Admin &&
+    editData.data.Admin.profile &&
+    editData.data.Admin.profile,
   )
 
   return (
@@ -172,8 +198,9 @@ const EditProfile = () => {
             src={
               editData &&
               editData.data &&
-              editData.data.profilePhoto &&
-              editData.data.profilePhoto
+              editData.data.Admin &&
+              editData.data.Admin.profile &&
+              editData.data.Admin.profile
             }
             id="output"
             className="editProfile-output"
@@ -209,6 +236,7 @@ const EditProfile = () => {
                 value={emailId}
                 placeholder=" "
                 className="login-input editProfilr-color"
+                disabled
               />
 
               <label htmlFor="emailId" className="login-lable">
