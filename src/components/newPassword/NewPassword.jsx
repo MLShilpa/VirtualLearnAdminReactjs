@@ -7,6 +7,7 @@ import { useEffect } from 'react'
 import { showOtp } from '../../redux/reducers/showOtp'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { Base_Url } from '../../utils/baseUrl'
 const NewPassword = () => {
   const dispatch = useDispatch()
 
@@ -24,33 +25,35 @@ const NewPassword = () => {
 
     validationSchema: Yup.object({
       Npassword: Yup.string()
-        .min(8, 'Password must be 8 characters long')
-        .matches(/[0-9]/, 'Password requires a number')
-        .matches(/[a-z]/, 'Password requires a lowercase letter')
-        .matches(/[A-Z]/, 'Password requires an uppercase letter')
-        .required('Please enter your password'),
+        .min(8, "Password must be 8 characters long")
+        .matches(/[0-9]/, "Password requires a number")
+        .matches(/[a-z]/, "Password requires a lowercase letter")
+        .matches(/[A-Z]/, "Password requires an uppercase letter")
+        .matches(/[^\w]/, "Password requires a symbol")
+        .required("Please enter your password"),
       Cpassword: Yup.string()
         .oneOf([Yup.ref('Npassword'), null], 'Password must match')
         .required('Required*'),
     }),
 
     onSubmit: (values) => {
-      console.log('new password', values)
+      console.log('new password', values,EmailIdEntered)
       axios(
-        `http://virtuallearnadmin-env.eba-vvpawj4n.ap-south-1.elasticbeanstalk.com/admin/resetPassword`,
+        `${Base_Url}/api/v1/forgot_password`,
         {
-          method: 'put',
+          method: 'patch',
           headers: {
             Accept: 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
           },
           data: {
-            emailId: EmailIdEntered,
+            email: EmailIdEntered,
             password: values.Npassword,
           },
         },
       )
         .then((res) => {
+          // console.log("res",res)
           toast.success(res && res.data && res.data.message, {
             position: 'top-right',
             autoClose: 5000,
@@ -62,16 +65,23 @@ const NewPassword = () => {
             theme: 'colored',
           })
           if (res) {
-            // alert('password')
             if (res.status === 200) {
-              // alert(res && res.data && res.data.message)
               navigate('/')
             }
           }
         })
         .catch((err) => {
           // alert(err.response.data)
-          alert('error')
+          toast.error("Something Went Wrong! Please Try Again.", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            theme: "colored",
+          });
         })
     },
   })
@@ -107,7 +117,7 @@ const NewPassword = () => {
           placeholder=" "
           className="login-input"
         />
-        <label className="login-lable">New Password</label>
+        <label htmlFor='Npassword' className="login-lable">New Password</label>
         {formik.errors.Npassword ? (
           <p className="error-msg">{formik.errors.Npassword}</p>
         ) : null}
@@ -122,7 +132,7 @@ const NewPassword = () => {
           placeholder=" "
           className="login-input"
         />
-        <label className="login-lable">Confirm Password</label>
+        <label htmlFor='Cpassword' className="login-lable">Confirm Password</label>
         {formik.errors.Cpassword ? (
           <p className="error-msg">{formik.errors.Cpassword}</p>
         ) : null}

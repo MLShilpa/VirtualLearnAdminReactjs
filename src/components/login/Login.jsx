@@ -63,8 +63,8 @@ const Login = () => {
   const loginSubmitHandler = () => { };
   useEffect(() => {
     response && loginSubmitHandler();
-    console.log('response', response)
-    console.log('loginData', loginData)
+    // console.log('response', response)
+    // console.log('loginData', loginData)
   }, [response, loginData]);
 
   // console.log(formik.errors)

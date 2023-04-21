@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { showOtp } from '../../redux/reducers/showOtp'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { Base_Url } from '../../utils/baseUrl'
 
 const ForgotPassword = () => {
   const navigate = useNavigate()
@@ -25,22 +26,24 @@ const ForgotPassword = () => {
     }),
 
     onSubmit: (values) => {
-      // console.log('values', values.email)
+      console.log('values', values.email)
 
       axios(
-        `http://virtuallearnadmin-env.eba-vvpawj4n.ap-south-1.elasticbeanstalk.com/admin/send`,
+        `${Base_Url}/api/v1/send_otp`,
         {
           method: 'post',
+          data: {
+            email: values.email
+          },
           headers: {
-            Accept: 'application/json, text/plain, */*',
+            Accept: '*/*',
             'Content-Type': 'application/json',
           },
-          data: { emailId: values.email },
         },
       )
         .then((res) => {
           if (res) {
-            // console.log('res', res)
+            console.log('res', res)
             if (res.status === 200) {
               // alert(res && res.data.message)
               toast.success('OTP Valid for 2 Mins', {

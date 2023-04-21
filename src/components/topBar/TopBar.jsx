@@ -73,9 +73,12 @@ const TopBar = () => {
               {
                 main: 'Dashboard',
                 addCourses: 'Add Course',
+                myCourses:"My Course",
                 certificate: 'Add Course',
                 QandA: 'Add Course',
                 upload: 'Add Course',
+                DraftCourses:"My Course",
+                PublishedCourses:"My Course",
                 viewAll: 'Recently Added Course',
                 studentList: 'Student List',
                 settings: 'Settings',
@@ -87,7 +90,7 @@ const TopBar = () => {
             }
           </div>
           <div className="topBar-headerIcons">
-            <div
+            {/* <div
               className="topBar-publish"
               onClick={() => {
                 publishHandler()
@@ -101,7 +104,7 @@ const TopBar = () => {
                   className="toolBar-publishImg"
                 />
               </div>
-            </div>
+            </div> */}
             <div
               className="topBar-profile"
               onClick={() => {

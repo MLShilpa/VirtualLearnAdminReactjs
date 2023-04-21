@@ -1,60 +1,58 @@
-import './OtpVerification.css'
+import "./OtpVerification.css";
 // import OTPInput, { ResendOTP } from 'otp-input-react'
-import OTPInput from 'otp-input-react'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
-import { showNewPW } from '../../redux/reducers/showNewPW'
+import OTPInput from "otp-input-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { showNewPW } from "../../redux/reducers/showNewPW";
 
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Base_Url } from "../../utils/baseUrl";
 
 const OtpVerification = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const [otp, setOTP] = useState('')
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [otp, setOTP] = useState("");
 
-  const EmailIdEntered = useSelector((state) => state.emailSend.emailId)
+  const EmailIdEntered = useSelector((state) => state.emailSend.emailId);
 
   const otpSubmitHandler = (e) => {
-    e.preventDefault()
-    console.log('EmailIdEntered', EmailIdEntered)
-    console.log('otp', otp)
+    e.preventDefault();
+    // console.log('EmailIdEntered', EmailIdEntered)
+    // console.log('otp', otp)
 
-    axios(
-      `http://virtuallearnadmin-env.eba-vvpawj4n.ap-south-1.elasticbeanstalk.com/admin/verify`,
-      {
-        method: 'post',
-        headers: {
-          Accept: 'application/json, text/plain, */*',
-          'Content-Type': 'application/json',
-        },
-        data: {
-          emailId: EmailIdEntered,
-          otp: otp,
-        },
+    axios(`${Base_Url}/api/v1/verify_otp`, {
+      method: "post",
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
       },
-    )
+      data: {
+        // email: EmailIdEntered,
+        otp: otp,
+      },
+    })
       .then((res) => {
         if (res) {
           // alert('valid otp')
-          toast.success('OTP Verification successful', {
-            position: 'top-right',
+          toast.success("OTP Verification successful", {
+            position: "top-right",
             autoClose: 5000,
             hideProgressBar: true,
             closeOnClick: false,
             pauseOnHover: true,
             draggable: false,
             progress: undefined,
-            theme: 'colored',
-          })
+            theme: "colored",
+          });
           // alert(res.data)
-          console.log('res.dataotp', res)
+          console.log("res.dataotp", res);
 
           if (res.status === 200) {
-            dispatch(showNewPW(true))
-            navigate('/newPassword')
+            dispatch(showNewPW(true));
+            navigate("/newPassword");
           }
         }
       })
@@ -66,76 +64,71 @@ const OtpVerification = () => {
         //     err.response.data.Error &&
         //     err.response.data.Error,
         // )
-        toast.error('Wrong OTP', {
-          position: 'top-right',
+        toast.error("Wrong OTP", {
+          position: "top-right",
           autoClose: 5000,
           hideProgressBar: true,
           closeOnClick: false,
           pauseOnHover: true,
           draggable: false,
           progress: undefined,
-          theme: 'colored',
-        })
-      })
-  }
+          theme: "colored",
+        });
+      });
+  };
 
   const resendOtp = (e) => {
-    e.preventDefault()
-    console.log('resend', EmailIdEntered)
-    axios(
-      `http://virtuallearnadmin-env.eba-vvpawj4n.ap-south-1.elasticbeanstalk.com/admin/resend`,
-      {
-        method: 'post',
-        headers: {
-          Accept: 'application/json, text/plain, */*',
-          'Content-Type': 'application/json',
-        },
-        data: {
-          emailId: EmailIdEntered,
-        },
+    e.preventDefault();
+    // console.log('resend', EmailIdEntered)
+    axios(`${Base_Url}/api/v1/send_otp`, {
+      method: "post",
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
       },
-    )
+      data: {
+        email: EmailIdEntered,
+      },
+    })
       .then((res) => {
-        toast.info('OTP Valid for 2 Mins', {
-          position: 'top-right',
+        toast.info("OTP Valid for 2 Mins", {
+          position: "top-right",
           autoClose: 5000,
           hideProgressBar: true,
           closeOnClick: false,
           pauseOnHover: true,
           draggable: false,
           progress: undefined,
-          theme: 'colored',
-        })
+          theme: "colored",
+        });
         if (res) {
           // alert('otp sent')
           // alert(res.data.message)
 
-          console.log('sent otp message', res.data)
+          console.log("sent otp message", res.data);
 
           // if (res.status === 200) {
           // }
         }
       })
       .catch((err) => {
-        // alert(err.response.data)
-        // alert('error')
-        toast.error('Wrong OTP', {
-          position: 'top-right',
+        toast.error("Something Went Wrong! Please Try Again", {
+          position: "top-right",
           autoClose: 5000,
           hideProgressBar: true,
           closeOnClick: false,
           pauseOnHover: true,
           draggable: false,
           progress: undefined,
-          theme: 'colored',
-        })
-        console.log('otp verification error', err)
-      })
-  }
+          theme: "colored",
+        });
+        console.log("otp verification error", err);
+      });
+  };
 
   return (
     <div>
-      {' '}
+      {" "}
       <div className="otpVerifivation-container">
         <div className="otp-verification">Verification</div>
         <div className="otp-verifyText">
@@ -147,7 +140,7 @@ const OtpVerification = () => {
         action=""
         className="otp-formController"
         onSubmit={(e) => {
-          otpSubmitHandler(e)
+          otpSubmitHandler(e);
         }}
       >
         <div className="otp-otpContainer">
@@ -162,20 +155,20 @@ const OtpVerification = () => {
             disabled={false}
             autoComplete="off"
             inputStyles={{
-              borderBottom: '1px solid #072D5B',
-              borderTop: 'none',
-              borderLeft: 'none',
-              borderRight: 'none',
-              width: '2.7rem',
+              borderBottom: "1px solid #072D5B",
+              borderTop: "none",
+              borderLeft: "none",
+              borderRight: "none",
+              width: "2.7rem",
             }}
           />
         </div>
         <div className="otp-resendCode">
-          Didn’t receive a code?{' '}
+          Didn’t receive a code?{" "}
           <span
             className="otp-resend"
             onClick={(e) => {
-              resendOtp(e)
+              resendOtp(e);
             }}
           >
             Resend
@@ -189,7 +182,7 @@ const OtpVerification = () => {
         <ResendOTP onResendClick={() => console.log('Resend clicked')} />
       </div> */}
     </div>
-  )
-}
+  );
+};
 
-export default OtpVerification
+export default OtpVerification;
