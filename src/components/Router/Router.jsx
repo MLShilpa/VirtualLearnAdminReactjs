@@ -12,6 +12,9 @@ import AdminPassword from '../adminPassword/AdminPassword';
 import ForgotPassword from '../forgotPassword/ForgotPassword';
 import Login from '../login/Login';
 import MainBoard from '../mainBoard/MainBoard';
+import DraftCourses from '../myCourse/myCourseFolder/draftCourses/DraftCourses';
+import PublishedCourses from '../myCourse/myCourseFolder/publishedCourses/PublishedCourses';
+import MyCourse from '../myCourse/MyCouse';
 import NewPassword from '../newPassword/NewPassword';
 import OtpVerification from '../otpVerification/OtpVerification';
 import ChangePassword from '../profileDrawer/changePassword/ChangePassword';
@@ -27,7 +30,7 @@ import ProtectedRoute from './protecteRoute';
 
 const Router = () => {
   const authicate = localStorage.getItem('auth');
-  console.log('auth', authicate);
+  // console.log('auth', authicate);
   const showOtp = useSelector((state) => state.showOtp.showOtp);
   const showNewPW = useSelector((state) => state.showNewPW.showNewPW);
 
@@ -106,6 +109,13 @@ const Router = () => {
             <Route path="upload" element={<Upload />} />
             <Route path="QandA" element={<QandA />} />
             <Route path="certificate" element={<Certificate />} />
+          </Route>
+          <Route path="myCourses" element={<MyCourse />}>
+            
+            <Route path=''  element={<DraftCourses />} />
+            <Route path="DraftCourses" element={<DraftCourses />} />
+            <Route path="PublishedCourses" element={<PublishedCourses />} />
+            {/* <Route path="certificate" element={<Certificate />} /> */}
           </Route>
           <Route path="studentList" element={<StudentList />} />
           <Route path="settings" element={<AdminPassword />} />

@@ -30,6 +30,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { addIcon } from '../../../utils/icons'
 import Modal from '../../../../src/utils/modal/Modal'
 import { showModal } from '../../../redux/reducers/showModal'
+import { Base_Url } from '../../../utils/baseUrl'
 
 const Upload = () => {
   const [counterVideo, setCounterVideo] = useState(0)
@@ -62,7 +63,7 @@ const Upload = () => {
   useEffect(() => {
     axios
       .get(
-        `http://virtuallearnadmin-env.eba-vvpawj4n.ap-south-1.elasticbeanstalk.com/admin/categories`,
+        `${Base_Url}/admin/categories`,
         {
           headers: {
             Authorization: `Bearer ${sessionStorage.getItem('token')}`,
@@ -80,7 +81,7 @@ const Upload = () => {
   useEffect(() => {
     axios
       .get(
-        `http://virtuallearnadmin-env.eba-vvpawj4n.ap-south-1.elasticbeanstalk.com/admin/subCategories`,
+        `${Base_Url}/admin/subCategories`,
         {
           headers: {
             Authorization: `Bearer ${sessionStorage.getItem('token')}`,
