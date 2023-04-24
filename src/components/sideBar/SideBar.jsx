@@ -82,15 +82,15 @@ const SideBar = () => {
             <button
               className="sideBar-linkNames btn-links"
               onClick={async () => {
-                const logout = await axios(`${Base_Url}/api/v1/admin_logout`, {
-                  method: "post",
-                  headers: {
-                    Accept: "*/*",
-                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-                    "Content-Type": "application/json",
-                  },
-                  data: {},
-                });
+                // const logout = await axios(`${Base_Url}/api/v1/admin_logout`, {
+                //   method: "post",
+                //   headers: {
+                //     Accept: "*/*",
+                //     Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                //     "Content-Type": "application/json",
+                //   },
+                //   data: {},
+                // });
                 // console.log(logout)
                 sessionStorage.clear();
                 window.location.reload();
