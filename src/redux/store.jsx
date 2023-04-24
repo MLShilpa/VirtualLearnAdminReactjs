@@ -21,6 +21,7 @@ import showNewPWSlice from './reducers/showNewPW'
 import courseIdSlice from './reducers/courseIdSlice'
 import studentListSlice from './reducers/studentlistSlice'
 import showModalSlice from './reducers/showModal'
+import MyCourseStateSlice from './reducers/MyCourseStateSlice'
 
 const reducers = combineReducers({
   showProfile: showProfileSlice.reducer,
@@ -41,6 +42,7 @@ const reducers = combineReducers({
   courseId: courseIdSlice.reducer,
   studentList: studentListSlice.reducer,
   showModal: showModalSlice.reducer,
+  myCourseStateSlice: MyCourseStateSlice.reducer,
 })
 const persistConfig = {
   key: 'root',

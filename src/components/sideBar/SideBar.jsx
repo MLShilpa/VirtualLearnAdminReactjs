@@ -2,10 +2,14 @@ import "./SideBar.css";
 import { NavLink, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Base_Url } from "../../utils/baseUrl";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setMyCourseScreenState, setNavBarState } from "../../redux/reducers/MyCourseStateSlice";
 
 const SideBar = () => {
   const location = useLocation();
   console.log("djfb ", location.pathname);
+  const dispatch = useDispatch();
   return (
     <div>
       <div className="sideBarContainer">
@@ -42,8 +46,12 @@ const SideBar = () => {
               <div className="sideBar-Text">Add Courses</div>
             </div>
           </NavLink>
-          <NavLink to="myCourses" className="sideBar-linkNames">
-            <div className="sideBar-DashBoardContainer">
+          <NavLink to="MyCourses" className="sideBar-linkNames">
+            <div className="sideBar-DashBoardContainer"
+            onClick={()=>{dispatch(setNavBarState(1))
+              // dispatch(setMyCourseScreenState(1))
+            }}
+            >
               <div className="sideBar-Item">
                 <img
                   src={require("../../assets/icons/add video.png")}
@@ -82,15 +90,15 @@ const SideBar = () => {
             <button
               className="sideBar-linkNames btn-links"
               onClick={async () => {
-                // const logout = await axios(`${Base_Url}/api/v1/admin_logout`, {
-                //   method: "post",
-                //   headers: {
-                //     Accept: "*/*",
-                //     Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-                //     "Content-Type": "application/json",
-                //   },
-                //   data: {},
-                // });
+                const logout = await axios(`${Base_Url}/api/v1/admin_logout`, {
+                  method: "post",
+                  headers: {
+                    Accept: "*/*",
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                    "Content-Type": "application/json",
+                  },
+                  data: {},
+                });
                 // console.log(logout)
                 sessionStorage.clear();
                 window.location.reload();

@@ -69,11 +69,11 @@
   }
   
   @media only screen and (max-width: 995px) {
-    .active.myCourse-navLink {
+    .active-myCourse-navLink {
       font-size: 19px;
     }
   
-    a.myCourse-navLink {
+    .myCourse-navLink {
       font-size: 19px;
     }
   }
@@ -86,7 +86,14 @@
       left: 0;
       top: 5rem;
       display: flex;
-  
+    }
+    .active-myCourse-navLink {
+      gap: 1rem;
+      padding: 2rem 1rem 1rem 1rem;
+      overflow: auto;
+      left: 0;
+      top: 5rem;
+      display: flex;
     }
   
     .studentList-containermyCourse {
