@@ -27,6 +27,8 @@ import SupermainBoard from '../superAdmin/SupermainBoard/SupermainBoard';
 import SuperRequests from '../superAdmin/SuperRequests/SuperRequests';
 import ViewAll from '../viewAllHomePage/ViewAll';
 import ProtectedRoute from './protecteRoute';
+import DummyFileRight from '../myCourse/courseDetail/rightCourseDetail/DummyFileRight';
+
 
 const Router = () => {
   const authicate = localStorage.getItem('auth');
@@ -110,9 +112,10 @@ const Router = () => {
             <Route path="QandA" element={<QandA />} />
             <Route path="certificate" element={<Certificate />} />
           </Route>
+          <Route path="DummyRight" element={<DummyFileRight />} />
           <Route path="myCourses" element={<MyCourse />}>
-            
-            <Route path=''  element={<DraftCourses />} />
+
+            <Route path='' element={<DraftCourses />} />
             <Route path="DraftCourses" element={<DraftCourses />} />
             <Route path="PublishedCourses" element={<PublishedCourses />} />
             {/* <Route path="certificate" element={<Certificate />} /> */}

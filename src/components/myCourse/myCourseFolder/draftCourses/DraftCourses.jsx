@@ -2,10 +2,14 @@ import './DraftCourses.css';
 import { NavLink, Outlet } from 'react-router-dom';
 
 const DraftCourses = () => {
+
   console.log('my course');
+
   return (
-    <div >DraftCourses
-    </div>
+
+    <NavLink to="DummyRight" className="draftHead">
+      DraftCourses
+    </NavLink>
   );
 };
 
