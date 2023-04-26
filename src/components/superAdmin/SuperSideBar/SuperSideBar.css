@@ -82,19 +82,20 @@ img.sideBar-navTools {
   }
 
   .sideBar-dashBoard {
+    width: 100vw;
     position: fixed;
     background: white;
     bottom: 0;
     left: 0;
-    right: 0;
+    /* right: 0; */
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-around;
-    padding: 0 48px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
     gap: 13.66px;
+    overflow: auto;
   }
-
   .sideBar-DashBoardContainer {
     width: 6rem;
     display: grid;
@@ -109,7 +110,7 @@ img.sideBar-navTools {
   }
 
   .sideBar-imageContainer {
-    padding: 1.5rem 0rem 0rem 0rem;
+    padding: 1.07rem 4rem 0rem 0rem;
   }
 
   .sideBarImg {
@@ -144,14 +145,14 @@ img.sideBar-navTools {
 @media only screen and (max-width: 481px) {
   .sideBar-dashBoard {
     justify-content: unset;
-
+    padding: 0 5px;
     overflow: auto;
   }
 }
 
 @media only screen and (max-width: 800px) {
   .sideBar-imageContainer {
-    padding: 1.2rem 0rem 0rem 0rem;
+    padding: 1.07rem 4rem 0rem 0rem;
   }
 }
 

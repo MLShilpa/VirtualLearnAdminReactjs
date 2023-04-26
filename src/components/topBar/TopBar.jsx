@@ -71,6 +71,7 @@ const TopBar = () => {
           <div className="topBar-addCourse">
             {
               {
+                dashBoard:"Dashboard",
                 main: 'Dashboard',
                 addCourses: 'Add Course',
                 MyCourses:"My Course",

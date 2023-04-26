@@ -17,7 +17,7 @@ import CourseDetail from "../Courses/courseDetail/CourseDetail";
 import LeftCouseDetailList from "../Courses/courseDetail/leftCourseDetail/LeftCouseDetailList";
 import DraftCourses from "../Courses/myCourse/myCourseFolder/draftCourses/DraftCourses";
 import PublishedCourses from "../Courses/myCourse/myCourseFolder/publishedCourses/PublishedCourses";
-import MyCourse from "../Courses/myCourse/MyCouse";
+import MyCourse from "../Courses/myCourse/MyCourse";
 import NewPassword from "../newPassword/NewPassword";
 import OtpVerification from "../otpVerification/OtpVerification";
 import ChangePassword from "../profileDrawer/changePassword/ChangePassword";
@@ -104,7 +104,7 @@ const Router = () => {
             )
           }
         >
-          <Route path="" element={<MainBoard />}></Route>
+          <Route exact path="" element={<MainBoard />}></Route>
           <Route path="main" element={<MainBoard />}></Route>
           <Route path="viewAll" element={<ViewAll />} />
           <Route path="addCourses" element={<AddCourse />}>
@@ -115,13 +115,15 @@ const Router = () => {
           </Route>
           <Route path="MyCourses" element={<Courses />}>
           <Route path="" element={<MyCourse />}>
-              <Route path="" element={<DraftCourses />} />
-              <Route path="DraftCourses" element={<DraftCourses />} />
+              {/* <Route index element={<DraftCourses />} /> */}
+              <Route 
+              exact
+              path="" element={<DraftCourses />} />
               <Route path="PublishedCourses" element={<PublishedCourses />} />
             </Route>
             <Route path="myCourses" element={<MyCourse />}>
               <Route path="" element={<DraftCourses />} />
-              <Route path="DraftCourses" element={<DraftCourses />} />
+              {/* <Route path="DraftCourses" element={<DraftCourses />} /> */}
               <Route path="PublishedCourses" element={<PublishedCourses />} />
             </Route>
             <Route path="CourseDetail" element={<CourseDetail />}>

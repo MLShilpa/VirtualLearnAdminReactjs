@@ -5,6 +5,7 @@ import { Base_Url } from '../../utils/baseUrl'
 
 const initialState = {
   data: {},
+  loading: false,
   // isSuccess: false,
   // loading: false,
   userName: '',
@@ -48,19 +49,21 @@ export const LoginSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+
     builder.addCase(LoginAsyncThunk.pending, (state, action) => {
       console.log('fetching Data...')
+      state.loading = true;
     })
     builder.addCase(LoginAsyncThunk.fulfilled, (state, action) => {
       // console.log('fetched Data Successfully', action.payload)
-      state.data = action
+      state.data = action;
       if (
         action.payload &&
         action.payload.data &&
         action.payload.data.message &&
         action.payload.data.message === 'Admin login successful'
       ) {
-        console.log("login", action.payload.data)
+        // console.log("login", action.payload.data)
         // if (action.payload.data.role === '[ROLE_ADMIN]') {
         //   toast.success('Successfully Logged In as admin', {
         //     position: 'top-center',
@@ -96,6 +99,7 @@ export const LoginSlice = createSlice({
           progress: undefined,
           theme: 'light',
         })
+        state.loading = false;
         sessionStorage.setItem('login', 'admin')
         sessionStorage.setItem('token', action.payload.data.accessToken)
         window.location.reload()
@@ -112,8 +116,9 @@ export const LoginSlice = createSlice({
         progress: undefined,
         theme: 'light',
       })
+      state.loading = false;
       // console.log('rejected',action)
-      state.data = action
+      state.data = action;
     })
   },
 })
