@@ -1,20 +1,27 @@
 import "./MyCourse.css";
 import { NavLink, Outlet } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setNavBarState } from "../../../redux/reducers/MyCourseStateSlice";
+// import CourseDetail from "./courseDetail/CourseDetail";
 
 const MyCourse = () => {
-  const [state, setState] = useState(1);
-  //   console.log('my course');
+  // const [state, setState] = useState(1);
+const dispatch = useDispatch();
+  const state = useSelector(state => state.myCourseStateSlice.navBarState)
+  const screenState = useSelector(state => state.myCourseStateSlice.myCourseScreenState);
+  console.log('state:',state);
   return (
-    <div className="studentList-containermyCourse">
+    <>
+    {/* {screenState === 1 ? <> */}
+      <div className="studentList-containermyCourse">
       <div className="myCourse-container">
         <NavLink
           to={"DraftCourses"}
-          
           className={({ isActive })=>
-            state === 1 ? "active-myCourse-navLink color" : "myCourse-navLink "
+          state === 1 ? "active-myCourse-navLink " : "myCourse-navLink "
           }
-          onClick={() => setState(1)}
+          onClick={() => dispatch(setNavBarState(1))}
         >
             <span className={state === 1 ? "myCourse-color":""}>
             Draft&nbsp;Courses
@@ -24,9 +31,9 @@ const MyCourse = () => {
 
         <NavLink
           to="PublishedCourses"
-          onClick={() => setState(2)}
+          onClick={() => dispatch(setNavBarState(2))}
           className={ ({ isActive })=>
-          isActive ? "active-myCourse-navLink color" : "myCourse-navLink"
+          isActive ? "active-myCourse-navLink myCourse-color" : "myCourse-navLink"
           }
         >
             <span className={state === 2 ? "myCourse-color":""}>
@@ -41,6 +48,11 @@ const MyCourse = () => {
         <Outlet />
       </div>
     </div>
+    {/* </>:<>
+    </>} */}
+   
+    </>
+   
   );
 };
 

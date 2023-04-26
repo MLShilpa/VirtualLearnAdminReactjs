@@ -73,7 +73,9 @@ const TopBar = () => {
               {
                 main: 'Dashboard',
                 addCourses: 'Add Course',
+                MyCourses:"My Course",
                 myCourses:"My Course",
+                CourseDetail:"My Course",
                 certificate: 'Add Course',
                 QandA: 'Add Course',
                 upload: 'Add Course',

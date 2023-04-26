@@ -20,6 +20,7 @@ const OtherTextArea = () => {
   const [loadingMessage, setLoadingMessage] = useState('')
   const [photoLink, setPhotoLink] = useState('')
   const [videoLink, setVideoLink] = useState('')
+  const [videoType, setVideoType] = useState('Select your option')
 
   const dispatch = useDispatch()
 
@@ -181,25 +182,49 @@ const OtherTextArea = () => {
           </div>
         </div>
       </div>
-      <div className="upload-videoCategoryFiles">
-        <div>
-          {' '}
-          <div className="upload-title">Course Thumbnail</div>
-          <input
-            type="file"
+      {/* <div className="upload-videoCategoryFiles"> */}
+      <div>
+        {' '}
+        <div className="upload-title">Course Thumbnail</div>
+        <input
+          type="file"
+          onChange={(e) => {
+            uploadPhoto(e)
+          }}
+          name="imageUpload"
+          accept="image/png, image/jpeg"
+          placeholder="Video Title"
+          className="upload-inputField title"
+          autoComplete="off"
+        />
+      </div>
+      <div>
+        <div className="upload-title">Preview Video</div>
+        <select
+          name="videoType"
+          className="upload-select"
+          value={videoType}
+          onChange={(e) => {
+            setVideoType(e.target.value)
+          }}
+        >
+          <option>Select your option</option>
+          <option value="Browse"> Browse from the device</option>
+          <option value="URL"> Give an URL</option>
+        </select>
+
+        {videoType === 'URL' &&
+          (<input
+            name="videoUpload"
             onChange={(e) => {
-              uploadPhoto(e)
+              // uploadVideoPreview(e)
             }}
-            name="imageUpload"
-            accept="image/png, image/jpeg"
-            placeholder="Video Title"
-            className="upload-inputField title"
-            autoComplete="off"
-          />
-        </div>
-        <div>
-          <div className="upload-title">Preview Video</div>
-          <input
+            placeholder="Enter the URL"
+            className="upload-inputField category"
+          />)}
+
+        {videoType === 'Browse' &&
+          (<input
             type="file"
             name="videoUpload"
             onChange={(e) => {
@@ -209,9 +234,10 @@ const OtherTextArea = () => {
             autoComplete="off"
             placeholder="Video Category"
             className="upload-inputField category"
-          />
-        </div>
+          />)}
+
       </div>
+      {/* </div> */}
       <div className="upload-difficultyLevel">
         <div>
           <div className="upload-title">Difficulty&nbsp;Level</div>

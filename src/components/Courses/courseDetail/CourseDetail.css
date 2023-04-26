@@ -1,0 +1,13 @@
+.container-courseDetail {
+  position: absolute !important;
+  z-index: -3;
+  left: 288px;
+  top: 109.274px;
+  border-radius: 2.5em 0 0 0;
+  right: 0;
+  height: 89%;
+  background-color: #f9f9f9;
+  overflow: auto;
+  padding: 2rem;
+  /* display: none; */
+}
