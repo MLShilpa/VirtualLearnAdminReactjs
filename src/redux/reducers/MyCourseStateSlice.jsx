@@ -1,23 +1,31 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  navBarState : 1,
-  myCourseScreenState:1,
+  draftCoursesPageNum:1,
+  courseDetailDraftState:false,
+  publishedCoursesPageNum:1,
+  courseDetailPublishedState:false,
 }
 
 export const MyCourseStateSlice = createSlice({
   name: 'myCourseStateSlice',
   initialState,
   reducers: {
-    setNavBarState: (state, action) => {
-      state.navBarState = action.payload
+    setDraftCoursesPageNum: (state, action) => {
+      state.draftCoursesPageNum = action.payload
     },
-    setMyCourseScreenState: (state, action) => {
-      state.myCourseScreenState = action.payload
+    setCourseDetailDraft: (state, action) => {
+      state.courseDetailDraftState = action.payload
+    },
+    setPublishedCoursesPageNum: (state, action) => {
+      state.publishedCoursesPageNum = action.payload
+    },
+    setCourseDetailPublishedState: (state, action) => {
+      state.courseDetailPublishedState = action.payload
     },
   },
 })
 
-export const { setNavBarState,setMyCourseScreenState } = MyCourseStateSlice.actions
+export const { setDraftCoursesPageNum,setPublishedCoursesPageNum,setCourseDetailDraft,setCourseDetailPublishedState} = MyCourseStateSlice.actions
 
 export default MyCourseStateSlice

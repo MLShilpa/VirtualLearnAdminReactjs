@@ -157,3 +157,7 @@ span.span-btn {
     letter-spacing: 0.5px;
   }
 }
+.login-buttonContainer button:disabled {
+  opacity: 0.5;
+  cursor: no-drop;
+}

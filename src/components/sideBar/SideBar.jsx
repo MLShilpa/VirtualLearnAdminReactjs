@@ -4,7 +4,7 @@ import axios from "axios";
 import { Base_Url } from "../../utils/baseUrl";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setMyCourseScreenState, setNavBarState } from "../../redux/reducers/MyCourseStateSlice";
+import { setCourseDetailDraft, setCourseDetailPublishedState, setDraftCoursesPageNum, setPublishedCoursesPageNum } from "../../redux/reducers/MyCourseStateSlice";
 
 const SideBar = () => {
   const location = useLocation();
@@ -22,7 +22,7 @@ const SideBar = () => {
         </div>
 
         <div className="sideBar-dashBoard">
-          <NavLink to="main" className="sideBar-linkNames">
+          <NavLink end to="" className="sideBar-linkNames">
             <div className="sideBar-DashBoardContainer">
               <div className="sideBar-Item">
                 <img
@@ -48,7 +48,11 @@ const SideBar = () => {
           </NavLink>
           <NavLink to="MyCourses" className="sideBar-linkNames">
             <div className="sideBar-DashBoardContainer"
-            onClick={()=>{dispatch(setNavBarState(1))
+            onClick={()=>{
+              dispatch(setDraftCoursesPageNum(1))
+              dispatch(setPublishedCoursesPageNum(1))
+              dispatch(setCourseDetailDraft(false))
+              dispatch(setCourseDetailPublishedState(false))
               // dispatch(setMyCourseScreenState(1))
             }}
             >
