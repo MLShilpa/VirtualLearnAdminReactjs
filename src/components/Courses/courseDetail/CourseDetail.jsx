@@ -1,5 +1,6 @@
-import "./CourseDetail.css";
-import { NavLink, Outlet } from "react-router-dom";
+import './CourseDetail.css';
+import { NavLink, Outlet } from 'react-router-dom';
+import DummyFileRight from './rightCourseDetail/DummyFileRight';
 import LeftCouseDetailList from "./leftCourseDetail/LeftCouseDetailList";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -63,23 +64,23 @@ const CourseDetail = () => {
           <span className="courseDetail-header-text">Course Details</span>
         </div>
         <div
-              className="courseDetail-publish"
-              onClick={() => {
-                publishHandler()
-              }}
-            >
-              <div className="courseDetail-publishText">Publish to web</div>
-              <div className="courseDetail-publishIcon">
-                <img
-                  src={require('../../../assets/icons/Web_upload.png')}
-                  alt=""
-                  className="courseDetail-publishImg"
-                />
-              </div>
-            </div>
+          className="courseDetail-publish"
+          onClick={() => {
+            publishHandler()
+          }}
+        >
+          <div className="courseDetail-publishText">Publish to web</div>
+          <div className="courseDetail-publishIcon">
+            <img
+              src={require('../../../assets/icons/Web_upload.png')}
+              alt=""
+              className="courseDetail-publishImg"
+            />
+          </div>
+        </div>
       </div>
 
-      <LeftCouseDetailList />
+      <DummyFileRight />
     </div>
   );
 };

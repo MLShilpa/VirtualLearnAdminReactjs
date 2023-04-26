@@ -182,166 +182,166 @@ const PublishedCourses = () => {
             </div>
           ) : (
             <div className="PublishedCourse-list-body">
-            <>
-              {/* {Data.length > 0 ? ( */}
-              {/* {publishedData?.data.reverse().map((res, i) => { */}
-              {publishedData?.data.map((res, i) => {
-                // {Data.map((res, i) => {
-                return (
-                  <div
-                    className="PublishedCourses-CourseList"
-                    key={i}
-                    onClick={() => {
-                      // alert("pressed")
-                      dispatch(setCourseDetailPublishedState(true));
-                      dispatch(setPublishedCoursesPageNum(page));
-                      navigate("/dashBoard/MyCourses/CourseDetail");
-                    }}
-                  >
-                    <div className="PublishedCourses-Title">
-                      <div className="PublishedCourses-Thumbnail">
-                        <img
-                          src={res?.courseImage}
-                          alt=""
-                          className="PublishedCourses-thumbnail"
-                        />
-                        <div className="PublishedCourses-thumbnail-play">
+              <>
+                {/* {Data.length > 0 ? ( */}
+                {/* {publishedData?.data.reverse().map((res, i) => { */}
+                {publishedData?.data.map((res, i) => {
+                  // {Data.map((res, i) => {
+                  return (
+                    <div
+                      className="PublishedCourses-CourseList"
+                      key={i}
+                      onClick={() => {
+                        // alert("pressed")
+                        dispatch(setCourseDetailPublishedState(true));
+                        dispatch(setPublishedCoursesPageNum(page));
+                        navigate("/dashBoard/MyCourses/CourseDetail");
+                      }}
+                    >
+                      <div className="PublishedCourses-Title">
+                        <div className="PublishedCourses-Thumbnail">
+                          <img
+                            src={res?.courseImage}
+                            alt=""
+                            className="PublishedCourses-thumbnail"
+                          />
+                          <div className="PublishedCourses-thumbnail-play">
+                            <svg
+                              width={19}
+                              height={19}
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M9.5 18a8.5 8.5 0 100-17 8.5 8.5 0 000 17z"
+                                fill="#EE5C4D"
+                                fillOpacity={0.7}
+                                stroke="#EE5C4D"
+                                strokeWidth={0.962}
+                              />
+                              <mask
+                                id="prefix__a"
+                                style={{
+                                  maskType: "alpha",
+                                }}
+                                maskUnits="userSpaceOnUse"
+                                x={7}
+                                y={6}
+                                width={6}
+                                height={7}
+                              >
+                                <path
+                                  d="M8.534 12.286l.004-.002 3.812-2.29h.001a.783.783 0 00.356-.487.785.785 0 00-.356-.862h-.001l-3.812-2.29a.78.78 0 00-.6-.08.782.782 0 00-.584.753v4.583a.789.789 0 001.18.675z"
+                                  fill="#fff"
+                                />
+                              </mask>
+                              <g mask="url(#prefix__a)">
+                                <path
+                                  d="M8.534 12.286l.004-.002 3.812-2.29h.001a.783.783 0 00.356-.487.785.785 0 00-.356-.862h-.001l-3.812-2.29a.78.78 0 00-.6-.08.782.782 0 00-.584.753v4.583a.789.789 0 001.18.675z"
+                                  fill="#fff"
+                                />
+                              </g>
+                            </svg>
+                          </div>
+                        </div>
+                        <div className="PublishedCourses-titleContainer">
+                          <div>{res?.title}</div>
+
+                          <div className="date-Container">
+                            {/* 12/09/2020, 06:30 
+                      "uploadedDate": "2022-12-21 06:01:13.705145",*/}
+                            Added on&nbsp;
+                            {res?.createdAt.slice(8, 10)}/
+                            {res?.createdAt.slice(5, 7)}/
+                            {res?.createdAt.slice(0, 4)},&nbsp;
+                            {res?.createdAt.slice(11, 16)}
+                          </div>
+                          <aside
+                            className="PublishedCourses-delete-modal"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
+                          >
+                            <Modal
+                              isOpen={modalIsOpen}
+                              onRequestClose={closeModal}
+                              contentLabel="Example Modal"
+                              ariaHideApp={false}
+                              className="PublishedCourses-delete-course-modal"
+                              // overlayClassName="Overlay"
+                              parentSelector={() =>
+                                document.querySelector("#root")
+                              }
+                            >
+                              <div className="PublishedCourses-delete-course-modal-content">
+                                <div className="PublishedCourses-deleteCourse">
+                                  Delete Course
+                                </div>
+                                <div className="PublishedCourses-deleteContent">
+                                  Are you sure you want to delete the course
+                                  <strong style={{ textTransform: "capitalize" }}>
+                                    {" "}
+                                    {toBeDeleted?.title}
+                                  </strong>{" "}
+                                  ?
+                                </div>
+                                <div className="PublishedCourses-buttons">
+                                  <button
+                                    onClick={closeModal}
+                                    className="PublishedCourses-cancel"
+                                  >
+                                    Cancel
+                                  </button>
+
+                                  <button
+                                    className="PublishedCourses-delete"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      deleteCourse(toBeDeleted._id);
+                                      closeModal();
+                                    }}
+                                  >
+                                    Delete
+                                  </button>
+                                </div>
+                              </div>
+                            </Modal>
+                          </aside>
+                        </div>
+                      </div>
+                      <div>
+                        <button
+                          className="PublishedCourses-delete-courses"
+                          // onClick={console.log('i--',i)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            // console.log("i", i);
+                            setToBedeleted(res);
+                            openModal();
+                          }}
+                        >
                           <svg
-                            width={19}
-                            height={19}
+                            width={36}
+                            height={36}
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <path
-                              d="M9.5 18a8.5 8.5 0 100-17 8.5 8.5 0 000 17z"
-                              fill="#EE5C4D"
-                              fillOpacity={0.7}
-                              stroke="#EE5C4D"
-                              strokeWidth={0.962}
+                              d="M18 36c9.941 0 18-8.059 18-18S27.941 0 18 0 0 8.059 0 18s8.059 18 18 18z"
+                              fill="#092963"
+                              fillOpacity={0.1}
                             />
-                            <mask
-                              id="prefix__a"
-                              style={{
-                                maskType: "alpha",
-                              }}
-                              maskUnits="userSpaceOnUse"
-                              x={7}
-                              y={6}
-                              width={6}
-                              height={7}
-                            >
-                              <path
-                                d="M8.534 12.286l.004-.002 3.812-2.29h.001a.783.783 0 00.356-.487.785.785 0 00-.356-.862h-.001l-3.812-2.29a.78.78 0 00-.6-.08.782.782 0 00-.584.753v4.583a.789.789 0 001.18.675z"
-                                fill="#fff"
-                              />
-                            </mask>
-                            <g mask="url(#prefix__a)">
-                              <path
-                                d="M8.534 12.286l.004-.002 3.812-2.29h.001a.783.783 0 00.356-.487.785.785 0 00-.356-.862h-.001l-3.812-2.29a.78.78 0 00-.6-.08.782.782 0 00-.584.753v4.583a.789.789 0 001.18.675z"
-                                fill="#fff"
-                              />
-                            </g>
+                            <path
+                              d="M22 16v10h-8V16h8zm-1.5-6h-5l-1 1H11v2h14v-2h-3.5l-1-1zm3.5 4H12v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V14z"
+                              fill="#092963"
+                            />
                           </svg>
-                        </div>
-                      </div>
-                      <div className="PublishedCourses-titleContainer">
-                        <div>{res?.title}</div>
-
-                        <div className="date-Container">
-                          {/* 12/09/2020, 06:30 
-                      "uploadedDate": "2022-12-21 06:01:13.705145",*/}
-                          Added on&nbsp;
-                          {res?.createdAt.slice(8, 10)}/
-                          {res?.createdAt.slice(5, 7)}/
-                          {res?.createdAt.slice(0, 4)},&nbsp;
-                          {res?.createdAt.slice(11, 16)}
-                        </div>
-                        <aside
-                          className="PublishedCourses-delete-modal"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                          }}
-                        >
-                          <Modal
-                            isOpen={modalIsOpen}
-                            onRequestClose={closeModal}
-                            contentLabel="Example Modal"
-                            ariaHideApp={false}
-                            className="PublishedCourses-delete-course-modal"
-                            // overlayClassName="Overlay"
-                            parentSelector={() =>
-                              document.querySelector("#root")
-                            }
-                          >
-                            <div className="PublishedCourses-delete-course-modal-content">
-                              <div className="PublishedCourses-deleteCourse">
-                                Delete Course
-                              </div>
-                              <div className="PublishedCourses-deleteContent">
-                                Are you sure you want to delete the course
-                                <strong style={{ textTransform: "capitalize" }}>
-                                  {" "}
-                                  {toBeDeleted?.title}
-                                </strong>{" "}
-                                ?
-                              </div>
-                              <div className="PublishedCourses-buttons">
-                                <button
-                                  onClick={closeModal}
-                                  className="PublishedCourses-cancel"
-                                >
-                                  Cancel
-                                </button>
-
-                                <button
-                                  className="PublishedCourses-delete"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    deleteCourse(toBeDeleted._id);
-                                    closeModal();
-                                  }}
-                                >
-                                  Delete
-                                </button>
-                              </div>
-                            </div>
-                          </Modal>
-                        </aside>
+                        </button>
                       </div>
                     </div>
-                    <div>
-                      <button
-                        className="PublishedCourses-delete-courses"
-                        // onClick={console.log('i--',i)}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          // console.log("i", i);
-                          setToBedeleted(res);
-                          openModal();
-                        }}
-                      >
-                        <svg
-                          width={36}
-                          height={36}
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M18 36c9.941 0 18-8.059 18-18S27.941 0 18 0 0 8.059 0 18s8.059 18 18 18z"
-                            fill="#092963"
-                            fillOpacity={0.1}
-                          />
-                          <path
-                            d="M22 16v10h-8V16h8zm-1.5-6h-5l-1 1H11v2h14v-2h-3.5l-1-1zm3.5 4H12v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V14z"
-                            fill="#092963"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </>
+                  );
+                })}
+              </>
             </div>
           )}
 

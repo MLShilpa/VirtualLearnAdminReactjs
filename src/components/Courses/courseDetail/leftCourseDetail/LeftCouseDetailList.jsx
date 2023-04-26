@@ -6,7 +6,7 @@ const LeftCouseDetailList = () => {
   return (
     <div className=''>
       <p>
-      LeftCouseDetailList
+        LeftCouseDetailList
       </p>
     </div>
   );

@@ -132,7 +132,7 @@
 .upload-imgUpload {
     display: flex;
     justify-content: center;
-    padding: 2rem 0rem;
+    /* padding: 2rem 0rem; */
 }
 
 span.upload-browseColor {
