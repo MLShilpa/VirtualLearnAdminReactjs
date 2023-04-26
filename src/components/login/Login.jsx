@@ -31,7 +31,7 @@ const Login = () => {
   }, []);
 
   const loginData = useSelector((state) => state.Login);
-
+console.log(loginData.loading)
   const formik = useFormik({
     initialValues: {
       userName: "",
@@ -55,8 +55,7 @@ const Login = () => {
       LoginAsyncThunk({
         userName: formik.values.userName,
         password: formik.values.password,
-      }),
-      navigate('/dashBoard'),
+      })
     )
   };
 
@@ -122,7 +121,7 @@ const Login = () => {
             Forgot Password ?
           </div>
           <div className="login-buttonContainer">
-            <button type="submit" className="login-loginButton">
+            <button type="submit" className="login-loginButton" disabled={loginData?.loading}>
               Login
             </button>
           </div>

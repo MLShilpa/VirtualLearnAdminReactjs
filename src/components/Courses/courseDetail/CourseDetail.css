@@ -8,6 +8,61 @@
   height: 89%;
   background-color: #f9f9f9;
   overflow: auto;
-  padding: 2rem;
+  padding: 2rem 1rem;
   /* display: none; */
+}
+
+.courseDetail-header {
+  /* border-style: dashed;  */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* gap: 10px; */
+  /* cursor: pointer; */
+  background-color: #ffffff;
+
+}
+
+.courseDetail-header-left {
+  /* border-style:dotted;  */
+  display: block;
+  width: fit-content;
+  /* align-items: center; */
+  gap: 20px;
+  background-color: #ffffff;
+
+}
+
+.courseDetail-header-text {
+  font-family: ProximaNovaSoft-Regular;
+  font-weight: 600;
+  font-size: 20px;
+  color: #292929;
+  text-align: center;
+  /* border-style: dashed; */
+}
+
+.courseDetail-BackIcon {
+  /* border-style: dashed; */
+  height: fit-content;
+  padding: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.courseDetail-publish {
+  /* border-style: dashed; */
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  background-color: var(--secondaryClr);
+  padding: 7px 14px;
+  margin: 0.5rem 0.5rem;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.courseDetail-publishText {
+  font-family: ProximaNovaSoft-Regular;
+  color: white;
 }

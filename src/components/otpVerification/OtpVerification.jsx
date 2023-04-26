@@ -49,11 +49,12 @@ const OtpVerification = () => {
           });
           // alert(res.data)
           console.log("res.dataotp", res);
-
-          if (res.status === 200) {
-            dispatch(showNewPW(true));
-            navigate("/newPassword");
-          }
+          dispatch(showNewPW(true));
+          navigate("/newPassword");
+          // if (res.status === 200) {
+          //   dispatch(showNewPW(true));
+          //   navigate("/newPassword");
+          // }
         }
       })
       .catch((err) => {
