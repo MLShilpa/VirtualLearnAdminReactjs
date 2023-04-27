@@ -66,3 +66,9 @@
   font-family: ProximaNovaSoft-Regular;
   color: white;
 }
+
+.flexContainer {
+  display: flex;
+  flex-direction: row;
+
+}

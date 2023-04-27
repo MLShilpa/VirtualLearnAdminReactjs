@@ -81,6 +81,7 @@ const CourseDetail = () => {
       </div>
 
       <DummyFileRight />
+
     </div>
   );
 };

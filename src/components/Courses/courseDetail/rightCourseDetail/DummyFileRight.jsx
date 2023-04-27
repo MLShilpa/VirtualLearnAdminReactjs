@@ -7,12 +7,7 @@ import { addIcon } from '../../../../utils/icons'
 import RichTextEditor from '../../../AddCoursesFolder/richTextEditor/RichTextEditor'
 import OtherTextArea from '../../../AddCoursesFolder/otherTextArea/OtherTextArea'
 import { useDropzone } from 'react-dropzone'
-import { Viewer } from '@react-pdf-viewer/core';
-import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-import '@react-pdf-viewer/core/lib/styles/index.css';
-import '@react-pdf-viewer/default-layout/lib/styles/index.css';
-import { Worker } from '@react-pdf-viewer/core';
-
+import PdfReader from './PdfReader'
 
 const DummyFileRight = () => {
 
@@ -219,9 +214,8 @@ const DummyFileRight = () => {
                         </select>
                       </div>
                     </div>
-
-
                   </div>
+                  <PdfReader />
                 </div>
 
 
