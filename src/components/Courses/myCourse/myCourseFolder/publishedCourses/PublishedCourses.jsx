@@ -195,7 +195,7 @@ const PublishedCourses = () => {
                         // alert("pressed")
                         dispatch(setCourseDetailPublishedState(true));
                         dispatch(setPublishedCoursesPageNum(page));
-                        navigate("/dashBoard/MyCourses/CourseDetail");
+                        navigate("/DashBoard/MyCourses/CourseDetail");
                       }}
                     >
                       <div className="PublishedCourses-Title">

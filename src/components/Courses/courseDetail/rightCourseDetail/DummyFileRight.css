@@ -1,27 +1,17 @@
 .main-container {
-    /* position: absolute;
-    z-index: -3;
-    left: 288px;
-    top: 109.274px;
-    border-radius: 2.5em 0 0 0;
-    right: 0;
-    background-color: #f9f9f9;
-    height: 100vh; */
     width: 100%;
-    height: 100vh;
 }
 
-.date-recentcourse {
-    display: flex;
+.DummyFileRight-date-recentcourse {
+    display: block;
     flex-direction: row;
-    justify-content: space-between;
     width: 100%;
     padding-top: 30px;
-    padding-bottom: 50px;
+    padding-left: 30px;
+    /* border-style: dotted; */
 }
 
 .chapName {
-    margin-right: 20rem;
     margin-bottom: 2rem;
 }
 
@@ -34,4 +24,30 @@
     height: 800px;
     overflow-y: auto;
     margin-bottom: 10px;
+}
+
+.DummyFileRight-Save-buttonPublish {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.DummyFileRight-upload-container {
+    /* border-style: double; */
+    width: 100%;
+    min-width: none;
+}
+
+@media screen and (min-width: 1600px) {
+    .DummyFileRight-upload-container {
+        width: calc(50vw - 20%);
+        min-width: 800px;
+    }
+}
+
+.DummyFileRight-textarea-tagline {}
+
+.DummyFileRight-upload-videoCategory {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
