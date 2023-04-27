@@ -1,38 +1,53 @@
 .main-container {
-  width: 100%;
+    width: 100%;
 }
 
 .DummyFileRight-date-recentcourse {
-  display: block;
-  flex-direction: row;
-  width: 100%;
-  padding-top: 30px;
-  padding-left: 30px;
-  /* border-style: dotted; */
+    display: block;
+    flex-direction: row;
+    width: 100%;
+    padding-top: 30px;
+    padding-left: 30px;
+    /* border-style: dotted; */
 }
 
 .chapName {
-  margin-bottom: 2rem;
+    margin-bottom: 2rem;
 }
+
+.viewerContainer {
+
+    background-color: #e4e4e4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 800px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
 .DummyFileRight-Save-buttonPublish {
-  display: flex;
-  justify-content: flex-end;
+    display: flex;
+    justify-content: flex-end;
 }
+
 .DummyFileRight-upload-container {
-  /* border-style: double; */
-  width: 100%;
-  min-width: none;
+    /* border-style: double; */
+    width: 100%;
+    min-width: none;
 }
+
 @media screen and (min-width: 1600px) {
-  .DummyFileRight-upload-container {
-    width: calc( 50vw - 20% );
-    min-width: 800px;
-  }
+    .DummyFileRight-upload-container {
+        width: calc(50vw - 20%);
+        min-width: 800px;
+    }
 }
-.DummyFileRight-textarea-tagline {
-}
+
+.DummyFileRight-textarea-tagline {}
+
 .DummyFileRight-upload-videoCategory {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }

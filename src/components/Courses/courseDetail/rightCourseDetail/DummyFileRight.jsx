@@ -7,12 +7,7 @@ import { addIcon } from '../../../../utils/icons'
 import RichTextEditor from '../../../AddCoursesFolder/richTextEditor/RichTextEditor'
 import OtherTextArea from '../../../AddCoursesFolder/otherTextArea/OtherTextArea'
 import { useDropzone } from 'react-dropzone'
-import { Viewer } from '@react-pdf-viewer/core';
-import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-import '@react-pdf-viewer/core/lib/styles/index.css';
-import '@react-pdf-viewer/default-layout/lib/styles/index.css';
-import { Worker } from '@react-pdf-viewer/core';
-
+import PdfReader from './PdfReader'
 
 const DummyFileRight = () => {
 
@@ -25,7 +20,7 @@ const DummyFileRight = () => {
       <div className="main-container">
         <div className="DummyFileRight-date-recentcourse">
 
-          <form
+          {/* <form
             onSubmit={(e) => {
               // uploadVideosHandler(e)
               // overViewHandler(e)
@@ -150,7 +145,7 @@ const DummyFileRight = () => {
                 </button>
               </div>
             </div>
-          </form>
+          </form> */}
 
           {/* <form onSubmit={(e) => {
             // uploadVideosHandler(e)
@@ -173,7 +168,7 @@ const DummyFileRight = () => {
           </form> */}
 
 
-          {/* <form
+          <form
             onSubmit={(e) => {
               // uploadVideosHandler(e)
               // overViewHandler(e)
@@ -223,9 +218,8 @@ const DummyFileRight = () => {
                         </select>
                       </div>
                     </div>
-
-
                   </div>
+                  <PdfReader />
                 </div>
 
 
@@ -244,7 +238,7 @@ const DummyFileRight = () => {
               </div>
 
             </div >
-          </form> */}
+          </form>
         </div >
       </div >
     </>

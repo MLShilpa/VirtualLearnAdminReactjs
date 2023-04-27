@@ -3,7 +3,7 @@
   background-color: #ffffff;
   margin: 15px;
   /* min-height: 100%; */
-  height: calc( 100% - 30px );
+  height: calc(100% - 30px);
   /* overflow: auto; */
   padding: 34px;
   border-radius: 10px;
@@ -65,24 +65,27 @@
   font-family: ProximaNovaSoft-Regular;
   color: white;
 }
-.courseDetail-Conatiner{
+
+.courseDetail-Conatiner {
   border-style: dotted;
   border-color: blue;
   display: flex;
   overflow: scroll;
-  height: calc( 100% - 30px );
+  height: calc(100% - 30px);
 }
-.courseDetail-Conatiner-Left{
+
+.courseDetail-Conatiner-Left {
   width: 40%;
   min-width: 412px;
   border-color: green;
-  border-style:solid;
+  border-style: solid;
 }
-.courseDetail-Conatiner-Right{
+
+.courseDetail-Conatiner-Right {
   width: 60%;
   min-width: max-content;
   /* min-width: 412px; */
-  border-style:solid;
+  border-style: solid;
   border-color: red;
   overflow: scroll;
 }
