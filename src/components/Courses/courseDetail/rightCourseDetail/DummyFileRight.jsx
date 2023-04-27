@@ -23,17 +23,17 @@ const DummyFileRight = () => {
   return (
     <>
       <div className="main-container">
-        <div className="date-recentcourse">
+        <div className="DummyFileRight-date-recentcourse">
 
-          {/* <form
+          <form
             onSubmit={(e) => {
               // uploadVideosHandler(e)
               // overViewHandler(e)
             }}
           >
-            <div className="upload-container">
+            <div className="DummyFileRight-upload-container">
               <div id="form" className="upload-formController">
-                <div className="upload-videoCategory">
+                <div className="DummyFileRight-upload-videoCategory">
                   <div>
                     {' '}
                     <div className="upload-title">Video&nbsp;Title</div>
@@ -110,7 +110,7 @@ const DummyFileRight = () => {
                   <div>
                     {' '}
                     <div className="upload-title">Video&nbsp;Tagline</div>
-                    <div className="textarea-tagline">
+                    <div className="DummyFileRight-textarea-tagline">
                       <textarea
                         name="tagline"
                         className="upload-inputField tagline"
@@ -140,28 +140,31 @@ const DummyFileRight = () => {
                 <div
                   className="Upload-buttonPublish"
                   style={{ marginTop: '10px' }}
-                ></div>
+                >
+                </div>
               </div>
 
-              <div className="Upload-buttonPublish">
+              <div className="DummyFileRight-Save-buttonPublish">
                 <button type="submit" className="QandA-Button" id="save" disabled>
                   Save
                 </button>
               </div>
             </div>
-          </form> */}
+          </form>
 
           {/* <form onSubmit={(e) => {
             // uploadVideosHandler(e)
             // overViewHandler(e)
           }}>
-            <div className="upload-container">
+            <div className="DummyFileRight-upload-container">
+              <div className='upload-videoTitleee'>
               <input
                 type="text"
                 placeholder="Chapter Title"
                 className="upload-inputField title chapName"
               />
-              <div className="Upload-buttonPublish">
+              </div>
+              <div className="DummyFileRight-Save-buttonPublish">
                 <button type="submit" className="QandA-Button" id="save" disabled>
                   Save
                 </button>
@@ -169,7 +172,8 @@ const DummyFileRight = () => {
             </div>
           </form> */}
 
-          <form
+
+          {/* <form
             onSubmit={(e) => {
               // uploadVideosHandler(e)
               // overViewHandler(e)
@@ -240,8 +244,7 @@ const DummyFileRight = () => {
               </div>
 
             </div >
-          </form>
-
+          </form> */}
         </div >
       </div >
     </>

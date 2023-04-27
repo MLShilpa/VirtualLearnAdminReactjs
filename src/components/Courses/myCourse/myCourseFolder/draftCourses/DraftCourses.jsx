@@ -194,7 +194,7 @@ const DraftCourses = () => {
                         // alert("pressed")
                         dispatch(setCourseDetailDraft(true));
                         dispatch(setDraftCoursesPageNum(page));
-                        navigate("/dashBoard/MyCourses/CourseDetail");
+                        navigate("/DashBoard/MyCourses/CourseDetail");
                       }}
                     >
                       <div className="DraftCourses-Title">
