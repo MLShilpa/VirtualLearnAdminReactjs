@@ -112,8 +112,18 @@ img.topbar-closeImg {
 }
 
 @media only screen and (max-width: 939px) {
+
+  .topBar-headerIcons {
+    gap: 2rem;
+  }
+
+  .EZDrawer .EZDrawer__checkbox:checked ~ .EZDrawer__container {
+    width: 40% !important;
+  }
+}
+@media only screen and (max-width: 855px) {
   .topBar-Header {
-    padding: 1rem 4rem 0.7rem 3rem !important;
+    padding: 1rem 4rem 0.7rem 1rem !important;
     display: flex !important;
     position: fixed !important;
     z-index: 4 !important;
@@ -126,16 +136,7 @@ img.topbar-closeImg {
   .topBar-addCourse {
     display: none;
   }
-
-  .topBar-headerIcons {
-    gap: 2rem;
-  }
-
-  .EZDrawer .EZDrawer__checkbox:checked ~ .EZDrawer__container {
-    width: 40% !important;
-  }
 }
-
 @media only screen and (max-width: 1193px) {
   .EZDrawer .EZDrawer__checkbox:checked ~ .EZDrawer__container {
     width: 46% !important;

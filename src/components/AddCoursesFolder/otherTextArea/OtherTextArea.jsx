@@ -151,7 +151,7 @@ const OtherTextArea = () => {
         <div>
           {' '}
           <div className="upload-title">Course&nbsp;Outcome</div>
-          <div className="textarea-tagline">
+          <div className="DummyFileRight-textarea-tagline">
             <textarea
               value={outcome}
               onChange={(e) => {
@@ -167,7 +167,7 @@ const OtherTextArea = () => {
         </div>
         <div>
           <div className="upload-title">Requirements</div>
-          <div className="textarea-tagline">
+          <div className="DummyFileRight-textarea-tagline">
             <textarea
               name="requirements"
               className="upload-inputField "
@@ -186,6 +186,7 @@ const OtherTextArea = () => {
       <div>
         {' '}
         <div className="upload-title">Course Thumbnail</div>
+        <div className="DummyFileRight-textarea-tagline">
         <input
           type="file"
           onChange={(e) => {
@@ -197,6 +198,7 @@ const OtherTextArea = () => {
           className="upload-inputField title"
           autoComplete="off"
         />
+        </div>
       </div>
       <div>
         <div className="upload-title">Preview Video</div>

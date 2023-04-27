@@ -161,7 +161,8 @@ textarea.upload-inputField {
 }
 
 .upload-videoTitleee {
-  margin-right: 20rem;
+  width: 100%;
+  /* margin-right: 20rem; */
 }
 
 select.upload-select {
@@ -232,6 +233,7 @@ select.upload-select {
   display: flex;
   align-items: center;
   gap: 12px;
+  /* border-style: dashed; */
 }
 
 .addCategoryBtn {

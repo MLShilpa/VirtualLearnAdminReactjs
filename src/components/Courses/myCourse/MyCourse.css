@@ -40,6 +40,8 @@
   .myCourse-addBtn {
     cursor: pointer;
     border: none;
+    text-decoration: none;
+    color: black;
     /* width: min-content; */
     display: flex;
     border-radius: 10px;

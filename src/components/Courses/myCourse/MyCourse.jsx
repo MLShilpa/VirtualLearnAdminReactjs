@@ -43,10 +43,12 @@ const MyCourse = () => {
             <span>Published&nbsp;Courses</span>
           </NavLink>
           </div>
-          <button className="myCourse-addBtn" onClick={()=>{navigate("/dashBoard/MyCourses/CourseDetail")}}>
+          <NavLink className="myCourse-addBtn" to="CourseDetail" 
+          // onClick={()=>{navigate("/dashBoard/MyCourses/CourseDetail")}}
+          >
           <div className="myCourse-addBtn-icon" >{addIcon}</div>
            Add Course
-          </button>
+          </NavLink>
          
         </div>
    
