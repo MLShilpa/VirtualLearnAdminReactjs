@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
+  data:"",
   categoryName: '',
   subCategoryName: '',
   courseTagLine: '',

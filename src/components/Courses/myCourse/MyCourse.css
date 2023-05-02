@@ -37,19 +37,36 @@
     gap: 6rem;
     /* border-style: dashed; */
   }
-  .myCourse-addBtn {
+  /* .myCourse-addBtn {
     cursor: pointer;
     border: none;
     text-decoration: none;
     color: black;
-    /* width: min-content; */
     display: flex;
     border-radius: 10px;
     background-color: rgba(9, 41, 99, 0.11);
     align-items: center;
     justify-content: center;
     padding: 0px 10px 0px 5px;
+  } */
+
+  .myCourse-addBtn {
     /* border-style: dashed; */
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    border-radius: 10px;
+    background-color: var(--secondaryClr);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 10px 0px 5px;
+    cursor: pointer;
+  }
+  
+  .myCourse-addText {
+    font-family: ProximaNovaSoft-Regular;
+    color: white;
   }
   .myCourse-body{
     overflow: hidden;
