@@ -1,5 +1,265 @@
+.container-LeftCouseDetailList {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+    overflow: scroll;
+    height:100% ;
+    min-width: 450px;
+    max-width: 450px;
+  }
+  .courseTitleSection-empty{
+    margin-top: 20px;
+    width: calc( 100% );
+    display: flex;
+    flex-direction:row;
+    padding: 10px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    border: 1px solid black;
+  }
+  .courseTitle-empty{
+    font-family:  var(--primaryFont);
+    font-size: 20px;
+   }
 
-  .container-LeftCouseDetailList {
-    display: block;
-    /* border-style: dashed; */
+
+  .courseTitle{
+   padding: 10px;
+   border-radius: 10px;
+   background-color: #f9f9f9;
+  }
+  .courseTitle-name{
+    font-family:  var(--primaryFont);
+    font-size: 20px;
+  }
+  .course-sections {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left:auto;
+    /* border: 1px solid red; */
+  }
+  .course-accordian {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    /* border: 1px solid blue; */
+    max-width: 450px;
+}
+
+.course-accordian-heading {
+    /* cursor: pointer; */
+    /* height: 50px; */
+    padding: 7px 10px 0 10px;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    border: #042c5c;
+    /* justify-content: space-between; */
+}
+
+/* .course-accordian-heading:hover{
+    background-color: #ddd;
+} */
+
+.course-accordian-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* height: 30px; */
+    font-family: var(--primaryFont);
+}
+
+.course-accordian-container-title {
+    color: #494949;
+    text-transform: capitalize;
+    font-size: 18px;
+}
+.course-accordian-container-title-active {
+    color: green;
+    text-transform: capitalize;
+}
+
+.course-accordian-container-state {
+    font-size: 30px;
+    color: var(--secondaryClr);
+    animation: rotate 0.3s;
+}
+.accordian-show {
+  height: auto;
+  opacity: 1;
+}
+
+.course-accordian-content {
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  height: 0;
+  opacity: 0;
+}
+.course-accordian-container-body {
+  text-align: justify;
+  margin-top: 10px;
+}
+
+.accordian-items {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 370px;
+  margin-left: auto;
+
+}
+.accordian-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  width: 370px;
+}
+.accordian-item-test {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+  width: 370px;
+}
+.accordian-item-icon {
+  margin-right: 15px;
+}
+
+.accordian-item-section-2 {
+  background-color: #f9f9f9;
+  width: 100%;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-content: space-between;
+  padding: 5px 10px 5px 15px;
+  font-family: var(--primaryFont);
+}
+.accordian-item-section-2-para{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: calc( 100% ) ;
+/* border: 1px solid red; */
+}
+.accordian-item-chapter-number {
+  font-size: 20px;
+  font-weight: 700;
+  color: #494949;
+  text-transform: capitalize;
+
+}
+
+.accordian-item-chapter-title {
+  font-size: 16px;
+  color: #042c5c;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+}
+.accordian-item-section-2-buttons{
+  display: flex;
+  align-items:center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.video-play-btn {
+  cursor: pointer;
+}
+
+.test-section {
+  cursor: pointer;
+  border: 1px solid red;
+}
+.accordian-item-section-2-test {
+  background-color: #f9f9f9;
+  width: 100%;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px 5px 15px;
+  font-family: var(--primaryFont);
+}
+.accordian-item-section-2-para-test{
+  display: flex;
+  flex-direction: column;
+  width: 100% ;
+  /* border: 1px solid red; */
+  margin-left: 15px;
+}
+.accordian-item-section-2-buttons-test{
+  display: flex;
+  align-items:center;
+  justify-content: space-between;
+}
+.leftCourseDetail-delete{
+  cursor: pointer;
+  /* border: 1px solid red; */
+
+}
+.deleteSvg{
+  fill: #f9f9f9;
+}
+.deleteSvg:hover{
+  fill:#ddd;
+}
+.leftCourseDetail-edit{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.leftCourseDetail-edit:hover{
+  background-color:#ddd;
+}
+
+
+.leftCourseDetail-addBtn {
+  background-color: var(--secondaryClr);
+  border: none;
+  display: flex;
+  width: max-content;
+  font-family: AvenirLTStd-Book;
+  border-radius: 6px;
+  color: #ffffff;
+  font-family: var(--primaryFont);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px 5px 5px;
+  cursor: pointer;
+}
+
+.leftCourseDetail-lessons-buttons{
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+
+  @media only screen and (max-width: 425px) {
+    .course-accordian-container-title {
+      font-size: 15px;
+    }
+  
+    .course-accordian-container-title-active {
+      font-size: 15px;
+    }
+
+  
   }

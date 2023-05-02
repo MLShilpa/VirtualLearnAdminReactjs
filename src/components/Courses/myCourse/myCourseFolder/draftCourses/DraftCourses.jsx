@@ -22,6 +22,7 @@ import {
 } from "@mui/material";
 import { purple } from "@mui/material/colors";
 import Loading from "../../../../../utils/loading/loading";
+import { setAccState, setAddCourseState, setCourseId } from "../../../../../redux/reducers/addCourseState";
 
 const theme = createTheme({
   palette: {
@@ -100,7 +101,7 @@ const DraftCourses = () => {
         })
 
         .then((res) => {
-          // console.log("draftdata", res.data);
+          console.log("draftdata", res.data);
           setdraftdata(res.data);
           setLoading(false);
         })
@@ -194,6 +195,8 @@ const DraftCourses = () => {
                         // alert("pressed")
                         dispatch(setCourseDetailDraft(true));
                         dispatch(setDraftCoursesPageNum(page));
+                        dispatch(setAddCourseState())
+                        dispatch(setCourseId(res?._id))
                         navigate("/DashBoard/MyCourses/CourseDetail");
                       }}
                     >

@@ -20,7 +20,7 @@ const DummyFileRight = () => {
       <div className="main-container">
         <div className="DummyFileRight-date-recentcourse">
 
-          {/* <form
+          <form
             onSubmit={(e) => {
               // uploadVideosHandler(e)
               // overViewHandler(e)
@@ -145,7 +145,7 @@ const DummyFileRight = () => {
                 </button>
               </div>
             </div>
-          </form> */}
+          </form>
 
           {/* <form onSubmit={(e) => {
             // uploadVideosHandler(e)
@@ -168,13 +168,13 @@ const DummyFileRight = () => {
           </form> */}
 
 
-          <form
+          {/* <form
             onSubmit={(e) => {
               // uploadVideosHandler(e)
               // overViewHandler(e)
             }}
           >
-            <div className="upload-container">
+            <div className="DummyFileRight-upload-containe">
               <div id="form" className="upload-formController">
                 <div className="upload-videoCategory">
                   <div>
@@ -238,7 +238,7 @@ const DummyFileRight = () => {
               </div>
 
             </div >
-          </form>
+          </form> */}
         </div >
       </div >
     </>

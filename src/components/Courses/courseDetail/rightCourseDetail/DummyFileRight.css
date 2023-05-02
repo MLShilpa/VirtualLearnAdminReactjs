@@ -6,6 +6,7 @@
     display: block;
     flex-direction: row;
     width: 100%;
+    /* width: max-content; */
     padding-top: 30px;
     padding-left: 30px;
     /* border-style: dotted; */
@@ -16,12 +17,12 @@
 }
 
 .viewerContainer {
-
     background-color: #e4e4e4;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 800px;
+    min-width:600px;
     overflow-y: auto;
     margin-bottom: 10px;
 }
@@ -44,7 +45,9 @@
     }
 }
 
-.DummyFileRight-textarea-tagline {}
+.DummyFileRight-textarea-tagline {
+    
+}
 
 .DummyFileRight-upload-videoCategory {
     display: flex;

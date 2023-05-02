@@ -3,13 +3,18 @@ import { NavLink, Outlet } from "react-router-dom";
 import DummyFileRight from "./rightCourseDetail/DummyFileRight";
 import LeftCouseDetailList from "./leftCourseDetail/LeftCouseDetailList";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { Base_Url } from "../../../utils/baseUrl";
 import { reset } from "../../../redux/reducers/overViewSlice";
+import TestDetail from "./rightCourseDetail/TestDetail";
 
 const CourseDetail = () => {
   const dispatch = useDispatch();
+  const courseState = useSelector(state => state.addCourseState.courseState)
+  const lessonState = useSelector(state => state.addCourseState.lessonState)
+  const testState = useSelector(state => state.addCourseState.testState)
+  const chapterState = useSelector(state => state.addCourseState.chapterState)
   const publishHandler = () => {
     axios(`${Base_Url}api/v1/publish_web?_id=`, {
       method: "PATCH",
@@ -81,7 +86,10 @@ const CourseDetail = () => {
             <LeftCouseDetailList />
           </div>
           <div className="courseDetail-Conatiner-Right">
-            <DummyFileRight />
+          {courseState ? <><DummyFileRight /></>:<></>}
+            {lessonState ? <><DummyFileRight /></>:<></>}
+            {chapterState ? <><DummyFileRight /></>:<></>}
+            {testState ? <><TestDetail /></>:<></>}
           </div>
         </div>
       </div>
