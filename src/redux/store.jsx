@@ -23,6 +23,7 @@ import studentListSlice from './reducers/studentlistSlice'
 import showModalSlice from './reducers/showModal'
 import MyCourseStateSlice from './reducers/MyCourseStateSlice'
 import addCourseState from './reducers/addCourseState'
+import createCourseSlice from './reducers/createCourseSlice'
 
 const reducers = combineReducers({
   showProfile: showProfileSlice.reducer,
@@ -45,11 +46,12 @@ const reducers = combineReducers({
   showModal: showModalSlice.reducer,
   myCourseStateSlice: MyCourseStateSlice.reducer,
   addCourseState: addCourseState.reducer,
+  createCourse: createCourseSlice.reducer,
 })
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['videoLink', 'lesson', 'chapter', 'showModal', 'test'],
+  blacklist: ['videoLink', 'lesson', 'chapter', 'showModal', 'test', 'createCourse'],
 }
 const persistedReducer = persistReducer(persistConfig, reducers)
 

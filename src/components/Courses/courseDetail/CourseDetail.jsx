@@ -8,6 +8,8 @@ import axios from "axios";
 import { Base_Url } from "../../../utils/baseUrl";
 import { reset } from "../../../redux/reducers/overViewSlice";
 import TestDetail from "./rightCourseDetail/TestDetail";
+import LessonDetails from "./rightCourseDetail/LessonDetails";
+import ChapterTitleRight from "./rightCourseDetail/ChapterTitleRight";
 
 const CourseDetail = () => {
   const dispatch = useDispatch();
@@ -87,8 +89,8 @@ const CourseDetail = () => {
           </div>
           <div className="courseDetail-Conatiner-Right">
           {courseState ? <><DummyFileRight /></>:<></>}
-            {lessonState ? <><DummyFileRight /></>:<></>}
-            {chapterState ? <><DummyFileRight /></>:<></>}
+            {lessonState ? <><LessonDetails/></>:<></>}
+            {chapterState ? <><ChapterTitleRight /></>:<></>}
             {testState ? <><TestDetail /></>:<></>}
           </div>
         </div>
