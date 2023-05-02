@@ -320,6 +320,7 @@ const Upload = () => {
                       dispatch(showModal(true))
                       setModalData('Category')
                       setModalUrl('admin/category')
+
                     }}
                   >
                     {addIcon}

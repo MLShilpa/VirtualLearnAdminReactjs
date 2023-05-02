@@ -144,7 +144,7 @@ const OtherTextArea = () => {
   const [diff, setDiff] = useState(overview.difficultyLevel)
   const [keyWord, setKeyWord] = useState(overview.courseKeyword)
 
-  console.log('overview', overview)
+  // console.log('overview', overview)
   return (
     <>
       <div className="upload-videoCategoryFileds">
@@ -187,17 +187,19 @@ const OtherTextArea = () => {
         {' '}
         <div className="upload-title">Course Thumbnail</div>
         <div className="DummyFileRight-textarea-tagline">
-        <input
-          type="file"
-          onChange={(e) => {
-            uploadPhoto(e)
-          }}
-          name="imageUpload"
-          accept="image/png, image/jpeg"
-          placeholder="Video Title"
-          className="upload-inputField title"
-          autoComplete="off"
-        />
+          <input
+            type="file"
+            onChange={(e) => {
+              // uploadPhoto(e)
+              setPhotoLink(e.target.files[0])
+              dispatch(storeoverViewPhoto({ imageUpload: e.target.files[0] }))
+            }}
+            name="imageUpload"
+            accept="image/png, image/jpeg"
+            placeholder="Video Title"
+            className="upload-inputField title"
+            autoComplete="off"
+          />
         </div>
       </div>
       <div>
@@ -218,8 +220,11 @@ const OtherTextArea = () => {
         {videoType === 'URL' &&
           (<input
             name="videoUpload"
+            value={videoLink}
             onChange={(e) => {
               // uploadVideoPreview(e)
+              setVideoLink(e.target.value)
+              dispatch(storeoverViewVideo({ videoUpload: e.target.value }))
             }}
             placeholder="Enter the URL"
             className="upload-inputField category"
@@ -230,7 +235,9 @@ const OtherTextArea = () => {
             type="file"
             name="videoUpload"
             onChange={(e) => {
-              uploadVideoPreview(e)
+              // uploadVideoPreview(e)
+              setVideoLink(e.target.files[0].name)
+              dispatch(storeoverViewVideo({ videoUpload: e.target.files[0].name }))
             }}
             accept="video/*"
             autoComplete="off"
