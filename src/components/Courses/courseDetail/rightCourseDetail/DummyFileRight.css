@@ -26,6 +26,7 @@
     margin-bottom: 10px;
 }
 
+
 .DummyFileRight-Save-buttonPublish {
     display: flex;
     justify-content: flex-end;
@@ -36,6 +37,77 @@
     width: 100%;
     min-width: none;
 }
+
+.upload-selectDrop {
+    padding-right: 12px;
+    padding: 8px 32px 8px 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    outline: none;
+    /* width: 129%; */
+    height: 48px;
+    margin-top: 8px;
+    background: #fdfdfd;
+    border: 1px solid #d5d4dc;
+    border-radius: 8px;
+    width: 187px;
+}
+
+.imgDropDown {
+    position: absolute;
+    top: 1.8rem;
+    right: 0.3rem;
+}
+
+.dropbtn {
+
+    /* color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer; */
+}
+
+.optionsDiv:hover,
+.optionsDiv:focus {
+    background-color: rgb(48, 157, 225);
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    display: flex;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 100px;
+    overflow: auto;
+    z-index: 1;
+    top: 3.5rem;
+}
+
+.optionsDiv {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.optionsDiv:hover {
+    background-color: blue;
+}
+
+.show {
+    display: block;
+}
+
+
 
 @media screen and (min-width: 1600px) {
     .DummyFileRight-upload-container {
