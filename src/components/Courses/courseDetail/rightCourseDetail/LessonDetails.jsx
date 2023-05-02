@@ -1,11 +1,14 @@
 import React from 'react'
 import { ToastContainer } from 'react-toastify'
-
-import Router from './components/Router/Router'
+import PdfReader from './PdfReader';
 
 const LessonDetails = () => {
     return (
-        {/* <form
+      <div className="main-container">
+      <div className="DummyFileRight-date-recentcourse">
+        <div className="DummyFileRight-upload-container">
+        LessonDetails
+      <form
             onSubmit={(e) => {
               // uploadVideosHandler(e)
               // overViewHandler(e)
@@ -73,7 +76,11 @@ const LessonDetails = () => {
               </div>
 
             </div >
-          </form> */}
+          </form>
+        </div>
+        </div>
+        </div>
+  
     );
 };
 

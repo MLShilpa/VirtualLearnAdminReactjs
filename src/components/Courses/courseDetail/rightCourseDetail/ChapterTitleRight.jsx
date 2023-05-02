@@ -1,11 +1,13 @@
 import React from 'react'
 import { ToastContainer } from 'react-toastify'
 
-import Router from './components/Router/Router'
-
 const ChapterTitleRight = () => {
     return (
-        {/* <form onSubmit={(e) => {
+
+      <div className="main-container">
+      <div className="DummyFileRight-date-recentcourse">
+        <div className="DummyFileRight-upload-container">
+        <form onSubmit={(e) => {
             // uploadVideosHandler(e)
             // overViewHandler(e)
           }}>
@@ -23,7 +25,11 @@ const ChapterTitleRight = () => {
                 </button>
               </div>
             </div>
-          </form> */}
+          </form> 
+          </div>
+          </div>
+          </div>
+
     );
 };
 

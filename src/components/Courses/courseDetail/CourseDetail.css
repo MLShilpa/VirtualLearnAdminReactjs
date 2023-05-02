@@ -67,25 +67,24 @@
 }
 
 .courseDetail-Conatiner {
-  border-style: dotted;
-  border-color: blue;
+  /* border: 1px dotted blue; */
   display: flex;
+  justify-content: space-around;
   overflow: scroll;
   height: calc(100% - 30px);
 }
 
 .courseDetail-Conatiner-Left {
-  width: 40%;
+  width: max-content;
   min-width: 412px;
-  border-color: green;
-  border-style: solid;
+  max-width: 600px;
+  /* border: 1px solid green; */
 }
 
 .courseDetail-Conatiner-Right {
   width: 60%;
   min-width: max-content;
-  /* min-width: 412px; */
-  border-style: solid;
-  border-color: red;
+  /* border: 1px solid red; */
+
   overflow: scroll;
 }

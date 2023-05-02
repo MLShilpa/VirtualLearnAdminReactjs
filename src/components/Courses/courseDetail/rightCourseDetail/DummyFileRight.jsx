@@ -274,7 +274,7 @@ const DummyFileRight = () => {
               // overViewHandler(e)
             }}
           >
-            <div className="upload-container">
+            <div className="DummyFileRight-upload-containe">
               <div id="form" className="upload-formController">
                 <div className="upload-videoCategory">
                   <div>

@@ -102,8 +102,13 @@ const SideBar = () => {
                     "Content-Type": "application/json",
                   },
                   data: {},
-                });
-                // console.log(logout)
+                })
+                .then((res)=>{
+                  return res;
+                })
+                .catch((err) => {
+                  return err;
+                })
                 sessionStorage.clear();
                 window.location.reload();
               }}
