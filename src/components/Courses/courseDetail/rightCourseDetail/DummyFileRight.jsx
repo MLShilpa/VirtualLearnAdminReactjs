@@ -145,11 +145,11 @@ const DummyFileRight = () => {
                           />
                           <div id="myDropdown" class="dropdown-content">
                             {categoryList &&
-                              categoryList.map((ele) => {
+                              categoryList.map((ele,id) => {
                                 return (
                                   <div
                                     className="QandA-option optionsDiv"
-                                    key={ele}
+                                    key={id}
                                     onClick={() => {
 
                                       dispatch(storeCategory(ele && ele._id && ele._id))

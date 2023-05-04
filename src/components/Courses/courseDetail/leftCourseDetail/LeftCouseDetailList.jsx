@@ -7,21 +7,76 @@ import {
   videoPlayActive,
 } from "../../../../assets/icons/svgIcons";
 import { chapterResponses } from "../../../../utils/Data";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { green } from "@mui/material/colors";
 import { addIcon, addIconWhite } from "../../../../utils/icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setAccState,
   setChapterState,
+  setCourseChapterData,
   setCourseState,
   setLessonState,
   setTestState,
 } from "../../../../redux/reducers/addCourseState";
+import {
+  getChaptersLesonsApi,
+  getCourseChaptersApi,
+  getParticularCourses,
+} from "../../../autherisation/auth";
+import {
+  setChapterData,
+  setLessonData,
+  setOverViewData,
+} from "../../../../redux/reducers/overViewSlice";
+import LessonDetails from "../rightCourseDetail/LessonDetails";
 
 const LeftCouseDetailList = () => {
-  const accState = useSelector(state => state.addCourseState.accState)
-  const [courseId, setCourseId] = useState(true);
+  const accState = useSelector((state) => state.addCourseState.accState);
+  const courseId = useSelector((state) => state.addCourseState.courseId);
+  // console.log("courseId",courseId)
+  useEffect(() => {
+    getChaptersListApiCall();
+  }, [courseId]);
+
+  const getChaptersListApiCall = async () => {
+    const response = await getCourseChaptersApi(courseId);
+    if (response) {
+      dispatch(setCourseChapterData(response));
+    }
+  };
+  const getCourseDetailApiCall = async () => {
+    const response = await getParticularCourses(courseId);
+    if (response) {
+      dispatch(setOverViewData(response));
+    } else {
+      dispatch(setOverViewData());
+    }
+  };
+  const getChapterDetailApiCall = (ele, id) => {
+    // const response = await getParticularCourses(chapterId);
+    // if (response) {
+    //   dispatch(setChapterData(response));
+    // }
+    const data = {
+      chapterId: ele._id,
+      chapterName: ele.chapterTitle,
+      chapterNumber: id+1,
+    };
+    dispatch(setChapterData(data))
+  };
+  const getlessonDetailApiCall = async (lessonId) => {
+    // const response = await getChaptersLesonsApi(lessonId);
+    // if (response) {
+    //   dispatch(setLessonData(response));
+    // } else {
+    //   dispatch(setLessonData());
+    // }
+    dispatch(setLessonData());
+  };
+
+  const chapterData = useSelector((state) => state.addCourseState.chapterData);
+  const [courseIdState, setCourseIdState] = useState(true);
   const dispatch = useDispatch();
   const convertMinute = (time) => {
     var arrTime = time?.split(":");
@@ -33,7 +88,7 @@ const LeftCouseDetailList = () => {
   console.log("my course");
   return (
     <div className="container-LeftCouseDetailList">
-      {courseId ? (
+      {courseIdState ? (
         <>
           <div className="courseTitle">
             <div className="courseTitle-name">
@@ -44,7 +99,7 @@ const LeftCouseDetailList = () => {
                 className="leftCourseDetail-delete"
                 onClick={(e) => {
                   e.stopPropagation();
-                   // alert("delete pressed")
+                  // alert("delete pressed")
                 }}
               >
                 {deleteWithoutFill}
@@ -53,10 +108,11 @@ const LeftCouseDetailList = () => {
                 className="leftCourseDetail-edit"
                 onClick={(e) => {
                   e.stopPropagation();
-                  dispatch(setCourseState(true))
+                  dispatch(setCourseState(true));
                   dispatch(setLessonState(false));
                   dispatch(setChapterState(false));
                   dispatch(setTestState(false));
+                  getCourseDetailApiCall();
                   // alert("edit pressed")
                 }}
               >
@@ -75,8 +131,7 @@ const LeftCouseDetailList = () => {
                     onClick={(e) => {
                       e.stopPropagation();
                       // alert("dropDown arrow presed")
-                      dispatch(setAccState(id))
-                      
+                      dispatch(setAccState(id));
                     }}
                   >
                     <div className="course-accordian-heading">
@@ -116,7 +171,8 @@ const LeftCouseDetailList = () => {
                             dispatch(setChapterState(true));
                             dispatch(setTestState(false));
                             dispatch(setLessonState(false));
-                            dispatch(setCourseState(false))
+                            dispatch(setCourseState(false));
+                            getChapterDetailApiCall(ele, id);
                             // alert("edit arrow presed")
                           }}
                         >
@@ -164,7 +220,8 @@ const LeftCouseDetailList = () => {
                                             dispatch(setLessonState(true));
                                             dispatch(setChapterState(false));
                                             dispatch(setTestState(false));
-                                            dispatch(setCourseState(false))
+                                            dispatch(setCourseState(false));
+                                            getlessonDetailApiCall(itemele._id);
                                             // alert("edit arrow presed")
                                           }}
                                         >
@@ -177,17 +234,19 @@ const LeftCouseDetailList = () => {
                               </>
                             );
                           })}
-                          <div className="leftCourseDetail-lessons-buttons"
-                           onClick={(e) => {
-                            e.stopPropagation();
-                            dispatch(setLessonState(true));
-                            dispatch(setChapterState(false));
-                            dispatch(setTestState(false));
-                            dispatch(setCourseState(false))
-                            // alert("edit arrow presed")
-                          }}
-                          >
-                            <div className="leftCourseDetail-addBtn">
+                          <div className="leftCourseDetail-lessons-buttons">
+                            <div
+                              className="leftCourseDetail-addBtn"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                dispatch(setLessonData());
+                                dispatch(setLessonState(true));
+                                dispatch(setChapterState(false));
+                                dispatch(setTestState(false));
+                                dispatch(setCourseState(false));
+                                // alert("edit arrow presed")
+                              }}
+                            >
                               <div className="myCourse-addBtn-icon">
                                 {addIconWhite}
                               </div>
@@ -195,15 +254,16 @@ const LeftCouseDetailList = () => {
                             </div>
                             {ele.test ? null : (
                               <>
-                                <div className="leftCourseDetail-addBtn" 
-                                 onClick={(e) => {
-                                  e.stopPropagation();
-                                  dispatch(setTestState(true));
-                                  dispatch(setLessonState(false));
-                                  dispatch(setChapterState(false));
-                                  dispatch(setCourseState(false))
-                                  // alert("edit arrow presed")
-                                }}
+                                <div
+                                  className="leftCourseDetail-addBtn"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    dispatch(setTestState(true));
+                                    dispatch(setLessonState(false));
+                                    dispatch(setChapterState(false));
+                                    dispatch(setCourseState(false));
+                                    // alert("edit arrow presed")
+                                  }}
                                 >
                                   <div className="myCourse-addBtn-icon">
                                     {addIconWhite}
@@ -251,7 +311,7 @@ const LeftCouseDetailList = () => {
                                           dispatch(setTestState(true));
                                           dispatch(setLessonState(false));
                                           dispatch(setChapterState(false));
-                                          dispatch(setCourseState(false))
+                                          dispatch(setCourseState(false));
                                           // alert("edit presed");
                                         }}
                                       >
@@ -271,15 +331,17 @@ const LeftCouseDetailList = () => {
               );
             })}
           </div>
-          <div className="leftCourseDetail-addBtn"
-          onClick={(e) => {
-            e.stopPropagation();
-            dispatch(setChapterState(true));
-            dispatch(setLessonState(false));
-            dispatch(setTestState(false));
-            dispatch(setCourseState(false))
-            // alert("edit arrow presed")
-          }}
+          <div
+            className="leftCourseDetail-addBtn"
+            onClick={(e) => {
+              e.stopPropagation();
+              dispatch(setChapterData());
+              dispatch(setChapterState(true));
+              dispatch(setLessonState(false));
+              dispatch(setTestState(false));
+              dispatch(setCourseState(false));
+              // alert("edit arrow presed")
+            }}
           >
             <div className="myCourse-addBtn-icon">{addIconWhite}</div>
             Add Chapter
@@ -289,15 +351,17 @@ const LeftCouseDetailList = () => {
         <>
           <div className="courseTitleSection-empty">
             <div className="courseTitle-empty">Course Title</div>
-            <div className="leftCourseDetail-addBtn"
-            onClick={(e) => {
-              e.stopPropagation();
-              dispatch(setCourseState(true))
-              dispatch(setLessonState(false));
-              dispatch(setChapterState(false));
-              dispatch(setTestState(false));
-              // alert("edit arrow presed")
-            }}
+            <div
+              className="leftCourseDetail-addBtn"
+              onClick={(e) => {
+                e.stopPropagation();
+                dispatch(setCourseState(true));
+                dispatch(setLessonState(false));
+                dispatch(setChapterState(false));
+                dispatch(setTestState(false));
+                dispatch(setOverViewData());
+                // alert("edit arrow presed")
+              }}
             >
               <div className="myCourse-addBtn-icon">{addIconWhite}</div>
               Add Course
