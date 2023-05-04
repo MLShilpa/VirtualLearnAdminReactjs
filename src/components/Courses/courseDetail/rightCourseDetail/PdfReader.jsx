@@ -6,58 +6,87 @@ import { Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+import { useDispatch, useSelector } from 'react-redux'
+import { SelectedFile } from "../../../../redux/reducers/createCourseSlice"
 
 const PdfReader = () => {
-    // creating new plugin instance
-    const defaultLayoutPluginInstance = defaultLayoutPlugin();
-    // pdf file onChange state
-    const [pdfFile, setPdfFile] = useState(null);
-    // pdf file error state
-    const [pdfError, setPdfError] = useState('');
-    // handle file onChange event
-    const allowedFiles = ['application/pdf'];
-    const handleFile = (e) => {
-        let selectedFile = e.target.files[0];
-        // console.log(selectedFile.type);
-        if (selectedFile) {
-            if (selectedFile && allowedFiles.includes(selectedFile.type)) {
-                let reader = new FileReader();
-                reader.readAsDataURL(selectedFile);
-                reader.onloadend = (e) => {
-                    setPdfError('');
-                    setPdfFile(e.target.result);
-                }
-            }
-            else {
-                setPdfError('Not a valid pdf: Please select only PDF');
-                setPdfFile('');
-            }
+    const selectedOption = useSelector((state) => state.createCourse.lessonType)
+    const selectedFile = useSelector((state) => state.createCourse.selectedFile)
+    const dispatch = useDispatch();
+
+    const handleFile = (event) => {
+        const fileType = event.target.files[0].type;
+        // only allow the selected file type for each option
+        if (
+            (selectedOption === 'pdf' && fileType === 'application/pdf') ||
+            (selectedOption === 'ppt' && fileType === 'application/vnd.ms-powerpoint') ||
+            (selectedOption === 'video' && fileType.startsWith('video/'))
+        ) {
+            dispatch(SelectedFile(event.target.files[0]));
+        } else {
+            alert(`Please select a ${selectedOption.toUpperCase()} file.`);
         }
-        else {
-            console.log('please select a PDF');
-        }
-    }
+    };
 
     return (
-        <div className="PDFcontainer">
-            <label className='upload-title'>Upload PDF</label>
-            <br></br>
-            <input type='file' className="form-control"
-                onChange={handleFile}></input>
-            {pdfError && <span className='text-danger'>{pdfError}</span>}
+        <>
+            {(() => {
+                switch (selectedOption) {
+                    case 'PDF':
+                        return (
+                            <div className="PDFcontainer">
+                                <label className='upload-title'>Upload PDF</label>
+                                <br></br>
 
-            <div className='upload-title'>View PDF</div>
-            <div className="viewerContainer">
-                {pdfFile && (
-                    <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.13.216/build/pdf.worker.min.js">
-                        {console.log(pdfFile)}
-                        <Viewer fileUrl={pdfFile}
-                            plugins={[defaultLayoutPluginInstance]}></Viewer>
-                    </Worker>
-                )}
-                {!pdfFile && <>No file is selected yet</>}
-            </div>
-        </div>
+                                <input type="file" accept=".pdf" className="form-control" onChange={handleFile} />
+                            </div>
+                        )
+                    case 'PPT':
+                        return (
+
+                            <div className="PDFcontainer">
+                                <label className='upload-title'>Upload PPT</label>
+                                <br></br>
+                                <input type="file" accept=".ppt,.pptx" className="form-control" onChange={handleFile} />
+                            </div>
+                        )
+                    case 'Video':
+                        return (
+                            <div className="PDFcontainer">
+                                <label className='upload-title'>Upload Video</label>
+                                <br></br>
+                                <input type="file" accept="video/*" className="form-control" onChange={handleFile} />
+                            </div>
+                        )
+                    case 'PDF URL':
+                        return (
+                            <div className="PDFcontainer">
+                                <label className='upload-title'>Enter PDF URL</label>
+                                <br></br>
+                                <input className="form-control" id='pdfUrl'></input>
+                            </div>
+                        )
+                    case 'Video URL':
+                        return (
+                            <div className="PDFcontainer">
+                                <label className='upload-title'>Enter video URL</label>
+                                <br></br>
+                                <input className="form-control" id='videoUrl'></input>
+                            </div>
+                        )
+                    case 'Weblink':
+                        return (
+                            <div className="PDFcontainer">
+                                <label className='upload-title'>Enter Weblink</label>
+                                <br></br>
+                                <input className="form-control" id='weblink'></input>
+                            </div>
+                        )
+                    default:
+                        return null
+                }
+            })()}
+        </>
     );
 };
 

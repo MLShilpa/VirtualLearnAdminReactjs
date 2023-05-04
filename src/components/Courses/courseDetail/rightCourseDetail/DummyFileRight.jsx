@@ -21,6 +21,43 @@ import {
   storeTagline,
 } from '../../../../redux/reducers/overViewSlice'
 
+// const formData = new FormData();
+// formData.append(
+//   "twitterLink",
+//   values.TwitterURL ? values.TwitterURL : "empty"
+// );
+// formData.append(
+//   "faceBookLink",
+//   values.FacebookURL ? values.FacebookURL : "empty"
+// );
+// formData.append("occupation", values.editPOccupation);
+// formData.append("gender", values.gender);
+// formData.append(
+//   "dateOfBirth",
+//   values.editPDOB ? values.editPDOB : "empty"
+// );
+// if (selectedFile == null) {
+//   // console.log("No image been uploaded");
+// } else {
+//   formData.append("profilePhoto", selectedFile);
+// }
+
+// const formData = {
+//   courseName: e.target.videoTitle.value,
+//   categoryName: e.target.videoCategory.value,
+//   subCategoryName: e.target.videoSubCategory.value,
+//   courseTagLine: e.target.tagline.value,
+
+//   description:
+//     description && description.description && description.description,
+//   learningOutCome: e.target.courseOutcome.value,
+//   requirements: e.target.requirements.value,
+
+//   difficultyLevel: e.target.difficultyLevel.value,
+//   courseKeyword: e.target.courseKeyWord.value,
+//   coursePhoto: overViewDataToBeUploaded.coursePhoto,
+//   previewVideo: overViewDataToBeUploaded.previewVideo,
+// }
 
 function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
@@ -240,7 +277,7 @@ const DummyFileRight = () => {
               </div>
 
               <div className="DummyFileRight-Save-buttonPublish">
-                <button type="submit" className="QandA-Button" id="save" onClick={() => { console.log("SFsfsdg") }}>
+                <button type="submit" className="QandA-Button" id="save" onClick={() => { }}>
                   Save
                 </button>
               </div>
