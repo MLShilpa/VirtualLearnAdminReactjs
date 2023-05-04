@@ -1,18 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    courseState:false,
+  courseState:false,
   testState: false,
   lessonState: false,
   chapterState: false,
-  courseId: "",
   accState:0,
+  courseId:"",
+  courseChapterData:"",
 };
 
 export const addCourseState = createSlice({
   name: "addCourseState",
   initialState,
   reducers: {
+    setCourseChapterData: (state, action) => {
+      state.courseChapterData = action.payload;
+    },
     setCourseState: (state, action) => {
         state.courseState = action.payload;
       },
@@ -41,6 +45,6 @@ export const addCourseState = createSlice({
   },
 });
 
-export const {setCourseState, setCourseId,setLessonState,setTestState,setChapterState , setAccState, setAddCourseState} = addCourseState.actions;
+export const {setCourseChapterData,setCourseState, setCourseId,setLessonState,setTestState,setChapterState , setAccState, setAddCourseState} = addCourseState.actions;
 
 export default addCourseState;

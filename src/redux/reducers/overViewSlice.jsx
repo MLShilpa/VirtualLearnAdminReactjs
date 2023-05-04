@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  data:"",
+  overViewData:"",
+chapterData:"",
+lessonData:"",
   categoryName: '',
   subCategoryName: '',
   courseTagLine: '',
@@ -19,6 +21,16 @@ export const overViewDataSlice = createSlice({
   name: 'overViewData',
   initialState,
   reducers: {
+    setOverViewData: (state, action) => {
+      state.overViewData = action.payload;
+    },
+    setChapterData: (state, action) => {
+      state.chapterData = action.payload;
+      // console.log("chapterData",state.chapterData)
+    },
+    setLessonData: (state, action) => {
+      state.lessonData = action.payload;
+    },
     storeoverViewData: (state, action) => {
       console.log('overViewDataSlice', action.payload)
       state.categoryName = action.payload.videoCategory
@@ -70,6 +82,9 @@ export const overViewDataSlice = createSlice({
 })
 
 export const {
+  setOverViewData,
+  setChapterData,
+  setLessonData,
   storeoverViewData,
   storeoverViewVideo,
   storeoverViewPhoto,

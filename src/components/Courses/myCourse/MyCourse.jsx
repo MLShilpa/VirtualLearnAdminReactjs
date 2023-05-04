@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import {
   setAccState,
   setAddCourseState,
+  setCourseId,
 } from "../../../redux/reducers/addCourseState";
 const MyCourse = () => {
   const navigate = useNavigate();
@@ -56,7 +57,8 @@ const MyCourse = () => {
             className="myCourse-addBtn"
             to="CourseDetail"
             onClick={() => {
-              dispatch(setAddCourseState());
+                        dispatch(setAddCourseState())
+                        dispatch(setCourseId())
               console.log("pressed");
             }}
           >
