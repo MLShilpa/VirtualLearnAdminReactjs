@@ -6,7 +6,7 @@
   height: calc(100% - 30px);
   /* overflow: auto; */
   padding: 34px;
-  border-radius: 10px;
+  border-radius: 25px;
   z-index: -2;
   min-width: max-content;
 }

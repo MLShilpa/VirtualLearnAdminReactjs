@@ -81,7 +81,7 @@ const ChangePassword = () => {
         .catch((err) => {
           if (
             (err && err.response && err.response.status && err.response.status) ===
-            400
+            400 || 403
           ) {
             toast.warning('Incorrect Password', {
               position: 'bottom-center',
