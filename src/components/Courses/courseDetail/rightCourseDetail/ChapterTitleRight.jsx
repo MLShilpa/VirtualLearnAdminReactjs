@@ -61,7 +61,7 @@ const ChapterTitleRight = () => {
                         submitChapter(e)
                     }}>
                         <div className="DummyFileRight-upload-container">
-                            <div className='upload-videoTitleee'>
+                            <div className='upload-videoTitleee ' style={{minWidth:"400px"}}>
                                 <input
                                     type="text"
                                     placeholder="Chapter Title"

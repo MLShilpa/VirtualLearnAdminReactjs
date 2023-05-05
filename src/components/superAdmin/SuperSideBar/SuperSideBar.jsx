@@ -4,7 +4,7 @@ import React from 'react'
 
 const SuperSideBar = () => {
   const location = useLocation()
-  console.log('djfb ', location.pathname)
+  // console.log('djfb ', location.pathname)
   return (
     <div>
       <div className="sideBarContainer">

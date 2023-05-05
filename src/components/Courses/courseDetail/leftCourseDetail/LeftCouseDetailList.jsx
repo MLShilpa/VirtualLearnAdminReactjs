@@ -30,6 +30,23 @@ import {
   setOverViewData,
 } from "../../../../redux/reducers/overViewSlice";
 import LessonDetails from "../rightCourseDetail/LessonDetails";
+import { resetTestData } from "../../../../redux/reducers/testSlice";
+import { SortableItem } from "./SortableItem";
+import Container from "react-bootstrap/Container";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  KeyboardSensor,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
 const LeftCouseDetailList = () => {
   const accState = useSelector((state) => state.addCourseState.accState);
@@ -54,16 +71,16 @@ const LeftCouseDetailList = () => {
     }
   };
   const getChapterDetailApiCall = (ele, id) => {
-    // const response = await getParticularCourses(chapterId);
+    // const response = await getParticularCourses(ele._id);
     // if (response) {
     //   dispatch(setChapterData(response));
     // }
     const data = {
       chapterId: ele._id,
       chapterName: ele.chapterTitle,
-      chapterNumber: id+1,
+      chapterNumber: id + 1,
     };
-    dispatch(setChapterData(data))
+    dispatch(setChapterData(data));
   };
   const getlessonDetailApiCall = async (lessonId) => {
     // const response = await getChaptersLesonsApi(lessonId);
@@ -85,7 +102,39 @@ const LeftCouseDetailList = () => {
     var res = a + "." + b;
     return <span>{res} mins</span>;
   };
-  console.log("my course");
+  // console.log("my course");
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+  const [languages, setLanguages] = useState(
+    chapterResponses?.data?.chapterResponses
+  );
+  function handleDragEnd(event) {
+    // console.log("Drag end called");
+    const { active, over } = event;
+    console.log("ACTIVE: " + active.id);
+    console.log("OVER :" + over.id);
+
+    if (active.id !== over.id) {
+      setLanguages((items) => {
+        console.log("items", items);
+        const oldIndex = items.findIndex((item) => item._id === active.id);
+        const newIndex = items.findIndex((item) => item._id === over.id);
+        console.log("oldIndex: " + oldIndex);
+        console.log("newIndex :" + newIndex);
+        // console.log(arrayMove(items, activeIndex, overIndex));
+        // return arrayMove(items, activeIndex, overIndex);
+        console.log(arrayMove(items, oldIndex, newIndex));
+        return arrayMove(items, oldIndex, newIndex);
+
+        // items: [2, 3, 1]   0  -> 2
+        // [1, 2, 3] oldIndex: 0 newIndex: 2  -> [2, 3, 1]
+      });
+    }
+  }
   return (
     <div className="container-LeftCouseDetailList">
       {courseIdState ? (
@@ -122,214 +171,37 @@ const LeftCouseDetailList = () => {
           </div>
 
           <div className="course-sections">
-            {chapterResponses?.data?.chapterResponses.map((ele, id) => {
-              return (
-                <>
-                  <div
-                    key={id}
-                    className="course-accordian"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      // alert("dropDown arrow presed")
-                      dispatch(setAccState(id));
-                    }}
-                  >
-                    <div className="course-accordian-heading">
-                      <div className="course-accordian-container">
-                        <span className="course-accordian-container-title">
-                          Chapter {id + 1} - {ele.chapterTitle}{" "}
-                        </span>
-                        {accState === id ? (
-                          <>
-                            {/* <p className="course-accordian-container-state">
-                              ^
-                            </p> */}
-                          </>
-                        ) : (
-                          <>
-                            <img
-                              src={require("../../../../assets/DropdownArrow.png")}
-                              className="course-accordian-container-state"
-                            />
-                          </>
-                        )}
-                      </div>
-                      <div className="accordian-item-section-2-buttons">
-                        <div
-                          className="leftCourseDetail-delete"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            // alert("delete arrow presed")
-                          }}
-                        >
-                          {deleteWithoutFill}
-                        </div>
-                        <div
-                          className="leftCourseDetail-edit"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            dispatch(setChapterState(true));
-                            dispatch(setTestState(false));
-                            dispatch(setLessonState(false));
-                            dispatch(setCourseState(false));
-                            getChapterDetailApiCall(ele, id);
-                            // alert("edit arrow presed")
-                          }}
-                        >
-                          <i class="fa-solid fa-pen-to-square fa-lg"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className={
-                        (accState === id ? "accordian-show" : "") +
-                        "course-accordian-content"
-                      }
-                    >
-                      <div className="course-accordian-container-body">
-                        <div className="accordian-items">
-                          {ele.lessonResponses.map((itemele, id2) => {
-                            return (
-                              <>
-                                <div className="accordian-item" key={id2}>
-                                  {/* <div className="accordian-item-icon">
-                                    {inactiveIcon("green")}
-                                  </div> */}
-                                  <div className="accordian-item-section-2">
-                                    <span className="accordian-item-chapter-number">
-                                      {id2 + 1 <= 10 ? `0${id2 + 1}` : id2}
-                                    </span>
-                                    <div className="accordian-item-section-2-para">
-                                      <span className="accordian-item-chapter-title">
-                                        {itemele.title}
-                                      </span>
-                                      <div className="accordian-item-section-2-buttons">
-                                        <div
-                                          className="leftCourseDetail-delete"
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            // alert("delete arrow presed")
-                                          }}
-                                        >
-                                          {deleteWithoutFill}
-                                        </div>
-                                        <div
-                                          className="leftCourseDetail-edit"
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            dispatch(setLessonState(true));
-                                            dispatch(setChapterState(false));
-                                            dispatch(setTestState(false));
-                                            dispatch(setCourseState(false));
-                                            getlessonDetailApiCall(itemele._id);
-                                            // alert("edit arrow presed")
-                                          }}
-                                        >
-                                          <i class="fa-solid fa-pen-to-square fa-lg"></i>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </>
-                            );
-                          })}
-                          <div className="leftCourseDetail-lessons-buttons">
-                            <div
-                              className="leftCourseDetail-addBtn"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                dispatch(setLessonData());
-                                dispatch(setLessonState(true));
-                                dispatch(setChapterState(false));
-                                dispatch(setTestState(false));
-                                dispatch(setCourseState(false));
-                                // alert("edit arrow presed")
-                              }}
-                            >
-                              <div className="myCourse-addBtn-icon">
-                                {addIconWhite}
-                              </div>
-                              Add Lesson
-                            </div>
-                            {ele.test ? null : (
-                              <>
-                                <div
-                                  className="leftCourseDetail-addBtn"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    dispatch(setTestState(true));
-                                    dispatch(setLessonState(false));
-                                    dispatch(setChapterState(false));
-                                    dispatch(setCourseState(false));
-                                    // alert("edit arrow presed")
-                                  }}
-                                >
-                                  <div className="myCourse-addBtn-icon">
-                                    {addIconWhite}
-                                  </div>
-                                  Add Test
-                                </div>
-                              </>
-                            )}
-                          </div>
-
-                          {ele.test && ele.test.testId && (
-                            <div className="accordian-item-test">
-                              <div
-                                className="accordian-item-section-2-test"
-                                onClick={() => {}}
-                              >
-                                <div className="accordian-item-chapter-number">
-                                  {testImage}
-                                </div>
-
-                                <div className="accordian-item-section-2-para-test">
-                                  <span className="accordian-item-chapter-title">
-                                    {ele.test.testTitle} bcju biew biweu iqb bci
-                                    bciqa kquwB
-                                  </span>
-
-                                  <div className="accordian-item-section-2-buttons-test">
-                                    <span className="accordian-item-chapter-duration">
-                                      {ele.test.totalQuestions} questions
-                                    </span>
-                                    <div className="accordian-item-section-2-buttons">
-                                      <div
-                                        className="leftCourseDetail-delete"
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          // alert("delete  presed");
-                                        }}
-                                      >
-                                        {deleteWithoutFill}
-                                      </div>
-                                      <div
-                                        className="leftCourseDetail-edit"
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          dispatch(setTestState(true));
-                                          dispatch(setLessonState(false));
-                                          dispatch(setChapterState(false));
-                                          dispatch(setCourseState(false));
-                                          // alert("edit presed");
-                                        }}
-                                      >
-                                        <i class="fa-solid fa-pen-to-square fa-lg"></i>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </>
-              );
-            })}
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={
+                // e.stopPropagation()
+                handleDragEnd
+              }
+            >
+              <Container
+                className="p-3"
+                // style={{ width: "50%" }}
+                align="center"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                <SortableContext
+                  items={languages.map((item) => item._id)}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {languages.map((ele, id) => (
+                    <SortableItem
+                      key={ele._id}
+                      id={ele._id}
+                      items={ele}
+                      id1={id}
+                    />
+                  ))}
+                </SortableContext>
+              </Container>
+            </DndContext>
           </div>
           <div
             className="leftCourseDetail-addBtn"

@@ -16,7 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* gap: 10px; */
+  /* gap: 50%; */
   /* cursor: pointer; */
   background-color: #ffffff;
 
@@ -69,22 +69,28 @@
 .courseDetail-Conatiner {
   /* border: 1px dotted blue; */
   display: flex;
-  justify-content: space-around;
+  align-items: flex-start;
+  /* justify-content:inherit; */
   overflow: scroll;
   height: calc(100% - 30px);
 }
 
 .courseDetail-Conatiner-Left {
   width: max-content;
-  min-width: 412px;
+  min-width: 450px;
   max-width: 600px;
+  /* max-width: 40%; */
   /* border: 1px solid green; */
+  height: calc(100% - 30px)
 }
 
 .courseDetail-Conatiner-Right {
-  width: 60%;
+  /* width: 60%; */
+  /* min-width: 450px; */
+  width: 100%;
   min-width: max-content;
-  /* border: 1px solid red; */
-
+  height: calc(100% - 30px);
   overflow: scroll;
+    /* border: 1px solid red; */
 }
+

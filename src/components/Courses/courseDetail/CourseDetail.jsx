@@ -87,12 +87,26 @@ const CourseDetail = () => {
           <div className="courseDetail-Conatiner-Left">
             <LeftCouseDetailList />
           </div>
-          <div className="courseDetail-Conatiner-Right">
-          {courseState ? <><DummyFileRight /></>:<></>}
-            {lessonState ? <><LessonDetails/></>:<></>}
-            {chapterState ? <><ChapterTitleRight /></>:<></>}
-            {testState ? <><TestDetail /></>:<></>}
-          </div>
+          {courseState &&
+            <div className="courseDetail-Conatiner-Right">
+            <DummyFileRight />
+            </div>
+          }
+          {lessonState &&
+            <div className="courseDetail-Conatiner-Right">
+            <LessonDetails/>
+            </div>
+          }
+          {chapterState &&
+            <div className="courseDetail-Conatiner-Right">
+            <ChapterTitleRight />
+            </div>
+          }
+          {testState &&
+            <div className="courseDetail-Conatiner-Right">
+            <TestDetail />
+            </div>
+          }
         </div>
       </div>
     </div>
