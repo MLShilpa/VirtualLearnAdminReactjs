@@ -1,0 +1,203 @@
+.TestDetail-formController{
+    margin-left: 20px;
+    /* border: 1px solid red; */
+    /* width: max-content; */
+}
+
+.TestDetail-accord-item-container:not(:last-of-type) {
+  background-color: rgb(234, 234, 234);
+  border-radius: 15px;
+  padding: 10px 25px 10px 10px;
+  margin-top: 0.5rem;
+  /* border: 1px solid blue; */
+}
+.TestDetail-QuestionContainer {
+  font-family: var(--primaryFont);
+  /* border: 1px solid red; */
+}
+.TestDetail-QuestionNo {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.4px;
+  color: #989898;
+}
+.TestDetail-containItem {
+  display: flex;
+  justify-content: space-between;
+}
+.TestDetail-head {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 0.2px;
+    color: #2b2b2b;
+    width: 80%;
+  }
+.TestDetail-inputText {
+  font-family: var(--primaryFont);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+  color: #2b2b2b;
+  padding: 5px 17px;
+  width: 103%;
+  margin-top: 8px;
+  background: #fdfdfd;
+  border: 1px solid #d5d4dc;
+  border-radius: 5px;
+  outline: none;
+  height: max-content;
+}
+.TestDetail-question-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+    width: 100%;
+  }
+  
+.TestDetail-options {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  border: 1px solid #0000002e;
+  border-radius: 3px;
+  background: #fdfdfd;
+  /* border: 1px solid red; */
+  width:100%;
+}
+
+input.TestDetail-question-options {
+  font-family: var(--primaryFont);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  width: 80%;
+  color: #2b2b2b;
+  padding: 5px 10px;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.TestDetail-addNewContainer {
+    display: flex;
+    justify-content: flex-start;
+    padding-bottom: 1rem;
+    margin-top: 1rem;
+  }
+  button.TestDetail-addNewBtn {
+    font-family: var(--primaryFont);
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background: rgba(9, 41, 99, 0.11);
+    border-radius: 4px;
+    padding: 10px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 30px;
+    color: #092963;
+  }
+
+  .TestDetail-buttonSave {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 3rem;
+  }
+  button.TestDetail-Button {
+    border: none;
+    background: #ee5c4d;
+    border-radius: 6px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 35px;
+    color: #ffffff;
+    cursor: pointer;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 6px 61px;
+  }
+  button.TestDetail-button {
+    background: transparent;
+    border: none;
+    outline: none;
+    padding-right: 10px;
+  }
+  
+
+
+
+
+
+.QandA-chapterName {
+  font-family: var(--primaryFont);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.4px;
+  color: #232323;
+}
+
+.QnAChapter {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.QandA-rightSide {
+  font-family: var(--primaryFont);
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+}
+
+
+
+
+
+@media only screen and (max-width: 500px) {
+  .QandA-body {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+@media only screen and (max-width: 940px) {
+    .TestDetail-accord-item-container {
+      max-width:550px
+    }
+  }
+@media only screen and (max-width: 855px) {
+  .TestDetail-question-container {
+    display: grid;
+    grid-template-columns: auto;
+    grid-row-gap: 0.5rem;
+
+  }
+  .TestDetail-accord-item-container {
+    max-width:none;
+    max-height: min-content;
+    /* border: 1px solid red; */
+    padding: none;
+  }
+  .TestDetail-options {
+    padding: 0.5rem;
+  }
+}

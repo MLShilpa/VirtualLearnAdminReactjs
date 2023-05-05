@@ -1,30 +1,46 @@
-import './ToggleSwitch.css'
-import { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { correctAns } from '../../../redux/reducers/testSlice'
+import "./ToggleSwitch.css";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { correctAns, setOption1State, setOption2State, setOption3State, setOption4State } from "../../../redux/reducers/testSlice";
 
 const ToggleSwitch = (props) => {
-  const [isToggled, setIsToggled] = useState(false)
-  console.log('props', props)
-  const dispatch = useDispatch()
+  const [isToggled, setIsToggled] = useState(false);
+  // console.log('props', props)
+  const dispatch = useDispatch();
 
   const onToggle = () => {
-    setIsToggled(!isToggled)
+    if(props.value){
+      if (props.label === "option_1") {
+        dispatch(setOption1State({ index: props.index, optionState: true }));
+        dispatch(correctAns({ index: props.index, label: props.label }));
+      } else if (props.label === "option_2") {
+        dispatch(setOption2State({ index: props.index, optionState: true }));
+        dispatch(correctAns({ index: props.index, label: props.label }));
+      } else if (props.label === "option_3") {
+        dispatch(setOption3State({ index: props.index, optionState: true }));
+        dispatch(correctAns({ index: props.index, label: props.label }));
+      } else if (props.label === "option_4") {
+        dispatch(setOption4State({ index: props.index, optionState: true }));
+        dispatch(correctAns({ index: props.index, label: props.label }));
+      }
+    } else {
 
-    dispatch(correctAns({ index: props.index, label: props.label }))
-  }
+    }
+   
+    // setIsToggled(!isToggled)
+  };
 
   return (
     <label className="toggle-switch">
       <input
         type="checkbox"
-        checked={isToggled}
+        checked={props.toggleState}
         onChange={onToggle}
         label={props.label}
       />
       <span className="switch" />
     </label>
-  )
-}
+  );
+};
 
-export default ToggleSwitch
+export default ToggleSwitch;
