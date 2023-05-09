@@ -137,7 +137,7 @@ const LeftCouseDetailList = () => {
   }
   return (
     <div className="container-LeftCouseDetailList">
-      {courseIdState ? (
+      {courseId ? (
         <>
           <div className="courseTitle">
             <div className="courseTitle-name">

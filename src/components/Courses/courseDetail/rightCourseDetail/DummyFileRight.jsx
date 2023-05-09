@@ -21,6 +21,7 @@ import {
   storeTagline,
 } from '../../../../redux/reducers/overViewSlice'
 
+
 // const formData = new FormData();
 // formData.append(
 //   "twitterLink",
@@ -80,19 +81,56 @@ const DummyFileRight = () => {
 
   const [category, setCategory] = useState('Choose Category')
   const [categoryList, setCategoryList] = useState()
+  const [subCategoryList, setSubCategoryList] = useState()
   const overview = useSelector((state) => state.overViewData)
 
   const [title, setTitle] = useState(overview.courseName)
-  const [vCategory, setvCategory] = useState(overview.categoryName)
-  const [vSubCategory, setvSubCategory] = useState('backend')
+  const [vCategory, setvCategory] = useState('Choose Category')
+  const [vSubCategory, setvSubCategory] = useState('Choose subCategory')
   const [taglinee, setTaglinee] = useState(overview.courseTagLine)
 
   const dispatch = useDispatch();
 
-  const categoryId = useSelector(
-    (state) => state.createCourse.categoryId,
-  )
-  console.log(categoryId)
+  const categoryId = useSelector((state) => state.overViewData?.categoryId)
+  const description = useSelector((state) => state.overViewData?.description)
+  const learningOutCome = useSelector((state) => state.overViewData?.learningOutCome)
+  const requirements = useSelector((state) => state.overViewData?.requirements)
+  const coursePhoto = useSelector((state) => state.overViewData?.coursePhoto)
+  const previewVideo = useSelector((state) => state.overViewData?.previewVideo)
+  const difficultyLevel = useSelector((state) => state.overViewData?.difficultyLevel)
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log("save")
+
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('category', vCategory);
+    formData.append('subCategory', vSubCategory);
+    formData.append('tagline', taglinee);
+    formData.append('image', coursePhoto);
+    formData.append('description', description);
+    formData.append('image', previewVideo);
+    formData.append('requirements', requirements);
+    // formData.append('keywords', event.target.image.files[0]);
+    formData.append('outcome', learningOutCome);
+    formData.append('difficulty', difficultyLevel);
+
+    try {
+      const response = await axios.post(`${Base_Url}/api/v1/create_course`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        }
+
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
 
   useEffect(() => {
     axios
@@ -105,7 +143,7 @@ const DummyFileRight = () => {
         },
       )
       .then((res) => {
-        console.log(res.data)
+        // console.log(res.data)
         setCategoryList(res.data)
       })
       .catch((err) => {
@@ -114,30 +152,36 @@ const DummyFileRight = () => {
       })
   }, [])
 
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       `${Base_Url}/api/v1/subcategory_list?id=${}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-  //         },
-  //       },
-  //     )
-  //     .then((res) => {
-  //       console.log(res.data)
-  //       setCategoryList(res.data)
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //       // alert('Some error occured')
-  //     })
-  // }, [])
+  useEffect(() => {
+    axios
+      .get(
+        `${Base_Url}/api/v1/subcategory_list`,
+        {
+          method: 'get',
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          },
+          params: {
+            id: `${categoryId}`
+          },
+        },
+      )
+      .then((res) => {
+        // console.log(res.data)
+        setSubCategoryList(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+        // alert('Some error occured')
+      })
+  })
+
 
   return (
     <>
       <div className="main-container">
         <div className="DummyFileRight-date-recentcourse">
+
 
           <form
             onSubmit={(e) => {
@@ -174,7 +218,7 @@ const DummyFileRight = () => {
 
                       <div className="upload-videoTitle">
                         <div class="dropdown">
-                          <div onClick={() => { myFunction() }} className="dropbtn upload-selectDrop">{category}</div>
+                          <div onClick={() => { myFunction() }} className="dropbtn upload-selectDrop">{vCategory}</div>
                           <img
                             src={require("../../../../assets/DropdownArrow.png")}
                             alt=""
@@ -182,7 +226,8 @@ const DummyFileRight = () => {
                           />
                           <div id="myDropdown" class="dropdown-content">
                             {categoryList &&
-                              categoryList.map((ele,id) => {
+                              categoryList.map((ele, id) => {
+
                                 return (
                                   <div
                                     className="QandA-option optionsDiv"
@@ -215,20 +260,28 @@ const DummyFileRight = () => {
                           className="upload-select"
                           value={vSubCategory}
                           onChange={(e) => {
-
+                            setvSubCategory(e.target.value)
                           }}
                         >
                           <option>Select your option</option>
-                          <option
-                            // value={cat.subCategoryName}
-                            className="QandA-option"
-                            onClick={() => {
+                          {subCategoryList &&
+                            subCategoryList?.categories?.subCategory?.map((ele, id) => {
 
-
-                            }}
-                          >
-
-                          </option>
+                              return (
+                                <option
+                                  value={ele}
+                                  className="QandA-option"
+                                  key={id}
+                                  onClick={() => {
+                                    //  dispatch(storeCategory(ele && ele._id && ele._id))
+                                    // setvSubCategory(ele && ele)
+                                    // console.log(vSubCategory);
+                                  }}
+                                >
+                                  {ele && ele}
+                                </option>
+                              );
+                            })}
 
                         </select>
 
@@ -277,7 +330,7 @@ const DummyFileRight = () => {
               </div>
 
               <div className="DummyFileRight-Save-buttonPublish">
-                <button type="submit" className="QandA-Button" id="save" onClick={() => { }}>
+                <button type="submit" className="QandA-Button" id="save" onClick={(e) => { handleSubmit(e) }}>
                   Save
                 </button>
               </div>

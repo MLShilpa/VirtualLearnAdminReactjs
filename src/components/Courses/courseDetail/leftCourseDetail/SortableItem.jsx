@@ -24,6 +24,8 @@ import {
 } from "@dnd-kit/sortable";
 import SortableItemLesson from "./SortableItemLesson";
 import { getParticularCourses } from "../../../autherisation/auth";
+import { resetTestData } from "../../../../redux/reducers/testSlice";
+
 export const SortableItem = (props) => {
   const {
     attributes,
@@ -98,7 +100,7 @@ export const SortableItem = (props) => {
           {...attributes}
           {...listeners}
           ref={setNodeRef}
-          style={style} 
+          style={style}
         >
           <svg viewBox="0 0 20 20" width="12" className="drag">
             <path d="M7 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 14zm6-8a2 2 0 1 0-.001-4.001A2 2 0 0 0 13 6zm0 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 14z"></path>
@@ -106,13 +108,13 @@ export const SortableItem = (props) => {
         </button>
         <div
           //   ref={setNodeRef} 
-          style={style} {...attributes} 
+          style={style} {...attributes}
           key={props.id1}
           className="course-accordian"
           onClick={(e) => {
             e.stopPropagation();
             // alert("dropDown arrow presed")
-              dispatch(setAccState(props.id1))
+            dispatch(setAccState(props.id1))
           }}
         >
           <div className="course-accordian-heading">
@@ -129,9 +131,9 @@ export const SortableItem = (props) => {
               ) : (
                 <>
                   <img
-                              src={require("../../../../assets/DropdownArrow.png")}
-                              className="course-accordian-container-state"
-                            />
+                    src={require("../../../../assets/DropdownArrow.png")}
+                    className="course-accordian-container-state"
+                  />
                 </>
               )}
             </div>
@@ -170,36 +172,36 @@ export const SortableItem = (props) => {
             <div className="course-accordian-container-body">
               <div className="accordian-items">
 
-                     <DndContext
-              sensors={sensors}
-              collisionDetection={closestCenter}
-              onDragEnd={
-                handleDragEndLesson
-              }
-            >
-              <Container
-                className="p-3"
-                // style={{ width: "50%" }}
-                align="center"
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              >
-                <SortableContext
-                  items={lessons.map((item) => item._id)}
-                  strategy={verticalListSortingStrategy}
+                <DndContext
+                  sensors={sensors}
+                  collisionDetection={closestCenter}
+                  onDragEnd={
+                    handleDragEndLesson
+                  }
                 >
-                  {lessons.map((ele, id) => (
-                    <SortableItemLesson
-                      key={ele._id}
-                      id={ele._id}
-                      items={ele}
-                      id2={id}
-                    />
-                  ))}
-                </SortableContext>
-              </Container>
-            </DndContext>
+                  <Container
+                    className="p-3"
+                    // style={{ width: "50%" }}
+                    align="center"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <SortableContext
+                      items={lessons.map((item) => item._id)}
+                      strategy={verticalListSortingStrategy}
+                    >
+                      {lessons.map((ele, id) => (
+                        <SortableItemLesson
+                          key={ele._id}
+                          id={ele._id}
+                          items={ele}
+                          id2={id}
+                        />
+                      ))}
+                    </SortableContext>
+                  </Container>
+                </DndContext>
                 <div
                   className="leftCourseDetail-lessons-buttons"
                   onClick={(e) => {
@@ -224,10 +226,11 @@ export const SortableItem = (props) => {
                         className="leftCourseDetail-addBtn"
                         onClick={(e) => {
                           e.stopPropagation();
-                            dispatch(setTestState(true));
-                            dispatch(setLessonState(false));
-                            dispatch(setChapterState(false));
-                            dispatch(setCourseState(false))
+                          dispatch(resetTestData());
+                          dispatch(setTestState(true));
+                          dispatch(setLessonState(false));
+                          dispatch(setChapterState(false));
+                          dispatch(setCourseState(false))
                           // alert("edit arrow presed")
                         }}
                       >
@@ -244,7 +247,7 @@ export const SortableItem = (props) => {
                   <div className="accordian-item-test">
                     <div
                       className="accordian-item-section-2-test"
-                      onClick={() => {}}
+                      onClick={() => { }}
                     >
                       <div className="accordian-item-chapter-number">
                         {testImage}
@@ -274,10 +277,10 @@ export const SortableItem = (props) => {
                               className="leftCourseDetail-edit"
                               onClick={(e) => {
                                 e.stopPropagation();
-                                  dispatch(setTestState(true));
-                                  dispatch(setLessonState(false));
-                                  dispatch(setChapterState(false));
-                                  dispatch(setCourseState(false))
+                                dispatch(setTestState(true));
+                                dispatch(setLessonState(false));
+                                dispatch(setChapterState(false));
+                                dispatch(setCourseState(false))
                                 // alert("edit presed");
                               }}
                             >
@@ -294,6 +297,6 @@ export const SortableItem = (props) => {
           </div>
         </div>
       </>
-     </div>
+    </div>
   );
 }
