@@ -17,7 +17,7 @@
     align-items: center;
     justify-content: space-between;
     background-color: #f9f9f9;
-    border: 1px solid black;
+    /* border: 1px solid black; */
   }
   .courseTitle-empty{
     font-family:  var(--primaryFont);
@@ -39,15 +39,18 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    margin-left:auto;
-    /* border: 1px solid red; */
+    /* align-items: flex-end ;
+    justify-content: flex-end; */
+    /* margin-left:auto; */
+    /* border: 1px solid black; */
   }
   .course-accordian {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
     /* border: 1px solid blue; */
-    max-width: 450px;
+    /* max-width: 450px; */
+    width: 100%;
 }
 
 .course-accordian-heading {
@@ -110,13 +113,15 @@
   align-items: flex-end;
   width: 370px;
   margin-left: auto;
+  /* border: 1px solid red */
 
 }
 .accordian-item {
   display: flex;
   align-items: center;
   margin-bottom: 15px;
-  width: 370px;
+  width: 100%;
+  /* border: 1px solid black */
 }
 .accordian-item-test {
   display: flex;
@@ -138,6 +143,7 @@
   justify-content: space-between;
   padding: 5px 10px 5px 15px;
   font-family: var(--primaryFont);
+  /* border: 1px solid black */
 }
 .accordian-item-section-2-para{
   display: flex;
@@ -253,6 +259,8 @@
 
 .Sortable-container{
   display: flex;
+  flex-direction: row;
+  /* border: 1px solid red; */
 }
 .DragHandle {
   display: flex;
@@ -270,6 +278,7 @@
   /* appearance: none; */
   /* background-color: transparent; */
   -webkit-tap-highlight-color: transparent;
+  /* border: 1px solid blue; */
 }
 .DragHandle svg{
     flex: 0 0 auto;
