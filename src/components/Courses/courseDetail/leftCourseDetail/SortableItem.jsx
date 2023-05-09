@@ -25,10 +25,6 @@ import {
 import SortableItemLesson from "./SortableItemLesson";
 import { getParticularCourses } from "../../../autherisation/auth";
 import { resetTestData } from "../../../../redux/reducers/testSlice";
-<<<<<<< HEAD
-
-=======
->>>>>>> 230e8fbbfc6170d4cb6e50828bc5f955d0b2aa0f
 export const SortableItem = (props) => {
   const {
     attributes,
@@ -174,7 +170,6 @@ export const SortableItem = (props) => {
             <div className="course-accordian-container-body">
               <div className="accordian-items">
 
-<<<<<<< HEAD
                 <DndContext
                   sensors={sensors}
                   collisionDetection={closestCenter}
@@ -205,38 +200,6 @@ export const SortableItem = (props) => {
                     </SortableContext>
                   </Container>
                 </DndContext>
-=======
-              <DndContext
-              sensors={sensors}
-              collisionDetection={closestCenter}
-              onDragEnd={
-                handleDragEndLesson
-              }
-            >
-              <Container
-                // className="p-3"
-                style={{ marginRight: "0px", paddingRight: "0px" }}
-                align="center"
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              >
-                <SortableContext
-                  items={lessons?.map((item) => item._id)}
-                  strategy={verticalListSortingStrategy}
-                >
-                  {lessons?.map((ele, id) => (
-                    <SortableItemLesson
-                      key={ele._id}
-                      id={ele._id}
-                      items={ele}
-                      id2={id}
-                    />
-                  ))}
-                </SortableContext>
-              </Container>
-            </DndContext>
->>>>>>> 230e8fbbfc6170d4cb6e50828bc5f955d0b2aa0f
                 <div
                   className="leftCourseDetail-lessons-buttons"
                   onClick={(e) => {
@@ -261,19 +224,11 @@ export const SortableItem = (props) => {
                         className="leftCourseDetail-addBtn"
                         onClick={(e) => {
                           e.stopPropagation();
-<<<<<<< HEAD
                           dispatch(resetTestData());
                           dispatch(setTestState(true));
                           dispatch(setLessonState(false));
                           dispatch(setChapterState(false));
                           dispatch(setCourseState(false))
-=======
-                           dispatch(resetTestData())
-                            dispatch(setTestState(true));
-                            dispatch(setLessonState(false));
-                            dispatch(setChapterState(false));
-                            dispatch(setCourseState(false))
->>>>>>> 230e8fbbfc6170d4cb6e50828bc5f955d0b2aa0f
                           // alert("edit arrow presed")
                         }}
                       >
