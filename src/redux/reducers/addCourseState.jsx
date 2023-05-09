@@ -8,6 +8,7 @@ const initialState = {
   accState:0,
   courseId:"",
   courseChapterData:"",
+  overViewData:"",
 };
 
 export const addCourseState = createSlice({
@@ -16,6 +17,9 @@ export const addCourseState = createSlice({
   reducers: {
     setCourseChapterData: (state, action) => {
       state.courseChapterData = action.payload;
+    },
+    setOverViewDataADC: (state, action) => {
+      state.overViewData = action.payload;
     },
     setCourseState: (state, action) => {
         state.courseState = action.payload;
@@ -42,9 +46,13 @@ export const addCourseState = createSlice({
         state.lessonState = false;
         state.accState = 0;
     },
+    setCourseChaptersAndOverviewDataNull: (state) =>{
+      state.overViewData = "";
+      state.courseChapterData = "";
+  },
   },
 });
 
-export const {setCourseChapterData,setCourseState, setCourseId,setLessonState,setTestState,setChapterState , setAccState, setAddCourseState} = addCourseState.actions;
+export const {setCourseChapterData,setOverViewDataADC,setCourseState, setCourseId,setLessonState,setTestState,setChapterState , setAccState, setAddCourseState,setCourseChaptersAndOverviewDataNull} = addCourseState.actions;
 
 export default addCourseState;

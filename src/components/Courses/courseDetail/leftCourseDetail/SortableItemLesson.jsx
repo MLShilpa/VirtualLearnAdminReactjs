@@ -72,7 +72,7 @@ const SortableItemLesson = (props) => {
           </span>
           <div className="accordian-item-section-2-para">
             <span className="accordian-item-chapter-title">
-              {props.items.title}
+              {props.items?.lessonName}
             </span>
             <div className="accordian-item-section-2-buttons">
               <div

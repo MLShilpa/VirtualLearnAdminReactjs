@@ -16,10 +16,10 @@ export const chapterResponses = {
         {
           chapterNumber: 1,
           numberOfLessons: 2,
-          chapterTitle: "Introduction to Course",
+          chapterName: "Introduction to Course",
           chapterCompletedStatus:true,
           chapterId:"638d6c7fa572c21b9fe07fac",
-          lessonResponses: [
+          lesson: [
             {
               lessonStatus:false,
             lessonCompletedStatus:true,
@@ -46,10 +46,10 @@ export const chapterResponses = {
         {
           chapterNumber: 2,
           numberOfLessons: 3,
-          chapterTitle: "Chapter number 2",
+          chapterName: "Chapter number 2",
           chapterCompletedStatus:true,
           chapterId:"638d6c7fa572c21b9fe07faf",
-          lessonResponses: [
+          lesson: [
             {
               lessonStatus:false,
               lessonCompletedStatus:true,
@@ -96,10 +96,10 @@ export const chapterResponses = {
         {
           chapterNumber: 3,
           numberOfLessons: 2,
-          chapterTitle: "Chapter number 3",
+          chapterName: "Chapter number 3",
           chapterCompletedStatus:false,
           chapterId:"638d6c7fa572c21b9fe07fb3",
-          lessonResponses: [
+          lesson: [
             {
               lessonStatus:false,
               lessonCompletedStatus:false,
@@ -126,10 +126,10 @@ export const chapterResponses = {
         {
           chapterNumber: 4,
           numberOfLessons: 3,
-          chapterTitle: "Chapter number 4",
+          chapterName: "Chapter number 4",
           chapterCompletedStatus:false,
           chapterId:"638d6c7fa572c21b9fe07fb6",
-          lessonResponses: [
+          lesson: [
             {
               lessonStatus:false,
               lessonCompletedStatus:false,

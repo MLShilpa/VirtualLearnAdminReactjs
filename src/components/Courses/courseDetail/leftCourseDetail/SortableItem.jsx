@@ -24,6 +24,7 @@ import {
 } from "@dnd-kit/sortable";
 import SortableItemLesson from "./SortableItemLesson";
 import { getParticularCourses } from "../../../autherisation/auth";
+import { resetTestData } from "../../../../redux/reducers/testSlice";
 export const SortableItem = (props) => {
   const {
     attributes,
@@ -43,7 +44,6 @@ export const SortableItem = (props) => {
   const accState = useSelector((state) => state.addCourseState.accState);
   const courseId = useSelector((state) => state.addCourseState.courseId);
 
-
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -51,7 +51,7 @@ export const SortableItem = (props) => {
     })
   );
   const [lessons, setLessons] = useState(
-    props.items.lessonResponses
+    props.items.lesson
   );
   function handleDragEndLesson(event) {
     // console.log("Drag end called");
@@ -84,7 +84,7 @@ export const SortableItem = (props) => {
     // }
     const data = {
       chapterId: ele._id,
-      chapterName: ele.chapterTitle,
+      chapterName: ele.chapterName,
       chapterNumber: id + 1,
     };
     dispatch(setChapterData(data));
@@ -118,7 +118,7 @@ export const SortableItem = (props) => {
           <div className="course-accordian-heading">
             <div className="course-accordian-container">
               <span className="course-accordian-container-title">
-                Chapter {props.id1 + 1} - {props.items.chapterTitle}{" "}
+                Chapter {props.id1 + 1} - {props.items.chapterName}{" "}
               </span>
               {accState === props.id1 ? (
                 <>
@@ -154,7 +154,7 @@ export const SortableItem = (props) => {
                   dispatch(setLessonState(false));
                   dispatch(setCourseState(false));
                   getChapterDetailApiCall(props.items, props.id1);
-                  // alert("edit arrow presed")
+                  // alert("edit presed")
                 }}
               >
                 <i class="fa-solid fa-pen-to-square fa-lg"></i>
@@ -170,7 +170,7 @@ export const SortableItem = (props) => {
             <div className="course-accordian-container-body">
               <div className="accordian-items">
 
-                     <DndContext
+              <DndContext
               sensors={sensors}
               collisionDetection={closestCenter}
               onDragEnd={
@@ -178,18 +178,18 @@ export const SortableItem = (props) => {
               }
             >
               <Container
-                className="p-3"
-                // style={{ width: "50%" }}
+                // className="p-3"
+                style={{ marginRight: "0px", paddingRight: "0px" }}
                 align="center"
                 onClick={(e) => {
                   e.stopPropagation();
                 }}
               >
                 <SortableContext
-                  items={lessons.map((item) => item._id)}
+                  items={lessons?.map((item) => item._id)}
                   strategy={verticalListSortingStrategy}
                 >
-                  {lessons.map((ele, id) => (
+                  {lessons?.map((ele, id) => (
                     <SortableItemLesson
                       key={ele._id}
                       id={ele._id}
@@ -224,6 +224,7 @@ export const SortableItem = (props) => {
                         className="leftCourseDetail-addBtn"
                         onClick={(e) => {
                           e.stopPropagation();
+                           dispatch(resetTestData())
                             dispatch(setTestState(true));
                             dispatch(setLessonState(false));
                             dispatch(setChapterState(false));
@@ -240,7 +241,7 @@ export const SortableItem = (props) => {
                   )}
                 </div>
 
-                {props.items.test && props.items.test.testId && (
+                {props.items?.Questions && props.items?.Questions.length>0 && (
                   <div className="accordian-item-test">
                     <div
                       className="accordian-item-section-2-test"
@@ -252,13 +253,13 @@ export const SortableItem = (props) => {
 
                       <div className="accordian-item-section-2-para-test">
                         <span className="accordian-item-chapter-title">
-                          {props.items.test.testTitle} bcju biew biweu iqb bci
+                          {props.items?.Questions?.testTitle} bcju biew biweu iqb bci
                           bciqa kquwB
                         </span>
 
                         <div className="accordian-item-section-2-buttons-test">
                           <span className="accordian-item-chapter-duration">
-                            {props.items.test.totalQuestions} questions
+                            {props.items?.Questions?.totalQuestions} questions
                           </span>
                           <div className="accordian-item-section-2-buttons">
                             <div
