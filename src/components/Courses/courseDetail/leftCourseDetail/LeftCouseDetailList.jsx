@@ -17,6 +17,7 @@ import {
   setCourseChapterData,
   setCourseState,
   setLessonState,
+  setOverViewDataADC,
   setTestState,
 } from "../../../../redux/reducers/addCourseState";
 import {
@@ -51,7 +52,13 @@ import {
 const LeftCouseDetailList = () => {
   const accState = useSelector((state) => state.addCourseState.accState);
   const courseId = useSelector((state) => state.addCourseState.courseId);
-  // console.log("courseId",courseId)
+  const courseChapterData = useSelector(
+    (state) => state.addCourseState.courseChapterData
+  );
+  const overViewData = useSelector(
+    (state) => state.addCourseState.overViewData
+  );
+  console.log("courseChapterData", courseChapterData);
   useEffect(() => {
     getChaptersListApiCall();
   }, [courseId]);
@@ -59,7 +66,12 @@ const LeftCouseDetailList = () => {
   const getChaptersListApiCall = async () => {
     const response = await getCourseChaptersApi(courseId);
     if (response) {
-      dispatch(setCourseChapterData(response));
+      if (response && response.overview) {
+        dispatch(setOverViewDataADC(response.overview));
+      }
+      if (response && response.courseChapters) {
+        dispatch(setCourseChapterData(response.courseChapters));
+      }
     }
   };
   const getCourseDetailApiCall = async () => {
@@ -109,9 +121,13 @@ const LeftCouseDetailList = () => {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
-  const [languages, setLanguages] = useState(
-    chapterResponses?.data?.chapterResponses
-  );
+  // const [chapters, setChapters] = useState(
+  //   chapterResponses?.data?.chapterResponses
+  // );
+  const [chapters, setChapters] = useState(courseChapterData);
+  useEffect(()=>{
+    setChapters(courseChapterData)
+  },[courseChapterData])
   function handleDragEnd(event) {
     // console.log("Drag end called");
     const { active, over } = event;
@@ -119,7 +135,7 @@ const LeftCouseDetailList = () => {
     console.log("OVER :" + over.id);
 
     if (active.id !== over.id) {
-      setLanguages((items) => {
+      setChapters((items) => {
         console.log("items", items);
         const oldIndex = items.findIndex((item) => item._id === active.id);
         const newIndex = items.findIndex((item) => item._id === over.id);
@@ -140,9 +156,7 @@ const LeftCouseDetailList = () => {
       {courseId ? (
         <>
           <div className="courseTitle">
-            <div className="courseTitle-name">
-              {chapterResponses?.data?.courseName}
-            </div>
+            <div className="courseTitle-name">{overViewData?.title}</div>
             <div className="accordian-item-section-2-buttons">
               <div
                 className="leftCourseDetail-delete"
@@ -169,40 +183,46 @@ const LeftCouseDetailList = () => {
               </div>
             </div>
           </div>
-
-          <div className="course-sections">
-            <DndContext
-              sensors={sensors}
-              collisionDetection={closestCenter}
-              onDragEnd={
-                // e.stopPropagation()
-                handleDragEnd
-              }
-            >
-              <Container
-                className="p-3"
-                // style={{ width: "50%" }}
-                align="center"
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
+          {courseChapterData && courseChapterData.length > 0 && (
+            <div className="course-sections">
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={
+                  // e.stopPropagation()
+                  handleDragEnd
+                }
               >
-                <SortableContext
-                  items={languages.map((item) => item._id)}
-                  strategy={verticalListSortingStrategy}
+                <Container
+                  // className="p-3"
+                  // style={{ width: "50%" }}
+                  style={{ marginRight: "0px", paddingRight: "0px" }}
+                  // align="center"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
                 >
-                  {languages.map((ele, id) => (
-                    <SortableItem
-                      key={ele._id}
-                      id={ele._id}
-                      items={ele}
-                      id1={id}
-                    />
-                  ))}
-                </SortableContext>
-              </Container>
-            </DndContext>
-          </div>
+                  {chapters && chapters.length>0 && 
+                                    <SortableContext
+                                    items={chapters?.map((item) => item._id)}
+                                    strategy={verticalListSortingStrategy}
+                                  >
+                                    {chapters?.map((ele, id) => (
+                                      <SortableItem
+                                        key={ele._id}
+                                        id={ele._id}
+                                        items={ele}
+                                        id1={id}
+                                      />
+                                    ))}
+                                  </SortableContext>
+                  }
+
+                </Container>
+              </DndContext>
+            </div>
+          )}
+
           <div
             className="leftCourseDetail-addBtn"
             onClick={(e) => {

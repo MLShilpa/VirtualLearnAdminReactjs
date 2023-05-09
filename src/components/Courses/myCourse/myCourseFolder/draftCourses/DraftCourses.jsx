@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import { purple } from "@mui/material/colors";
 import Loading from "../../../../../utils/loading/loading";
-import { setAccState, setAddCourseState, setCourseId } from "../../../../../redux/reducers/addCourseState";
+import { setAccState, setAddCourseState, setCourseChaptersAndOverviewDataNull, setCourseId } from "../../../../../redux/reducers/addCourseState";
 
 const theme = createTheme({
   palette: {
@@ -77,7 +77,7 @@ const DraftCourses = () => {
       // console.log("courseDetailDraftState",courseDetailDraftState)
       axios
         .get(
-          `${Base_Url}/api/v1/get_draft_courses?page=${currentPageNum}&limit=10`,
+          `${Base_Url}/api/v1/get_draft_courses?page=${currentPageNum}&limit=5`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -94,7 +94,7 @@ const DraftCourses = () => {
         });
     } else {
       axios
-        .get(`${Base_Url}/api/v1/get_draft_courses?page=${page}&limit=10`, {
+        .get(`${Base_Url}/api/v1/get_draft_courses?page=${page}&limit=5`, {
           headers: {
             Authorization: `Bearer ${sessionStorage.getItem("token")}`,
           },
@@ -138,7 +138,7 @@ const DraftCourses = () => {
         setLoading(true);
         axios
           .get(
-            `${Base_Url}/api/v1/get_draft_courses?page=${currentPage}&limit=10`,
+            `${Base_Url}/api/v1/get_draft_courses?page=${currentPage}&limit=5`,
             {
               headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -197,6 +197,7 @@ const DraftCourses = () => {
                         dispatch(setDraftCoursesPageNum(page));
                         dispatch(setAddCourseState())
                         dispatch(setCourseId(res?._id))
+                        dispatch(setCourseChaptersAndOverviewDataNull())
                         navigate("/DashBoard/MyCourses/CourseDetail");
                       }}
                     >
