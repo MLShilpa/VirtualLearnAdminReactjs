@@ -30,6 +30,7 @@
     "otp-input-react": "^0.3.0",
     "pdfjs-dist": "^2.13.216",
     "popper.js": "^1.16.1",
+    "puppeteer": "^20.1.1",
     "react": "^18.2.0",
     "react-accessible-accordion": "^5.0.0",
     "react-bootstrap": "^2.7.4",

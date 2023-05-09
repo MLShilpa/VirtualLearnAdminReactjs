@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  overViewData:"",
-chapterData:"",
-lessonData:"",
-  categoryName: '',
+  overViewData: "",
+  chapterData: "",
+  lessonData: "",
+  categoryId: '',
   subCategoryName: '',
   courseTagLine: '',
   courseName: '',
@@ -50,7 +50,7 @@ export const overViewDataSlice = createSlice({
       state.coursePhoto = action.payload.imageUpload
     },
     storeCategory: (state, action) => {
-      state.categoryName = action.payload
+      state.categoryId = action.payload
     },
     storeSubCategory: (state, action) => {
       state.subCategoryName = action.payload

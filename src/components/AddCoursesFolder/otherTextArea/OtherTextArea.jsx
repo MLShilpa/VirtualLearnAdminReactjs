@@ -24,6 +24,14 @@ const OtherTextArea = () => {
 
   const dispatch = useDispatch()
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      setRequire(require + '\n• ');
+    }
+  };
+
+
   //cloudinary upload
   function uploadVideoPreview(e) {
     setLoading(true)
@@ -178,7 +186,9 @@ const OtherTextArea = () => {
                 dispatch(storerequirements(e.target.value))
                 setRequire(e.target.value)
               }}
+            // onKeyDown={handleKeyDown}
             ></textarea>
+
           </div>
         </div>
       </div>
