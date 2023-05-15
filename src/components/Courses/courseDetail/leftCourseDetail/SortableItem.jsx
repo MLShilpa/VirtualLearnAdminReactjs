@@ -3,9 +3,10 @@ import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteWithoutFill, testImage } from "../../../../assets/icons/svgIcons";
-import { setAccState, setChapterState, setCourseState, setLessonState, setTestState } from "../../../../redux/reducers/addCourseState";
+import { setAccState, setChapterState, setCourseChapterData, setCourseId, setCourseState, setLessonState, setOverViewDataADC, setTestState } from "../../../../redux/reducers/addCourseState";
 import { setChapterData, setLessonData } from "../../../../redux/reducers/overViewSlice";
 import { addIconWhite } from "../../../../utils/icons";
+import axios from 'axios'
 // import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import {
@@ -23,8 +24,10 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import SortableItemLesson from "./SortableItemLesson";
-import { getParticularCourses } from "../../../autherisation/auth";
+import { getParticularCourses, getChapterName, getCourseChaptersApi } from "../../../autherisation/auth";
 import { resetTestData } from "../../../../redux/reducers/testSlice";
+import { Base_Url } from "../../../../utils/baseUrl";
+
 export const SortableItem = (props) => {
   const {
     attributes,
@@ -43,6 +46,7 @@ export const SortableItem = (props) => {
   const dispatch = useDispatch();
   const accState = useSelector((state) => state.addCourseState.accState);
   const courseId = useSelector((state) => state.addCourseState.courseId);
+  const chapterData = useSelector((state) => state.overViewData.chapterData)
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -77,17 +81,63 @@ export const SortableItem = (props) => {
     }
   }
 
+  // const getChapterDetailApiCall = async (ele, id) => {
+  //   const response = await getParticularCourses(ele._id);
+  //   // if (response) {
+  //   //   dispatch(setChapterData(response));
+  //   // }
+  //   const data = {
+  //     chapterId: ele._id,
+  //     chapterName: ele.chapterName,
+  //     chapterNumber: id + 1,
+  //   };
+  //   dispatch(setChapterData(data));
+  // };
+
+  const getChaptersListApiCall = async () => {
+    const response = await getCourseChaptersApi(courseId);
+    if (response) {
+      if (response && response.overview) {
+        dispatch(setOverViewDataADC(response.overview));
+      }
+      if (response && response.courseChapters) {
+        dispatch(setCourseChapterData(response.courseChapters));
+      }
+    }
+  };
+
+
   const getChapterDetailApiCall = async (ele, id) => {
-    const response = await getParticularCourses(ele._id);
-    // if (response) {
-    //   dispatch(setChapterData(response));
-    // }
-    const data = {
-      chapterId: ele._id,
-      chapterName: ele.chapterName,
-      chapterNumber: id + 1,
-    };
-    dispatch(setChapterData(data));
+    const response = await getChapterName(ele._id);
+    if (response) {
+      dispatch(setChapterData(response));
+    }
+  };
+
+  const deleteChapter = async (ele, id) => {
+    axios
+      .request(
+        `${Base_Url}/api/v1/delete_chapter`,
+        {
+          method: 'delete',
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          },
+          params: {
+            _id: `${ele._id}`
+          },
+        },
+      )
+      .then((res) => {
+        console.log(res.data)
+        getChaptersListApiCall();
+        dispatch(setChapterData(null))
+        dispatch(setChapterState(false))
+      })
+      .catch((err) => {
+        console.log(err)
+        // alert('Some error occured')
+      })
   };
 
   return (
@@ -140,6 +190,9 @@ export const SortableItem = (props) => {
                 className="leftCourseDetail-delete"
                 onClick={(e) => {
                   e.stopPropagation();
+                  // getChapterDetailApiCall(props.items, props.id1);
+                  deleteChapter(props.items, props.id1);
+
                   // alert("delete arrow presed")
                 }}
               >

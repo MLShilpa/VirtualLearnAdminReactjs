@@ -17,7 +17,7 @@ export const getParticularCourses = async (id) => {
       options,
     );
     if (response.data) {
-      console.log("courseDeatil",response.data)
+      console.log("courseDeatil", response.data)
       return response.data;
     }
   } catch (error) {
@@ -26,44 +26,89 @@ export const getParticularCourses = async (id) => {
 };
 
 export const getCourseChaptersApi = async (id) => {
-    const options = {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        'Content-Type': 'application/json',
-      },
-    };
-  
-    try {
-      const response = await axios.get(
-        `${Base_Url}/api/v1/get_course_chapters?courseId=${id}`,
-        options,
-      );
-      if (response.data) {
-        return response.data;
-      }
-    } catch (error) {
-      console.log('overView data', error.response.data);
-    }
+  const options = {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      'Content-Type': 'application/json',
+    },
   };
 
-  export const getChaptersLesonsApi = async (id) => {
-    const options = {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        'Content-Type': 'application/json',
-      },
-    };
-  
-    try {
-      const response = await axios.get(
-        `${Base_Url}/api/v1/get_course_chapters_lessons?lessonId=${id}`,
-        options,
-      );
-      if (response.data) {
-        return response.data;
-      }
-    } catch (error) {
-      console.log('overView data', error.response.data);
+  try {
+    const response = await axios.get(
+      `${Base_Url}/api/v1/get_course_chapters?courseId=${id}`,
+      options,
+    );
+    if (response.data) {
+      return response.data;
     }
+  } catch (error) {
+    console.log('overView data', error.response.data);
+  }
+};
+
+export const getChaptersLesonsApi = async (id) => {
+  const options = {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      'Content-Type': 'application/json',
+    },
   };
 
+  try {
+    const response = await axios.get(
+      `${Base_Url}/api/v1/get_course_chapters_lessons?lessonId=${id}`,
+      options,
+    );
+    if (response.data) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log('overView data', error.response.data);
+  }
+};
+
+
+export const getChapterName = async (id) => {
+  const options = {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      'Content-Type': 'application/json',
+    },
+  };
+
+  try {
+    const response = await axios.get(
+      `${Base_Url}/api/v1/get_chapter_name?chapterId=${id}`,
+      options,
+    );
+    if (response.data) {
+      // console.log(response.data)
+      return response.data;
+    }
+  } catch (error) {
+    console.log('overView data', error.response.data);
+  }
+};
+
+
+export const getCourseOverview = async (id) => {
+  const options = {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      'Content-Type': 'application/json',
+    },
+  };
+
+  try {
+    const response = await axios.get(
+      `${Base_Url}/api/v1/get_course_overview?courseId=${id}`,
+      options,
+    );
+    if (response.data) {
+      console.log(response.data)
+      return response.data;
+    }
+  } catch (error) {
+    console.log('overView data', error.response.data);
+  }
+};
