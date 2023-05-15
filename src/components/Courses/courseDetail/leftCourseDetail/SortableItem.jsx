@@ -178,18 +178,18 @@ export const SortableItem = (props) => {
                   }
                 >
                   <Container
-                    className="p-3"
-                    // style={{ width: "50%" }}
+                    // className="p-3"
+                    style={{ marginRight: "0px", paddingRight: "0px" }}
                     align="center"
                     onClick={(e) => {
                       e.stopPropagation();
                     }}
                   >
                     <SortableContext
-                      items={lessons.map((item) => item._id)}
+                      items={lessons?.map((item) => item._id)}
                       strategy={verticalListSortingStrategy}
                     >
-                      {lessons.map((ele, id) => (
+                      {lessons?.map((ele, id) => (
                         <SortableItemLesson
                           key={ele._id}
                           id={ele._id}
@@ -224,7 +224,7 @@ export const SortableItem = (props) => {
                         className="leftCourseDetail-addBtn"
                         onClick={(e) => {
                           e.stopPropagation();
-                          dispatch(resetTestData());
+                          dispatch(resetTestData())
                           dispatch(setTestState(true));
                           dispatch(setLessonState(false));
                           dispatch(setChapterState(false));
@@ -241,7 +241,7 @@ export const SortableItem = (props) => {
                   )}
                 </div>
 
-                {props.items?.Questions && props.items?.Questions.length>0 && (
+                {props.items?.Questions && props.items?.Questions.length > 0 && (
                   <div className="accordian-item-test">
                     <div
                       className="accordian-item-section-2-test"

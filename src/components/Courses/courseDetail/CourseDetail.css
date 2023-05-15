@@ -6,7 +6,7 @@
   height: calc(100% - 30px);
   /* overflow: auto; */
   padding: 34px;
-  border-radius: 25px;
+  border-top-left-radius: 25px;
   z-index: -2;
   min-width: max-content;
 }
@@ -16,7 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* gap: 50%; */
+  /* gap: 10px; */
   /* cursor: pointer; */
   background-color: #ffffff;
 
@@ -69,28 +69,22 @@
 .courseDetail-Conatiner {
   /* border: 1px dotted blue; */
   display: flex;
-  align-items: flex-start;
-  /* justify-content:inherit; */
+  justify-content: space-around;
   overflow: scroll;
   height: calc(100% - 30px);
 }
 
 .courseDetail-Conatiner-Left {
   width: max-content;
-  min-width: 450px;
+  min-width: 412px;
   max-width: 600px;
-  /* max-width: 40%; */
   /* border: 1px solid green; */
-  height: calc(100% - 30px)
 }
 
 .courseDetail-Conatiner-Right {
-  /* width: 60%; */
-  /* min-width: 450px; */
-  width: 100%;
+  width: 60%;
   min-width: max-content;
-  height: calc(100% - 30px);
-  overflow: scroll;
-    /* border: 1px solid red; */
-}
+  /* border: 1px solid red; */
 
+  overflow: scroll;
+}

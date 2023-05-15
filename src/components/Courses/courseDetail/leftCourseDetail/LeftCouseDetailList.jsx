@@ -125,9 +125,9 @@ const LeftCouseDetailList = () => {
   //   chapterResponses?.data?.chapterResponses
   // );
   const [chapters, setChapters] = useState(courseChapterData);
-  useEffect(()=>{
+  useEffect(() => {
     setChapters(courseChapterData)
-  },[courseChapterData])
+  }, [courseChapterData])
   function handleDragEnd(event) {
     // console.log("Drag end called");
     const { active, over } = event;
@@ -202,20 +202,20 @@ const LeftCouseDetailList = () => {
                     e.stopPropagation();
                   }}
                 >
-                  {chapters && chapters.length>0 && 
-                                    <SortableContext
-                                    items={chapters?.map((item) => item._id)}
-                                    strategy={verticalListSortingStrategy}
-                                  >
-                                    {chapters?.map((ele, id) => (
-                                      <SortableItem
-                                        key={ele._id}
-                                        id={ele._id}
-                                        items={ele}
-                                        id1={id}
-                                      />
-                                    ))}
-                                  </SortableContext>
+                  {chapters && chapters.length > 0 &&
+                    <SortableContext
+                      items={chapters?.map((item) => item._id)}
+                      strategy={verticalListSortingStrategy}
+                    >
+                      {chapters?.map((ele, id) => (
+                        <SortableItem
+                          key={ele._id}
+                          id={ele._id}
+                          items={ele}
+                          id1={id}
+                        />
+                      ))}
+                    </SortableContext>
                   }
 
                 </Container>

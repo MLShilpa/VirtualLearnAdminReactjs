@@ -82,7 +82,6 @@ const LessonDetails = () => {
                     </div>
                   </div>
 
-
                   {selectedOption === 'PDF' && (
                     <div className="PDFcontainer">
                       <label className='upload-title'>Upload PDF</label>
