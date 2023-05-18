@@ -21,6 +21,7 @@ import {
   storeTagline,
 } from '../../../../redux/reducers/overViewSlice'
 import Loading from '../../../../utils/loading/loading'
+import { setCourseId, setCourseState } from '../../../../redux/reducers/addCourseState';
 
 
 // const formData = new FormData();
@@ -155,10 +156,16 @@ const DummyFileRight = () => {
           },
         }
       )
+<<<<<<< HEAD
       console.log(fetchedData);
       // courseDispatch();
       // setFetchedCourseId()
       dispatch(setCourseId(fetchedData?.data?.courseId?._id))
+=======
+      // console.log("fetchedData",fetchedData?.data?.courseId?._id);
+      dispatch(setCourseId(fetchedData?.data?.courseId?._id))
+      dispatch(setCourseState(false));
+>>>>>>> 4b977aee906d634d9be558173746b95c8250e47c
       return fetchedData;
     } catch (err) {
       let error = err

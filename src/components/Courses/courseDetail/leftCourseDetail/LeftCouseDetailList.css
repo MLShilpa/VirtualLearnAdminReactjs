@@ -49,12 +49,13 @@
     flex-direction: column;
     margin-bottom: 10px;
     /* border: 1px solid blue; */
+    cursor: auto;
     /* max-width: 450px; */
     width: 100%;
 }
 
 .course-accordian-heading {
-    /* cursor: pointer; */
+    cursor: pointer;
     /* height: 50px; */
     padding: 7px 10px 0 10px;
     align-items: center;
