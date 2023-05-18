@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   storeoverViewVideo,
@@ -14,13 +14,31 @@ import Loading from '../../../utils/loading/loading'
 import './OtherTextArea.css'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-const OtherTextArea = () => {
+import ReactPlayer from "react-player";
+
+const OtherTextArea = (props) => {
   const [cloudinaryVideo, setcloudinaryVideo] = useState('')
+  const [photoLink, setPhotoLink] = useState('')
+  // const [videoLink, setVideoLink] = useState('')
+  const [previewVideo, setPreviewVideo] = useState('')
+  const [message, setMessage] = useState('')
+  const [progressValue, setProgressValue] = useState(0)
+  const [imageUrl, setImageUrl] = useState('')
+  const [src, setSrc] = useState('')
+
   const [loading, setLoading] = useState(false)
   const [loadingMessage, setLoadingMessage] = useState('')
-  const [photoLink, setPhotoLink] = useState('')
-  const [videoLink, setVideoLink] = useState('')
-  const [videoType, setVideoType] = useState('Select your option')
+  // overViewData?.overview?.courseVideo != null ? setVideoType('URL') : setVideoType('Select your option')
+
+  const overViewData = useSelector((state) => state.overViewData.overViewData)
+  useEffect(() => {
+
+    overViewData?.overview?.courseVideo && props.setVideoType('URL')
+  }, [overViewData])
+
+  // const [videoUrl, setVideoUrl] = useState()
+
+
 
   const dispatch = useDispatch()
 
@@ -33,126 +51,98 @@ const OtherTextArea = () => {
 
 
   //cloudinary upload
-  function uploadVideoPreview(e) {
+  const uploadVideoPreview = (e) => {
     setLoading(true)
-    setLoadingMessage('Preview video is being uploaded to cloud...')
+    setLoadingMessage('Preview photo is being uploaded to cloud...')
+    const link = e.target.files[0]
+    const data = new FormData();
+    data.append('file', link);
+    data.append('upload_preset', 'thsmgpyt'); // Replace with your upload preset name
+    data.append('cloud_name', 'deiz877la');
 
-    const cloudName = 'dtp1d46p6'
-    const uploadPreset = 'j4ygtykr'
-    const url = `https://api.cloudinary.com/v1_1/${cloudName}/video/upload/`
-    const timestamp = Date.now() / 1000
-    const previewVideo = e.target.files[0]
-
-    let formData = new FormData()
-    formData.append('api_key', '694173934399617')
-    formData.append('file', previewVideo)
-    formData.append('public_id', e.target.files[0].name) //this should be changed
-    formData.append('timestamp', timestamp)
-    formData.append('upload_preset', uploadPreset)
-
-    axios
-      .post(url, formData)
-      .then((result) => {
-        // console.log('Result', result)
-        setcloudinaryVideo(result)
+    fetch(
+      "https://api.cloudinary.com/v1_1/deiz877la/video/upload", {
+      method: "post",
+      body: data
+    }).then((res) =>
+      res.json()
+    )
+      .then((data) => {
+        console.log("data", data);
+        data?.url && props.setPreviewVideo(data?.url)
+        data?.url && props.setVideoUrl("")
+        data?.url && props.setVideoLink(link)
         setLoading(false)
         setLoadingMessage('')
-        // alert('Video upload successful')
-        toast.success('Preview Video Upload Successful', {
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'colored',
-        })
-        setVideoLink(result.data.url)
-        dispatch(storeoverViewVideo({ videoUpload: result.data.url }))
-      })
-      .catch((err) => {
-        // console.log(err)
-        // alert('upload failed')
-        toast.error('Preview video could not be uploaded', {
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'colored',
-        })
+
+      }).catch((err) => {
+        console.log("err", err)
         setLoading(false)
         setLoadingMessage('')
       })
+
   }
+
+
   //cloudinary upload
 
   function uploadPhoto(e) {
     setLoading(true)
     setLoadingMessage('Preview photo is being uploaded to cloud...')
-    const cloudName = 'dtp1d46p6'
-    const uploadPreset = 'j4ygtykr'
-    const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload/`
-    const timestamp = Date.now() / 1000
-    const previewVideo = e.target.files[0]
+    const image = e.target.files[0]
+    const data = new FormData();
+    data.append('file', image);
+    data.append('upload_preset', 'thsmgpyt'); // Replace with your upload preset name
+    data.append('cloud_name', 'deiz877la');
 
-    let formData = new FormData()
-    formData.append('api_key', '694173934399617')
-    formData.append('file', previewVideo)
-    formData.append('public_id', e.target.files[0].name) //this should be changed
-    formData.append('timestamp', timestamp)
-    formData.append('upload_preset', uploadPreset)
-
-    axios
-      .post(url, formData)
-      .then((result) => {
-        // console.log('Result', result)
-        // setcloudinaryVideo(result)
+    fetch(
+      "https://api.cloudinary.com/v1_1/deiz877la/image/upload", {
+      method: "post",
+      body: data
+    }).then((res) =>
+      res.json()
+    )
+      .then((data) => {
+        console.log("data", data);
+        data?.url && props.setPhoto(data?.url)
         setLoading(false)
         setLoadingMessage('')
-        // alert('Photo upload successful')
-        toast.success('Preview Photo Upload Successful', {
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'colored',
-        })
-        setPhotoLink(result.data.url)
-        dispatch(storeoverViewPhoto({ imageUpload: result.data.url }))
-      })
-      .catch((err) => {
-        // console.log(err)
-        // alert('upload failed')
-        toast.error('Preview photo could not be uploaded', {
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'colored',
-        })
+
+      }).catch((err) => {
+        console.log("err", err)
         setLoading(false)
         setLoadingMessage('')
       })
   }
 
+
+
   // console.log('video pic link', photoLink, videoLink)
+
   const overview = useSelector((state) => state.overViewData)
   const [outcome, setOutcome] = useState(overview.learningOutCome)
   const [require, setRequire] = useState(overview.requirements)
   const [diff, setDiff] = useState(overview.difficultyLevel)
   const [keyWord, setKeyWord] = useState(overview.courseKeyword)
 
+  // const [learningOutCome, setLearningOutCome] = useState(null)
+  // const [difficultyLevel, setDifficultyLevel] = useState(null)
+  // const [requirements, setRequirements] = useState(null)
+  const [photo, setPhoto] = useState(null)
+
   // console.log('overview', overview)
+
+  useEffect(() => {
+    if (overViewData) {
+      props.setLearningOutCome(overViewData?.overview?.outcome);
+      props.setRequirements(overViewData?.overview?.requirements);
+      props.setPhoto(overViewData?.overview?.courseImage);
+      props.setDifficultyLevel(overViewData?.overview?.difficulty);
+      // props.setPhoto(overViewData?.overview?.courseImage);
+      props.setVideoUrl(overViewData?.overview?.courseVideo)
+
+    }
+  }, [overViewData]);
   return (
     <>
       <div className="upload-videoCategoryFileds">
@@ -161,10 +151,10 @@ const OtherTextArea = () => {
           <div className="upload-title">Course&nbsp;Outcome</div>
           <div className="DummyFileRight-textarea-tagline">
             <textarea
-              value={outcome}
+              value={props.learningOutCome}
               onChange={(e) => {
                 dispatch(storelearningOutCome(e.target.value))
-                setOutcome(e.target.value)
+                props.setLearningOutCome(e.target.value)
               }}
               name="courseOutcome"
               className="upload-inputField "
@@ -181,10 +171,10 @@ const OtherTextArea = () => {
               className="upload-inputField "
               required
               autoComplete="off"
-              value={require}
+              value={props.requirements}
               onChange={(e) => {
                 dispatch(storerequirements(e.target.value))
-                setRequire(e.target.value)
+                props.setRequirements(e.target.value)
               }}
             // onKeyDown={handleKeyDown}
             ></textarea>
@@ -200,7 +190,8 @@ const OtherTextArea = () => {
           <input
             type="file"
             onChange={(e) => {
-              // uploadPhoto(e)
+              uploadPhoto(e)
+              // props.setImage(e)
               setPhotoLink(e.target.files[0])
               dispatch(storeoverViewPhoto({ imageUpload: e.target.files[0] }))
             }}
@@ -211,15 +202,19 @@ const OtherTextArea = () => {
             autoComplete="off"
           />
         </div>
+        <img src={props.photo} className='showImage' />
+
       </div>
       <div>
         <div className="upload-title">Preview Video</div>
         <select
           name="videoType"
           className="upload-select"
-          value={videoType}
+          // value={overViewData?.overview?.courseVideo ? 'URL' : 'select your option'}
+          value={props.videoType}
           onChange={(e) => {
-            setVideoType(e.target.value)
+            props.setVideoType(e.target.value)
+            // setVideoLink("")
           }}
         >
           <option>Select your option</option>
@@ -227,26 +222,32 @@ const OtherTextArea = () => {
           <option value="URL"> Give an URL</option>
         </select>
 
-        {videoType === 'URL' &&
+        {props.videoType === 'URL' &&
           (<input
             name="videoUpload"
-            value={videoLink}
+            // value={overViewData?.overview?.courseVideo ? overViewData?.overview?.courseVideo : videoUrl}
+            value={props.videoUrl}
             onChange={(e) => {
               // uploadVideoPreview(e)
-              setVideoLink(e.target.value)
+              props.setVideoUrl(e.target.value)
+              props.setPreviewVideo(e.target.value)
               dispatch(storeoverViewVideo({ videoUpload: e.target.value }))
             }}
             placeholder="Enter the URL"
             className="upload-inputField category"
           />)}
 
-        {videoType === 'Browse' &&
+        {props.videoType === 'Browse' &&
           (<input
             type="file"
             name="videoUpload"
             onChange={(e) => {
-              // uploadVideoPreview(e)
-              setVideoLink(e.target.files[0].name)
+              props.setVideoLink(e.target.files[0])
+              // props.setLink(e);
+              // props.setVideoUrl("")
+              // setSrc(URL.createObjectURL(props.videoLink));
+              // console.log("Fsg", URL.createObjectURL(videoLink))
+              uploadVideoPreview(e)
               dispatch(storeoverViewVideo({ videoUpload: e.target.files[0].name }))
             }}
             accept="video/*"
@@ -255,7 +256,18 @@ const OtherTextArea = () => {
             className="upload-inputField category"
           />)}
 
+        {props.previewVideo && props.previewVideo != null && (
+          <ReactPlayer
+            url={props.videoType === 'URL' ? props.videoUrl : props.videoType === 'Browse' ? (props.videoLink ? URL.createObjectURL(props.videoLink) : null) : null}
+            controls
+            className="react-player"
+            width="200px"
+            height="200px"
+          />
+        )}
       </div>
+
+
       {/* </div> */}
       <div className="upload-difficultyLevel">
         <div>
@@ -264,10 +276,10 @@ const OtherTextArea = () => {
             <select
               name="difficultyLevel"
               className="upload-select"
-              value={diff}
+              value={props.difficultyLevel}
               onChange={(e) => {
                 dispatch(storedifficultyLevel(e.target.value))
-                setDiff(e.target.value)
+                props.setDifficultyLevel(e.target.value)
               }}
             >
               <option value="Beginner"> Beginner</option>
@@ -292,8 +304,9 @@ const OtherTextArea = () => {
           />
         </div>
       </div>
-
       {loading && <Loading />}
+
+
     </>
   )
 }

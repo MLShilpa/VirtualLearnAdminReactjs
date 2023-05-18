@@ -30,6 +30,11 @@ input.otherTextArea-inputField {
     flex-wrap: wrap;
 }
 
+.showImage {
+    height: 300px;
+    width: 300px;
+}
+
 @media screen and (max-width: 1310px) {
     .upload-videoCategoryFiles {
         margin-right: 0rem;

@@ -99,7 +99,7 @@ export default function UploadFiles({ childToParent }) {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
-      'video/*': ['.mpg', '.mpeg', '.avi', '.wmv', '.mp4', '.webm', '.mov','.pdf'],
+      'video/*': ['.mpg', '.mpeg', '.avi', '.wmv', '.mp4', '.webm', '.mov', '.pdf'],
     },
   })
 

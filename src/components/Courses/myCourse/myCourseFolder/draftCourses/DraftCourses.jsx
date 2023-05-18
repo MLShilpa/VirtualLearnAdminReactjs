@@ -113,7 +113,7 @@ const DraftCourses = () => {
   }, [page]);
 
   const deleteCourse = (data) => {
-    alert(data);
+    // alert(data);
     currentPage = page;
     axios(`${Base_Url}/api/v1/delete_course?_id=${data}`, {
       method: "delete",
@@ -185,7 +185,7 @@ const DraftCourses = () => {
               <>
                 {/* {Data.length > 0 ? ( */}
 
-                {draftdata?.data.reverse().map((res, i) => {
+                {draftdata?.data.map((res, i) => {
                   // {Data.map((res, i) => {
                   return (
                     <div
@@ -209,6 +209,7 @@ const DraftCourses = () => {
                             className="DraftCourses-thumbnail"
                           />
                           <div className="DraftCourses-thumbnail-play">
+
                             <svg
                               width={19}
                               height={19}
