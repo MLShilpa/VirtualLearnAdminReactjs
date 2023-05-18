@@ -11,7 +11,7 @@ import OtherTextArea from '../../../AddCoursesFolder/otherTextArea/OtherTextArea
 import { useDropzone } from 'react-dropzone'
 import PdfReader from './PdfReader'
 import { Base_Url } from "../../../../utils/baseUrl";
-import { CategoryId } from '../../../../redux/reducers/createCourseSlice'
+import { setCourseId } from '../../../../redux/reducers/addCourseState'
 import {
   reset,
   storeCategory,
@@ -87,7 +87,7 @@ const DummyFileRight = () => {
   // const overview = useSelector((state) => state.overViewData)
 
 
-
+  const [fetchedCourseId, setFetchedCourseId] = useState()
   const [videoUrl, setVideoUrl] = useState()
   const [videoType, setVideoType] = useState('Select your option')
   const [videoLink, setVideoLink] = useState('')
@@ -134,29 +134,13 @@ const DummyFileRight = () => {
     formData.append('category', vCategory);
     formData.append('subCategory', vSubCategory);
     formData.append('description', description);
-    // formData.append('courseImage', "http://res.cloudinary.com/dx8ktxwtg/image/upload/v1684126027/course-preview/7702de31b71d947f8d507d5ec10d63dc_jle3qj.png");
-    // formData.append('courseVideo', "https://www.youtube.com/watch?v=GML8Mw449O4");
     formData.append('requirements', requirements);
     formData.append('tagline', taglinee);
     formData.append('keywords', "design");
     formData.append('courseImage', photo);
     formData.append('courseVideo', previewVideo);
-    // formData.append('keywords', event.target.image.files[0]);
     formData.append('outcome', learningOutCome);
     formData.append('difficulty', "medium");
-
-    // try {
-    //   const response = await axios.post(`${Base_Url}/api/v1/create_course`, formData, {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data',
-    //       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-    //     }
-
-    //   });
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.error("error", error);
-    // }
 
     try {
       const fetchedData = await axios(
@@ -172,12 +156,18 @@ const DummyFileRight = () => {
         }
       )
       console.log(fetchedData);
+      // courseDispatch();
+      // setFetchedCourseId()
+      dispatch(setCourseId(fetchedData?.data?.courseId?._id))
       return fetchedData;
     } catch (err) {
       let error = err
       console.log('error', error)
     }
   };
+
+  const courseDispatch = () => {
+  }
 
 
   useEffect(() => {
