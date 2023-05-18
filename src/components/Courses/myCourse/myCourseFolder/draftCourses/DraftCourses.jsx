@@ -113,7 +113,7 @@ const DraftCourses = () => {
   }, [page]);
 
   const deleteCourse = (data) => {
-    alert(data);
+    // alert(data);
     currentPage = page;
     axios(`${Base_Url}/api/v1/delete_course?_id=${data}`, {
       method: "delete",
@@ -136,9 +136,10 @@ const DraftCourses = () => {
           theme: "colored",
         });
         setLoading(true);
-        const num =currentPage;
+        let num =currentPage;
         if(draftdata.data.length == 1){
-          num =currentPage-1;
+          num=currentPage-1;
+          dispatch(setDraftCoursesPageNum(currentPage-1));
         }
         axios
           .get(
@@ -217,6 +218,7 @@ const DraftCourses = () => {
                             className="DraftCourses-thumbnail"
                           />
                           <div className="DraftCourses-thumbnail-play">
+
                             <svg
                               width={19}
                               height={19}
