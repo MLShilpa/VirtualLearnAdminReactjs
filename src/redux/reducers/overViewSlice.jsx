@@ -23,6 +23,7 @@ export const overViewDataSlice = createSlice({
   reducers: {
     setOverViewData: (state, action) => {
       state.overViewData = action.payload;
+      console.log("overViewData", state.overViewData)
     },
     setChapterData: (state, action) => {
       state.chapterData = action.payload;

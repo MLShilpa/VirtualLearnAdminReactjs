@@ -20,6 +20,7 @@ import {
   storeSubCategory,
   storeTagline,
 } from '../../../../redux/reducers/overViewSlice'
+import Loading from '../../../../utils/loading/loading'
 
 
 // const formData = new FormData();
@@ -79,73 +80,104 @@ window.onclick = function (event) {
 
 const DummyFileRight = () => {
 
-  const overviewData = useSelector((state) => state.overViewData.overviewData)
+  const overViewData = useSelector((state) => state.overViewData.overViewData)
 
   const [categoryList, setCategoryList] = useState()
   const [subCategoryList, setSubCategoryList] = useState()
-  const overview = useSelector((state) => state.overViewData)
+  // const overview = useSelector((state) => state.overViewData)
 
+
+
+  const [videoUrl, setVideoUrl] = useState()
+  const [videoType, setVideoType] = useState('Select your option')
+  const [videoLink, setVideoLink] = useState('')
   const [title, setTitle] = useState(null)
   const [vCategory, setvCategory] = useState(null)
   const [vSubCategory, setvSubCategory] = useState(null)
   const [taglinee, setTaglinee] = useState(null)
+  const [description, setDescription] = useState(null)
+  const [learningOutCome, setLearningOutCome] = useState(null)
+  const [difficultyLevel, setDifficultyLevel] = useState(null)
+  const [requirements, setRequirements] = useState(null)
+  const [photo, setPhoto] = useState(null)
+  const [previewVideo, setPreviewVideo] = useState(null)
 
   const dispatch = useDispatch();
 
+
   const categoryId = useSelector((state) => state.overViewData?.categoryId)
-  const description = null
-  const learningOutCome = null
-  const requirements = null
   const coursePhoto = useSelector((state) => state.overViewData?.coursePhoto)
-  const previewVideo = useSelector((state) => state.overViewData?.previewVideo)
-  const difficultyLevel = null
+  // const previewVideo = useSelector((state) => state.overViewData?.previewVideo)
 
   useEffect(() => {
-    if (overviewData) {
-      setTitle(overviewData?.overview?.title);
-      setTaglinee(overviewData?.overview?.tagline);
-      setvCategory(overviewData?.overview?.category);
-      setvSubCategory(overviewData?.overview?.subCategory);
-      description = overviewData?.overview?.description;
-      learningOutCome = overviewData?.overview?.outcome;
-      requirements = overviewData?.overview?.requirements;
-      coursePhoto = overviewData?.overview?.description;
-      difficultyLevel = overviewData?.overview?.difficulty;
+    if (overViewData) {
+      setTitle(overViewData?.overview?.title);
+      setTaglinee(overViewData?.overview?.tagline);
+      setvCategory(overViewData?.overview?.category);
+      setvSubCategory(overViewData?.overview?.subCategory);
+      setDescription(overViewData?.overview?.description);
+      setLearningOutCome(overViewData?.overview?.outcome);
+      setRequirements(overViewData?.overview?.requirements);
+      setPhoto(overViewData?.overview?.courseImage);
+      setPreviewVideo(overViewData?.overview?.courseVideo);
+      setDifficultyLevel(overViewData?.overview?.difficulty);
 
     }
-  }, [overviewData]);
+  }, [overViewData]);
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("save")
 
     const formData = new FormData();
     formData.append('title', title);
     formData.append('category', vCategory);
     formData.append('subCategory', vSubCategory);
-    formData.append('tagline', taglinee);
-    formData.append('image', coursePhoto);
     formData.append('description', description);
-    formData.append('image', previewVideo);
+    // formData.append('courseImage', "http://res.cloudinary.com/dx8ktxwtg/image/upload/v1684126027/course-preview/7702de31b71d947f8d507d5ec10d63dc_jle3qj.png");
+    // formData.append('courseVideo', "https://www.youtube.com/watch?v=GML8Mw449O4");
     formData.append('requirements', requirements);
+    formData.append('tagline', taglinee);
+    formData.append('keywords', "design");
+    formData.append('courseImage', photo);
+    formData.append('courseVideo', previewVideo);
     // formData.append('keywords', event.target.image.files[0]);
     formData.append('outcome', learningOutCome);
-    formData.append('difficulty', difficultyLevel);
+    formData.append('difficulty', "medium");
+
+    // try {
+    //   const response = await axios.post(`${Base_Url}/api/v1/create_course`, formData, {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+    //     }
+
+    //   });
+    //   console.log(response.data);
+    // } catch (error) {
+    //   console.error("error", error);
+    // }
 
     try {
-      const response = await axios.post(`${Base_Url}/api/v1/create_course`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      const fetchedData = await axios(
+        `${Base_Url}/api/v1/create_course`,
+        {
+          method: "post",
+          data: formData,
+          headers: {
+            Accept: "*/*",
+            "Content-Type": 'multipart/form-data',
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          },
         }
-
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
+      )
+      console.log(fetchedData);
+      return fetchedData;
+    } catch (err) {
+      let error = err
+      console.log('error', error)
     }
   };
-
 
 
   useEffect(() => {
@@ -168,31 +200,6 @@ const DummyFileRight = () => {
       })
   }, [])
 
-  useEffect(() => {
-    axios
-      .get(
-        `${Base_Url}/api/v1/subcategory_list`,
-        {
-          method: 'get',
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-          },
-          params: {
-            id: `${categoryId}`
-          },
-        },
-      )
-      .then((res) => {
-        // console.log(res.data)
-        setSubCategoryList(res.data)
-      })
-      .catch((err) => {
-        console.log(err)
-        // alert('Some error occured')
-      })
-  })
-
-
   return (
     <>
       <div className="main-container">
@@ -201,8 +208,7 @@ const DummyFileRight = () => {
 
           <form
             onSubmit={(e) => {
-              // uploadVideosHandler(e)
-              // overViewHandler(e)
+              handleSubmit(e)
             }}
           >
             <div className="DummyFileRight-upload-container">
@@ -257,7 +263,7 @@ const DummyFileRight = () => {
                                     }}
                                     value={vCategory}
                                   >
-                                    {ele.categories.category}
+                                    {ele?.categories?.category}
                                   </div>
                                 );
                               })}
@@ -280,24 +286,30 @@ const DummyFileRight = () => {
                           }}
                         >
                           <option>Select your option</option>
-                          {subCategoryList &&
-                            subCategoryList?.categories?.subCategory?.map((ele, id) => {
+                          {categoryList &&
+                            categoryList.map((ele, id) => {
+                              if (ele.categories.category === vCategory) {
+                                return ele.categories.subCategory.map((element, subId) => {
 
-                              return (
-                                <option
-                                  value={ele}
-                                  className="QandA-option"
-                                  key={id}
-                                  onClick={() => {
-                                    //  dispatch(storeCategory(ele && ele._id && ele._id))
-                                    // setvSubCategory(ele && ele)
-                                    // console.log(vSubCategory);
-                                  }}
-                                >
-                                  {ele && ele}
-                                </option>
-                              );
+                                  return (
+                                    <option
+                                      value={element}
+                                      className="QandA-option"
+                                      key={subId}
+                                      onClick={() => {
+                                        //  dispatch(storeCategory(ele && ele._id && ele._id))
+                                        // setvSubCategory(ele && ele)
+                                        // console.log(vSubCategory);
+                                      }}
+                                    >
+                                      {element && element}
+                                    </option>
+                                  );
+                                });
+                              }
+                              return null; // Return null if the condition is not met for the current item
                             })}
+
 
                         </select>
 
@@ -332,10 +344,27 @@ const DummyFileRight = () => {
                     Add&nbsp;Discription&nbsp;/&nbsp;Overview
                   </div>
                   <div className="uplaod-discriptionArea">
-                    <RichTextEditor />
+                    <RichTextEditor description={description} setDescription={setDescription} />
                   </div>
                   <div className="uplaod-TextArea">
-                    <OtherTextArea />
+                    <OtherTextArea learningOutCome={learningOutCome}
+                      setLearningOutCome={setLearningOutCome}
+                      difficultyLevel={difficultyLevel}
+                      setDifficultyLevel={setDifficultyLevel}
+                      setRequirements={setRequirements}
+                      requirements={requirements}
+                      photo={photo}
+                      setPhoto={setPhoto}
+                      previewVideo={previewVideo}
+                      setPreviewVideo={setPreviewVideo}
+                      videoUrl={videoUrl}
+                      setVideoUrl={setVideoUrl}
+                      videoLink={videoLink}
+                      setVideoLink={setVideoLink}
+                      videoType={videoType}
+                      setVideoType={setVideoType}
+
+                    />
                   </div>
                 </div>
                 <div
