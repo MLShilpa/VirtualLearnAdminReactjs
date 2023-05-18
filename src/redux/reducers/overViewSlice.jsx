@@ -26,7 +26,7 @@ export const overViewDataSlice = createSlice({
     },
     setChapterData: (state, action) => {
       state.chapterData = action.payload;
-      // console.log("chapterData",state.chapterData)
+      console.log("chapterData", state.chapterData)
     },
     setLessonData: (state, action) => {
       state.lessonData = action.payload;

@@ -24,6 +24,7 @@ import {
   getChaptersLesonsApi,
   getCourseChaptersApi,
   getParticularCourses,
+  getCourseOverview,
 } from "../../../autherisation/auth";
 import {
   setChapterData,
@@ -52,6 +53,7 @@ import {
 const LeftCouseDetailList = () => {
   const accState = useSelector((state) => state.addCourseState.accState);
   const courseId = useSelector((state) => state.addCourseState.courseId);
+
   const courseChapterData = useSelector(
     (state) => state.addCourseState.courseChapterData
   );
@@ -74,8 +76,18 @@ const LeftCouseDetailList = () => {
       }
     }
   };
+
+  // const getCourseDetailApiCall = async () => {
+  //   const response = await getParticularCourses(courseId);
+  //   if (response) {
+  //     dispatch(setOverViewData(response));
+  //   } else {
+  //     dispatch(setOverViewData());
+  //   }
+  // };
+
   const getCourseDetailApiCall = async () => {
-    const response = await getParticularCourses(courseId);
+    const response = await getCourseOverview(courseId);
     if (response) {
       dispatch(setOverViewData(response));
     } else {
@@ -227,11 +239,11 @@ const LeftCouseDetailList = () => {
             className="leftCourseDetail-addBtn"
             onClick={(e) => {
               e.stopPropagation();
-              dispatch(setChapterData());
               dispatch(setChapterState(true));
               dispatch(setLessonState(false));
               dispatch(setTestState(false));
               dispatch(setCourseState(false));
+              dispatch(setChapterData(null));
               // alert("edit arrow presed")
             }}
           >

@@ -79,25 +79,41 @@ window.onclick = function (event) {
 
 const DummyFileRight = () => {
 
-  const [category, setCategory] = useState('Choose Category')
+  const overviewData = useSelector((state) => state.overViewData.overviewData)
+
   const [categoryList, setCategoryList] = useState()
   const [subCategoryList, setSubCategoryList] = useState()
   const overview = useSelector((state) => state.overViewData)
 
-  const [title, setTitle] = useState(overview.courseName)
-  const [vCategory, setvCategory] = useState('Choose Category')
-  const [vSubCategory, setvSubCategory] = useState('Choose subCategory')
-  const [taglinee, setTaglinee] = useState(overview.courseTagLine)
+  const [title, setTitle] = useState(null)
+  const [vCategory, setvCategory] = useState(null)
+  const [vSubCategory, setvSubCategory] = useState(null)
+  const [taglinee, setTaglinee] = useState(null)
 
   const dispatch = useDispatch();
 
   const categoryId = useSelector((state) => state.overViewData?.categoryId)
-  const description = useSelector((state) => state.overViewData?.description)
-  const learningOutCome = useSelector((state) => state.overViewData?.learningOutCome)
-  const requirements = useSelector((state) => state.overViewData?.requirements)
+  const description = null
+  const learningOutCome = null
+  const requirements = null
   const coursePhoto = useSelector((state) => state.overViewData?.coursePhoto)
   const previewVideo = useSelector((state) => state.overViewData?.previewVideo)
-  const difficultyLevel = useSelector((state) => state.overViewData?.difficultyLevel)
+  const difficultyLevel = null
+
+  useEffect(() => {
+    if (overviewData) {
+      setTitle(overviewData?.overview?.title);
+      setTaglinee(overviewData?.overview?.tagline);
+      setvCategory(overviewData?.overview?.category);
+      setvSubCategory(overviewData?.overview?.subCategory);
+      description = overviewData?.overview?.description;
+      learningOutCome = overviewData?.overview?.outcome;
+      requirements = overviewData?.overview?.requirements;
+      coursePhoto = overviewData?.overview?.description;
+      difficultyLevel = overviewData?.overview?.difficulty;
+
+    }
+  }, [overviewData]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -328,8 +344,10 @@ const DummyFileRight = () => {
                 >
                 </div>
               </div>
-
               <div className="DummyFileRight-Save-buttonPublish">
+                <button className="QandA-ButtonEdit" id="edit">
+                  Edit
+                </button>
                 <button type="submit" className="QandA-Button" id="save" onClick={(e) => { handleSubmit(e) }}>
                   Save
                 </button>

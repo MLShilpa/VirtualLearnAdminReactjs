@@ -3,11 +3,16 @@ import { ToastContainer } from 'react-toastify'
 import PdfReader from './PdfReader';
 import { useDispatch, useSelector } from 'react-redux'
 import { LessonType, SelectedFile } from "../../../../redux/reducers/createCourseSlice"
+import { Base_Url } from "../../../../utils/baseUrl";
+import axios from 'axios'
 
 const LessonDetails = () => {
   const dispatch = useDispatch();
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [lessonName, setLessonName] = useState("");
+
+  const file = useSelector((state) => state.createCourse.selectedFile)
 
   const handleFile = (event) => {
     const fileType = event.target.files[0].type;
@@ -23,14 +28,37 @@ const LessonDetails = () => {
     }
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log("save")
+
+    const formData = new FormData();
+    formData.append('_id', '645a28fa61c22c1dbaaec6a5');
+    formData.append('lessonName', lessonName);
+    formData.append('link', file);
+    formData.append('type', event.target.videoCategory.value);
+
+    try {
+      const response = await axios.patch(`${Base_Url}/api/v1/add_lessons`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        }
+
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="main-container">
       <div className="DummyFileRight-date-recentcourse">
         <div className="DummyFileRight-upload-container">
           <form
             onSubmit={(e) => {
-              // uploadVideosHandler(e)
-              // overViewHandler(e)
+              handleSubmit(e)
             }}
           >
             <div className="upload-container">
@@ -47,9 +75,9 @@ const LessonDetails = () => {
                       className="upload-inputField title richText-container"
                       required
                       autoComplete="off"
-                      // value={title}
+                      value={lessonName}
                       onChange={(e) => {
-
+                        setLessonName(e.target.value)
                       }}
                     />
 
@@ -136,8 +164,11 @@ const LessonDetails = () => {
               </div >
 
 
-              <div className="Upload-buttonPublish">
-                <button type="submit" className="QandA-Button" id="save" disabled>
+              <div className="DummyFileRight-Save-buttonPublish">
+                <button className="QandA-ButtonEdit" id="edit">
+                  Edit
+                </button>
+                <button type="submit" className="QandA-Button" id="save">
                   Save
                 </button>
               </div>

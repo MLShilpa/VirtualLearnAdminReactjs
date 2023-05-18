@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Base_Url } from "../../../../utils/baseUrl";
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -19,9 +19,16 @@ const updatedSuccessfully = () =>
     })
 
 const ChapterTitleRight = () => {
+    const chapterData = useSelector((state) => state.overViewData.chapterData)
+    const [chapName, setChapName] = useState(null);
+    console.log(chapName)
     const courseId = useSelector((state) => state.addCourseState.courseId)
-    const [chapName, setChapName] = useState();
 
+    useEffect(() => {
+        if (chapterData) {
+            setChapName(chapterData?.chapterName?.chapterName);
+        }
+    }, [chapterData]);
 
     const submitChapter = (e) => {
         e.preventDefault();
@@ -37,7 +44,6 @@ const ChapterTitleRight = () => {
                     data: {
                         _id: courseId,
                         chapterName: chapName,
-                        chapterNumber: "4"
                     },
                 },
             )
@@ -61,7 +67,7 @@ const ChapterTitleRight = () => {
                         submitChapter(e)
                     }}>
                         <div className="DummyFileRight-upload-container">
-                            <div className='upload-videoTitleee ' style={{minWidth:"400px"}}>
+                            <div className='upload-videoTitleee ' style={{ minWidth: "400px" }}>
                                 <input
                                     type="text"
                                     placeholder="Chapter Title"
@@ -75,6 +81,9 @@ const ChapterTitleRight = () => {
                                 />
                             </div>
                             <div className="DummyFileRight-Save-buttonPublish">
+                                <button className="QandA-ButtonEdit" id="edit">
+                                    Edit
+                                </button>
                                 <button type="submit" className="QandA-Button" id="save">
                                     Save
                                 </button>

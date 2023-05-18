@@ -136,9 +136,13 @@ const DraftCourses = () => {
           theme: "colored",
         });
         setLoading(true);
+        const num =currentPage;
+        if(draftdata.data.length == 1){
+          num =currentPage-1;
+        }
         axios
           .get(
-            `${Base_Url}/api/v1/get_draft_courses?page=${currentPage}&limit=5`,
+            `${Base_Url}/api/v1/get_draft_courses?page=${num}&limit=5`,
             {
               headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -170,6 +174,9 @@ const DraftCourses = () => {
         console.log(err);
       });
   };
+//   var utcDate = '2023-07-15T04:44:28.962Z';  // ISO-8601 formatted date returned from server
+// var localDate = new Date(utcDate);
+// console.log(localDate)
   return (
     <div className="DraftCourses-body">
       {draftdata && draftdata.data && draftdata.data.length > 0 ? (
@@ -182,10 +189,11 @@ const DraftCourses = () => {
                 </ThemeProvider>
               </div>
             ) : (
-              <>
+              <div className="DraftCourses-list-body">
+              {/* <> */}
                 {/* {Data.length > 0 ? ( */}
 
-                {draftdata?.data.reverse().map((res, i) => {
+                {draftdata?.data.map((res, i) => {
                   // {Data.map((res, i) => {
                   return (
                     <div
@@ -257,7 +265,9 @@ const DraftCourses = () => {
                             {res?.createdAt.slice(8, 10)}/
                             {res?.createdAt.slice(5, 7)}/
                             {res?.createdAt.slice(0, 4)},&nbsp;
-                            {res?.createdAt.slice(11, 16)}
+                            {/* {res?.createdAt.slice(11, 16)} */}
+                            {/* {Date(res?.createdAt)} */}
+                            {Date(res?.createdAt).slice(16,21)}
                           </div>
                           <aside
                             className="DraftCourses-delete-modal"
@@ -344,7 +354,8 @@ const DraftCourses = () => {
                     </div>
                   );
                 })}
-              </>
+              {/* </> */}
+              </div>
             )}
 
             {draftdata && draftdata?.data && draftdata?.data?.length > 0 && (

@@ -12,7 +12,7 @@ export const createCourseSlice = createSlice({
   reducers: {
     CategoryId: (state, action) => {
       state.categoryId = action.payload;
-      console.log("sfaf", state.categoryId)
+      // console.log("sfaf", state.categoryId)
     },
     LessonType: (state, action) => {
       state.lessonType = action.payload;
@@ -20,7 +20,7 @@ export const createCourseSlice = createSlice({
     },
     SelectedFile: (state, action) => {
       state.selectedFile = action.payload;
-      console.log("sfaf", state.selectedFile)
+      // console.log("sfaf", state.selectedFile)
     },
   },
 });
