@@ -98,6 +98,7 @@ export const LoginSlice = createSlice({
           draggable: true,
           progress: undefined,
           theme: 'light',
+
         })
         state.loading = false;
         sessionStorage.setItem('login', 'admin')

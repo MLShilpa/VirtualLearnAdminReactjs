@@ -33,6 +33,24 @@ input.upload-inputField {
   cursor: pointer;
 }
 
+input.uploadUrl {
+  font-family: ProximaNovaSoft-Regular;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+  color: #111111;
+  border-radius: 8px;
+  /* border: 1px solid #0000004a; */
+  padding: 5px 10px;
+  outline: none;
+  width: 114px;
+  height: 3rem;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
 .title {
   width: 100%;
 }

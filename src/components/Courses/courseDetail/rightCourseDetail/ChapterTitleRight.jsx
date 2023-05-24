@@ -5,6 +5,9 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { setCourseChapterData, setOverViewDataADC, setCourseId, setEditState } from "../../../../redux/reducers/addCourseState";
+import { getCourseChaptersApi } from "../../../autherisation/auth";
+
 
 const updatedSuccessfully = () =>
     toast.success('Chapter added Successfully', {
@@ -18,17 +21,34 @@ const updatedSuccessfully = () =>
         theme: 'colored',
     })
 
+
+
 const ChapterTitleRight = () => {
     const chapterData = useSelector((state) => state.overViewData.chapterData)
+    const editState = useSelector((state) => state.addCourseState.editState)
     const [chapName, setChapName] = useState(null);
-    console.log(chapName)
+    const [chapId, setChapId] = useState(null);
     const courseId = useSelector((state) => state.addCourseState.courseId)
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        if (chapterData) {
-            setChapName(chapterData?.chapterName?.chapterName);
-        }
+        // if (chapterData) {
+        setChapName(chapterData === "" ? "" : chapterData?.chapterName?.chapterName);
+        setChapId(chapterData === "" ? "" : chapterData?.chapterName?._id);
+        // }
     }, [chapterData]);
+
+    const getChaptersListApiCall = async () => {
+        const response = await getCourseChaptersApi(courseId);
+        if (response) {
+            if (response && response.overview) {
+                dispatch(setOverViewDataADC(response.overview));
+            }
+            if (response && response.courseChapters) {
+                dispatch(setCourseChapterData(response.courseChapters));
+            }
+        }
+    };
 
     const submitChapter = (e) => {
         e.preventDefault();
@@ -48,8 +68,12 @@ const ChapterTitleRight = () => {
                 },
             )
             .then((res) => {
-                if (res?.status === 200)
+                if (res?.status === 200) {
+                    dispatch(setCourseId(courseId));
+                    getChaptersListApiCall();
                     updatedSuccessfully();
+                }
+
 
             })
             .catch((err) => {
@@ -57,6 +81,34 @@ const ChapterTitleRight = () => {
                 alert('Some error occured')
             })
     }
+
+    const editChapter = (e) => {
+        e.preventDefault();
+        axios
+            .request(
+                `${Base_Url}/api/v1/edit_chapter_name`,
+                {
+                    method: 'patch',
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+                    },
+                    params: {
+                        chapterId: chapId,
+                        chapterName: chapName,
+                    },
+                },
+            )
+            .then((res) => {
+                console.log(res.data)
+                getChaptersListApiCall();
+                updatedSuccessfully();
+            })
+            .catch((err) => {
+                console.log(err)
+                // alert('Some error occured')
+            })
+    };
+
 
     return (
 
@@ -81,10 +133,10 @@ const ChapterTitleRight = () => {
                                 />
                             </div>
                             <div className="DummyFileRight-Save-buttonPublish">
-                                <button className="QandA-ButtonEdit" id="edit">
+                                <button className="QandA-ButtonEdit" id="edit" disabled={editState === "edit" ? false : true} onClick={(e) => { editChapter(e) }}>
                                     Edit
                                 </button>
-                                <button type="submit" className="QandA-Button" id="save">
+                                <button type="submit" className="QandA-Button" id="save" disabled={editState === "edit" ? true : false}>
                                     Save
                                 </button>
                             </div>

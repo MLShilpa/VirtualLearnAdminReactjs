@@ -19,6 +19,8 @@ import {
   setLessonState,
   setOverViewDataADC,
   setTestState,
+  setCourseId,
+  setEditState
 } from "../../../../redux/reducers/addCourseState";
 import {
   getChaptersLesonsApi,
@@ -49,8 +51,15 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import Modal from "react-modal";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { Base_Url } from "../../../../utils/baseUrl";
+
 
 const LeftCouseDetailList = () => {
+  const [modalIsOpen, setIsOpen] = useState(false);
+
   const accState = useSelector((state) => state.addCourseState.accState);
   const courseId = useSelector((state) => state.addCourseState.courseId);
 
@@ -60,9 +69,10 @@ const LeftCouseDetailList = () => {
   const overViewData = useSelector(
     (state) => state.addCourseState.overViewData
   );
-  console.log("courseChapterData", courseChapterData);
+  // console.log("courseChapterData", courseChapterData);
   useEffect(() => {
     getChaptersListApiCall();
+    console.log("changed")
   }, [courseId]);
 
   const getChaptersListApiCall = async () => {
@@ -76,6 +86,48 @@ const LeftCouseDetailList = () => {
       }
     }
   };
+
+  const deleteCourse = (data) => {
+    // alert(data);
+    axios(`${Base_Url}/api/v1/delete_course?_id=${data}`, {
+      method: "delete",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => {
+        // alert(res)
+        toast.success("Course deleted successfully", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        })
+        dispatch(setCourseId(""));
+      })
+      .catch((err) => {
+        // alert(err.response.data)
+        // alert('error')
+        toast.error("Course deletion failed", {
+          position: "top-left",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        console.log(err);
+      });
+
+  }
 
   // const getCourseDetailApiCall = async () => {
   //   const response = await getParticularCourses(courseId);
@@ -163,6 +215,15 @@ const LeftCouseDetailList = () => {
       });
     }
   }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
     <div className="container-LeftCouseDetailList">
       {courseId ? (
@@ -174,11 +235,58 @@ const LeftCouseDetailList = () => {
                 className="leftCourseDetail-delete"
                 onClick={(e) => {
                   e.stopPropagation();
+                  openModal();
                   // alert("delete pressed")
                 }}
               >
                 {deleteWithoutFill}
               </div>
+              <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                contentLabel="Example Modal"
+                ariaHideApp={false}
+                className="DraftCourses-delete-course-modal"
+                // overlayClassName="Overlay"
+                parentSelector={() =>
+                  document.querySelector("#root")
+                }
+              >
+                <div className="DraftCourses-delete-course-modal-content">
+                  <div className="DraftCourses-deleteCourse">
+                    Delete Course
+                  </div>
+                  <div className="DraftCourses-deleteContent">
+                    Are you sure you want to delete the course
+                    <strong style={{ textTransform: "capitalize" }}>
+                      {" "}
+                      {overViewData?.title}
+                    </strong>{" "}
+                    from the Draft Courses ?
+                  </div>
+                  <div className="DraftCourses-buttons">
+                    <button
+                      onClick={closeModal}
+                      className="DraftCourses-cancel"
+                    >
+                      Cancel
+                    </button>
+
+                    <button
+                      className="DraftCourses-delete"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteCourse(courseId)
+                        dispatch(setCourseState(false));
+                        closeModal();
+
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </Modal>
               <div
                 className="leftCourseDetail-edit"
                 onClick={(e) => {
@@ -187,6 +295,7 @@ const LeftCouseDetailList = () => {
                   dispatch(setLessonState(false));
                   dispatch(setChapterState(false));
                   dispatch(setTestState(false));
+                  dispatch(setEditState("edit"));
                   getCourseDetailApiCall();
                   // alert("edit pressed")
                 }}
@@ -220,12 +329,14 @@ const LeftCouseDetailList = () => {
                       strategy={verticalListSortingStrategy}
                     >
                       {chapters?.map((ele, id) => (
+
                         <SortableItem
                           key={ele._id}
                           id={ele._id}
                           items={ele}
                           id1={id}
                         />
+
                       ))}
                     </SortableContext>
                   }
@@ -243,7 +354,8 @@ const LeftCouseDetailList = () => {
               dispatch(setLessonState(false));
               dispatch(setTestState(false));
               dispatch(setCourseState(false));
-              dispatch(setChapterData(null));
+              dispatch(setChapterData(""));
+              dispatch(setEditState("save"));
               // alert("edit arrow presed")
             }}
           >
@@ -264,6 +376,7 @@ const LeftCouseDetailList = () => {
                 dispatch(setChapterState(false));
                 dispatch(setTestState(false));
                 dispatch(setOverViewData());
+                dispatch(setEditState("save"));
                 // alert("edit arrow presed")
               }}
             >
