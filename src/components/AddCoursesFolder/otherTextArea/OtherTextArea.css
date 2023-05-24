@@ -35,6 +35,11 @@ input.otherTextArea-inputField {
     width: 300px;
 }
 
+.browse {
+    display: flex;
+    align-items: center;
+}
+
 @media screen and (max-width: 1310px) {
     .upload-videoCategoryFiles {
         margin-right: 0rem;

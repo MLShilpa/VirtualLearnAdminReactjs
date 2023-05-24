@@ -31,6 +31,7 @@ export const overViewDataSlice = createSlice({
     },
     setLessonData: (state, action) => {
       state.lessonData = action.payload;
+      console.log("LessonData", state.lessonData)
     },
     storeoverViewData: (state, action) => {
       console.log('overViewDataSlice', action.payload)

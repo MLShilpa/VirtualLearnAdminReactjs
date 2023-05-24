@@ -112,3 +112,25 @@ export const getCourseOverview = async (id) => {
     console.log('overView data', error.response.data);
   }
 };
+
+export const getLesson = async (id) => {
+  const options = {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      'Content-Type': 'application/json',
+    },
+  };
+
+  try {
+    const response = await axios.get(
+      `${Base_Url}/api/v1/get_lesson_name?lessonId=${id}`,
+      options,
+    );
+    if (response.data) {
+      // console.log(response.data)
+      return response.data;
+    }
+  } catch (error) {
+    console.log('Lesson data', error.response.data);
+  }
+};

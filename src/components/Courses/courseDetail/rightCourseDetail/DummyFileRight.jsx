@@ -11,7 +11,7 @@ import OtherTextArea from '../../../AddCoursesFolder/otherTextArea/OtherTextArea
 import { useDropzone } from 'react-dropzone'
 import PdfReader from './PdfReader'
 import { Base_Url } from "../../../../utils/baseUrl";
-import { setCourseId } from '../../../../redux/reducers/addCourseState'
+import { CategoryId } from '../../../../redux/reducers/createCourseSlice'
 import {
   reset,
   storeCategory,
@@ -21,46 +21,8 @@ import {
   storeTagline,
 } from '../../../../redux/reducers/overViewSlice'
 import Loading from '../../../../utils/loading/loading'
-import { setCourseId, setCourseState } from '../../../../redux/reducers/addCourseState';
-
-
-// const formData = new FormData();
-// formData.append(
-//   "twitterLink",
-//   values.TwitterURL ? values.TwitterURL : "empty"
-// );
-// formData.append(
-//   "faceBookLink",
-//   values.FacebookURL ? values.FacebookURL : "empty"
-// );
-// formData.append("occupation", values.editPOccupation);
-// formData.append("gender", values.gender);
-// formData.append(
-//   "dateOfBirth",
-//   values.editPDOB ? values.editPDOB : "empty"
-// );
-// if (selectedFile == null) {
-//   // console.log("No image been uploaded");
-// } else {
-//   formData.append("profilePhoto", selectedFile);
-// }
-
-// const formData = {
-//   courseName: e.target.videoTitle.value,
-//   categoryName: e.target.videoCategory.value,
-//   subCategoryName: e.target.videoSubCategory.value,
-//   courseTagLine: e.target.tagline.value,
-
-//   description:
-//     description && description.description && description.description,
-//   learningOutCome: e.target.courseOutcome.value,
-//   requirements: e.target.requirements.value,
-
-//   difficultyLevel: e.target.difficultyLevel.value,
-//   courseKeyword: e.target.courseKeyWord.value,
-//   coursePhoto: overViewDataToBeUploaded.coursePhoto,
-//   previewVideo: overViewDataToBeUploaded.previewVideo,
-// }
+import { setCourseId, setCourseState, setEditState, setOverViewDataADC, setCourseChapterData } from '../../../../redux/reducers/addCourseState';
+import { getCourseChaptersApi } from "../../../autherisation/auth";
 
 function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
@@ -82,13 +44,13 @@ window.onclick = function (event) {
 const DummyFileRight = () => {
 
   const overViewData = useSelector((state) => state.overViewData.overViewData)
+  const editState = useSelector((state) => state.addCourseState.editState)
+  const courseId = useSelector((state) => state.addCourseState.courseId);
 
   const [categoryList, setCategoryList] = useState()
   const [subCategoryList, setSubCategoryList] = useState()
   // const overview = useSelector((state) => state.overViewData)
 
-
-  const [fetchedCourseId, setFetchedCourseId] = useState()
   const [videoUrl, setVideoUrl] = useState()
   const [videoType, setVideoType] = useState('Select your option')
   const [videoLink, setVideoLink] = useState('')
@@ -102,6 +64,7 @@ const DummyFileRight = () => {
   const [requirements, setRequirements] = useState(null)
   const [photo, setPhoto] = useState(null)
   const [previewVideo, setPreviewVideo] = useState(null)
+  const [editCourseId, setEditCourseId] = useState()
 
   const dispatch = useDispatch();
 
@@ -122,7 +85,7 @@ const DummyFileRight = () => {
       setPhoto(overViewData?.overview?.courseImage);
       setPreviewVideo(overViewData?.overview?.courseVideo);
       setDifficultyLevel(overViewData?.overview?.difficulty);
-
+      setEditCourseId(overViewData?.overview?._id);
     }
   }, [overViewData]);
 
@@ -143,6 +106,19 @@ const DummyFileRight = () => {
     formData.append('outcome', learningOutCome);
     formData.append('difficulty', "medium");
 
+    // try {
+    //   const response = await axios.post(`${Base_Url}/api/v1/create_course`, formData, {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+    //     }
+
+    //   });
+    //   console.log(response.data);
+    // } catch (error) {
+    //   console.error("error", error);
+    // }
+
     try {
       const fetchedData = await axios(
         `${Base_Url}/api/v1/create_course`,
@@ -156,16 +132,9 @@ const DummyFileRight = () => {
           },
         }
       )
-<<<<<<< HEAD
-      console.log(fetchedData);
-      // courseDispatch();
-      // setFetchedCourseId()
-      dispatch(setCourseId(fetchedData?.data?.courseId?._id))
-=======
       // console.log("fetchedData",fetchedData?.data?.courseId?._id);
       dispatch(setCourseId(fetchedData?.data?.courseId?._id))
       dispatch(setCourseState(false));
->>>>>>> 4b977aee906d634d9be558173746b95c8250e47c
       return fetchedData;
     } catch (err) {
       let error = err
@@ -173,8 +142,45 @@ const DummyFileRight = () => {
     }
   };
 
-  const courseDispatch = () => {
-  }
+  const handleEdit = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('category', vCategory);
+    formData.append('subCategory', vSubCategory);
+    formData.append('description', description);
+    formData.append('requirements', requirements);
+    formData.append('tagline', taglinee);
+    formData.append('keywords', "design");
+    formData.append('courseImage', photo);
+    formData.append('courseVideo', previewVideo);
+    // formData.append('keywords', event.target.image.files[0]);
+    formData.append('outcome', learningOutCome);
+    formData.append('difficulty', "medium");
+    formData.append('courseId', editCourseId);
+
+    try {
+      const fetchedData = await axios(
+        `${Base_Url}/api/v1/edit_course`,
+        {
+          method: "patch",
+          data: formData,
+          headers: {
+            Accept: "*/*",
+            "Content-Type": 'multipart/form-data',
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          },
+        }
+      )
+      // console.log("res", fetchedData);
+      getChaptersListApiCall();
+      return fetchedData;
+    } catch (err) {
+      let error = err
+      console.log('error', error)
+    }
+  };
 
 
   useEffect(() => {
@@ -196,6 +202,18 @@ const DummyFileRight = () => {
         // alert('Some error occured')
       })
   }, [])
+
+  const getChaptersListApiCall = async () => {
+    const response = await getCourseChaptersApi(courseId);
+    if (response) {
+      if (response && response.overview) {
+        dispatch(setOverViewDataADC(response.overview));
+      }
+      if (response && response.courseChapters) {
+        dispatch(setCourseChapterData(response.courseChapters));
+      }
+    }
+  };
 
   return (
     <>
@@ -255,8 +273,7 @@ const DummyFileRight = () => {
 
                                       dispatch(storeCategory(ele && ele._id && ele._id))
                                       setvCategory(ele.categories.category)
-                                      // setCategory(ele.categories.category)
-                                      // dispatch(CategoryId(ele && ele._id && ele._id))
+
                                     }}
                                     value={vCategory}
                                   >
@@ -371,10 +388,11 @@ const DummyFileRight = () => {
                 </div>
               </div>
               <div className="DummyFileRight-Save-buttonPublish">
-                <button className="QandA-ButtonEdit" id="edit">
+
+                <button className="QandA-ButtonEdit" id="edit" disabled={editState === "edit" ? false : true} onClick={(e) => { handleEdit(e) }}>
                   Edit
                 </button>
-                <button type="submit" className="QandA-Button" id="save" onClick={(e) => { handleSubmit(e) }}>
+                <button type="submit" className="QandA-Button" id="save" onClick={(e) => { handleSubmit(e) }} disabled={editState === "edit" ? true : false}>
                   Save
                 </button>
               </div>

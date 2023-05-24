@@ -12,20 +12,15 @@ import {
 } from '../../../redux/reducers/overViewSlice'
 import Loading from '../../../utils/loading/loading'
 import './OtherTextArea.css'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 import ReactPlayer from "react-player";
 
 const OtherTextArea = (props) => {
   const [cloudinaryVideo, setcloudinaryVideo] = useState('')
   const [photoLink, setPhotoLink] = useState('')
   // const [videoLink, setVideoLink] = useState('')
-  const [previewVideo, setPreviewVideo] = useState('')
   const [message, setMessage] = useState('')
   const [progressValue, setProgressValue] = useState(0)
-  const [imageUrl, setImageUrl] = useState('')
-  const [src, setSrc] = useState('')
-
+  const [originalFileName, setOriginalFileName] = useState('')
   const [loading, setLoading] = useState(false)
   const [loadingMessage, setLoadingMessage] = useState('')
   // overViewData?.overview?.courseVideo != null ? setVideoType('URL') : setVideoType('Select your option')
@@ -70,6 +65,7 @@ const OtherTextArea = (props) => {
       .then((data) => {
         console.log("data", data);
         data?.url && props.setPreviewVideo(data?.url)
+        data?.original_filename && setOriginalFileName(data?.original_filename + "." + data?.format)
         data?.url && props.setVideoUrl("")
         data?.url && props.setVideoLink(link)
         setLoading(false)
@@ -82,7 +78,6 @@ const OtherTextArea = (props) => {
       })
 
   }
-
 
   //cloudinary upload
 
@@ -238,23 +233,29 @@ const OtherTextArea = (props) => {
           />)}
 
         {props.videoType === 'Browse' &&
-          (<input
-            type="file"
-            name="videoUpload"
-            onChange={(e) => {
-              props.setVideoLink(e.target.files[0])
-              // props.setLink(e);
-              // props.setVideoUrl("")
-              // setSrc(URL.createObjectURL(props.videoLink));
-              // console.log("Fsg", URL.createObjectURL(videoLink))
-              uploadVideoPreview(e)
-              dispatch(storeoverViewVideo({ videoUpload: e.target.files[0].name }))
-            }}
-            accept="video/*"
-            autoComplete="off"
-            placeholder="Video Category"
-            className="upload-inputField category"
-          />)}
+          (
+            <>
+              <div className='browse'>
+                <input
+                  type="file"
+                  name="videoUpload"
+                  onChange={(e) => {
+                    props.setVideoLink(e.target.files[0])
+                    // props.setLink(e);
+                    // props.setVideoUrl("")
+                    // setSrc(URL.createObjectURL(props.videoLink));
+                    // console.log("Fsg", URL.createObjectURL(videoLink))
+                    uploadVideoPreview(e)
+                    dispatch(storeoverViewVideo({ videoUpload: e.target.files[0].name }))
+                  }}
+                  accept="video/*"
+                  autoComplete="off"
+                  placeholder="Video Category"
+                  className="uploadUrl category"
+                />
+                <div>{originalFileName}</div>
+              </div>
+            </>)}
 
         {props.previewVideo && props.previewVideo != null && (
           <ReactPlayer
