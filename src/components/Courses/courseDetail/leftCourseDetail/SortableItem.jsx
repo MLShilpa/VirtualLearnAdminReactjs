@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteWithoutFill, testImage } from "../../../../assets/icons/svgIcons";
 import { setAccState, setChapterState, setCourseChapterData, setCourseId, setCourseState, setLessonState, setOverViewDataADC, setTestState } from "../../../../redux/reducers/addCourseState";
@@ -57,6 +57,11 @@ export const SortableItem = (props) => {
   const [lessons, setLessons] = useState(
     props.items.lesson
   );
+  useEffect(()=>{
+    setLessons(props.items.lesson)
+  },[props &&props.items && props.items.lesson])
+
+  
   function handleDragEndLesson(event) {
     // console.log("Drag end called");
     const { active, over } = event;
@@ -238,19 +243,22 @@ export const SortableItem = (props) => {
                       e.stopPropagation();
                     }}
                   >
-                    <SortableContext
-                      items={lessons?.map((item) => item._id)}
-                      strategy={verticalListSortingStrategy}
-                    >
-                      {lessons?.map((ele, id) => (
-                        <SortableItemLesson
-                          key={ele._id}
-                          id={ele._id}
-                          items={ele}
-                          id2={id}
-                        />
-                      ))}
-                    </SortableContext>
+                    {lessons && lessons.length > 0 && 
+                        <SortableContext
+                        items={lessons?.map((item) => item._id)}
+                        strategy={verticalListSortingStrategy}
+                      >
+                        {lessons?.map((ele, id) => (
+                          <SortableItemLesson
+                            key={ele._id}
+                            id={ele._id}
+                            items={ele}
+                            id2={id}
+                          />
+                        ))}
+                      </SortableContext>
+                    }
+                
                   </Container>
                 </DndContext>
                 <div
