@@ -31,7 +31,7 @@ import axios from 'axios'
 import { Base_Url } from "../../../../utils/baseUrl";
 import Modal from "react-modal";
 import { setCourseChapterData, setOverViewDataADC } from "../../../../redux/reducers/addCourseState";
-
+import { errorMessage, successfulMessage } from "../../../toastMesaage/ToastMessage";
 
 const SortableItemLesson = (props) => {
   const dispatch = useDispatch();
@@ -101,9 +101,12 @@ const SortableItemLesson = (props) => {
         console.log(res.data)
         dispatch(setLessonData(null))
         getChaptersListApiCall();
+        successfulMessage("Lesson deleted successfully")
+
       })
       .catch((err) => {
         console.log(err)
+        errorMessage("Lesson deletion failed")
         // alert('Some error occured')
       })
   };

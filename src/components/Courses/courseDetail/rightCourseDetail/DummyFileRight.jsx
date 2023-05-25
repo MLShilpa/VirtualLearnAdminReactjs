@@ -23,6 +23,8 @@ import {
 import Loading from '../../../../utils/loading/loading'
 import { setCourseId, setCourseState, setEditState, setOverViewDataADC, setCourseChapterData } from '../../../../redux/reducers/addCourseState';
 import { getCourseChaptersApi } from "../../../autherisation/auth";
+import { errorMessage, successfulMessage } from "../../../toastMesaage/ToastMessage";
+
 
 function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
@@ -64,7 +66,10 @@ const DummyFileRight = () => {
   const [requirements, setRequirements] = useState(null)
   const [photo, setPhoto] = useState(null)
   const [previewVideo, setPreviewVideo] = useState(null)
+  const [browseUrl, setBrowseUrl] = useState(null)
+  const [enteredUrl, setEnteredUrl] = useState(null)
   const [editCourseId, setEditCourseId] = useState()
+  const [keyword, setKeyword] = useState(null)
 
   const dispatch = useDispatch();
 
@@ -86,8 +91,17 @@ const DummyFileRight = () => {
       setPreviewVideo(overViewData?.overview?.courseVideo);
       setDifficultyLevel(overViewData?.overview?.difficulty);
       setEditCourseId(overViewData?.overview?._id);
+      setKeyword(overViewData?.overview?.keywords);
     }
   }, [overViewData]);
+
+  useEffect(() => {
+    if (videoType === 'Browse') {
+      setPreviewVideo(browseUrl);
+    } else if (videoType === 'URL') {
+      setPreviewVideo(videoUrl);
+    }
+  }, [videoType, browseUrl, videoUrl]);
 
 
   const handleSubmit = async (event) => {
@@ -100,24 +114,11 @@ const DummyFileRight = () => {
     formData.append('description', description);
     formData.append('requirements', requirements);
     formData.append('tagline', taglinee);
-    formData.append('keywords', "design");
+    formData.append('keywords', keyword);
     formData.append('courseImage', photo);
     formData.append('courseVideo', previewVideo);
     formData.append('outcome', learningOutCome);
-    formData.append('difficulty', "medium");
-
-    // try {
-    //   const response = await axios.post(`${Base_Url}/api/v1/create_course`, formData, {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data',
-    //       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-    //     }
-
-    //   });
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.error("error", error);
-    // }
+    formData.append('difficulty', difficultyLevel);
 
     try {
       const fetchedData = await axios(
@@ -135,14 +136,18 @@ const DummyFileRight = () => {
       // console.log("fetchedData",fetchedData?.data?.courseId?._id);
       dispatch(setCourseId(fetchedData?.data?.courseId?._id))
       dispatch(setCourseState(false));
+      successfulMessage('Course created successfully')
       return fetchedData;
+
     } catch (err) {
       let error = err
       console.log('error', error)
+      errorMessage('something went wrong')
     }
   };
 
   const handleEdit = async (event) => {
+    // getPreviewVideo();
     event.preventDefault();
 
     const formData = new FormData();
@@ -175,10 +180,14 @@ const DummyFileRight = () => {
       )
       // console.log("res", fetchedData);
       getChaptersListApiCall();
+      successfulMessage('Course created successfully')
+      dispatch(setCourseState(false));
       return fetchedData;
     } catch (err) {
       let error = err
       console.log('error', error)
+      errorMessage('something went wrong')
+
     }
   };
 
@@ -377,7 +386,12 @@ const DummyFileRight = () => {
                       setVideoLink={setVideoLink}
                       videoType={videoType}
                       setVideoType={setVideoType}
-
+                      browseUrl={browseUrl}
+                      setBrowseUrl={setBrowseUrl}
+                      enteredUrl={enteredUrl}
+                      setEnteredUrl={setEnteredUrl}
+                      keyword={keyword}
+                      setKeyword={setKeyword}
                     />
                   </div>
                 </div>

@@ -8,7 +8,7 @@ import { setChapterData, setLessonData } from "../../../../redux/reducers/overVi
 import { addIconWhite } from "../../../../utils/icons";
 import Modal from "react-modal";
 import axios from 'axios'
-// import Card from "react-bootstrap/Card";
+import { errorMessage, successfulMessage } from "../../../toastMesaage/ToastMessage";
 import Container from "react-bootstrap/Container";
 import {
   DndContext,
@@ -151,9 +151,11 @@ export const SortableItem = (props) => {
         getChaptersListApiCall();
         dispatch(setChapterData(null))
         dispatch(setChapterState(false))
+        successfulMessage("Chapter deleted successfully")
       })
       .catch((err) => {
         console.log(err)
+        errorMessage("Chapter deletion failed")
         // alert('Some error occured')
       })
   };
@@ -183,7 +185,10 @@ export const SortableItem = (props) => {
             dispatch(setAccState(props.id1))
           }}
         >
-          <div className="course-accordian-heading" onClick={() => { dispatch(setSelectedChapterId(props.items?._id)) }}>
+          <div className="course-accordian-heading" onClick={() => {
+            dispatch(setSelectedChapterId(props.items?._id))
+            // console.log(props.items?._id)
+          }}>
             <div className="course-accordian-container">
               <span className="course-accordian-container-title">
                 Chapter {props.id1 + 1} - {props.items.chapterName}{" "}

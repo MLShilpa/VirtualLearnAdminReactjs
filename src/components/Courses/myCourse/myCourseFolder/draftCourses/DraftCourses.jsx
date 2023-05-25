@@ -8,7 +8,7 @@ import {
 } from "../../../../../redux/reducers/MyCourseStateSlice";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { errorMessage, successfulMessage } from "../../../../toastMesaage/ToastMessage";
 import axios from "axios";
 import { Base_Url } from "../../../../../utils/baseUrl";
 import Modal from "react-modal";
@@ -125,16 +125,7 @@ const DraftCourses = () => {
     })
       .then((res) => {
         // alert(res)
-        toast.success("Course deleted successfully", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: false,
-          progress: undefined,
-          theme: "colored",
-        });
+        successfulMessage("Course deleted successfully")
         setLoading(true);
         let num = currentPage;
         if (draftdata.data.length === 1) {
@@ -162,16 +153,7 @@ const DraftCourses = () => {
       .catch((err) => {
         // alert(err.response.data)
         // alert('error')
-        toast.error("Course deletion failed", {
-          position: "top-left",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        errorMessage("Course deletion failed")
         console.log(err);
       });
   };
@@ -196,6 +178,8 @@ const DraftCourses = () => {
 
                 {draftdata?.data.map((res, i) => {
                   // {Data.map((res, i) => {
+                  const istDateTime = new Date(res?.createdAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+
                   return (
                     <div
                       className="DraftCourses-CourseList"
@@ -264,13 +248,18 @@ const DraftCourses = () => {
                             {/* 12/09/2020, 06:30 
                       "uploadedDate": "2022-12-21 06:01:13.705145",*/}
                             Added on&nbsp;
-                            {res?.createdAt.slice(8, 10)}/
+                            {/* {const date = new Date(res?.createdAt)}; */}
+                            {/* {res?.createdAt.slice(8, 10)}/
                             {res?.createdAt.slice(5, 7)}/
-                            {res?.createdAt.slice(0, 4)},&nbsp;
+                            {res?.createdAt.slice(0, 4)},&nbsp; */}
                             {/* {res?.createdAt.slice(11, 16)} */}
                             {/* {Date(res?.createdAt)} */}
                             {/* {Date(res?.createdAt).slice(16, 21)} */}
-                            {res?.createdAt.slice(11, 16)}
+                            {/* {res?.createdAt.slice(11, 16)} */}
+
+                            {istDateTime}
+
+
                           </div>
                           <aside
                             className="DraftCourses-delete-modal"

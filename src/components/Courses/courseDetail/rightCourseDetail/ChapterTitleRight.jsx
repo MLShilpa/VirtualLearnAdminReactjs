@@ -3,24 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Base_Url } from "../../../../utils/baseUrl";
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import { setCourseChapterData, setOverViewDataADC, setCourseId, setEditState } from "../../../../redux/reducers/addCourseState";
+import { setCourseChapterData, setOverViewDataADC, setCourseId, setEditState, setChapterState } from "../../../../redux/reducers/addCourseState";
 import { getCourseChaptersApi } from "../../../autherisation/auth";
-
-
-const updatedSuccessfully = () =>
-    toast.success('Chapter added Successfully', {
-        position: 'top-left',
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-    })
-
+import { errorMessage, successfulMessage } from "../../../toastMesaage/ToastMessage";
 
 
 const ChapterTitleRight = () => {
@@ -71,14 +56,17 @@ const ChapterTitleRight = () => {
                 if (res?.status === 200) {
                     dispatch(setCourseId(courseId));
                     getChaptersListApiCall();
-                    updatedSuccessfully();
+                    successfulMessage('Chapter added Successfully');
+                    dispatch(setChapterState(false));
+
                 }
 
 
             })
             .catch((err) => {
                 console.log(err)
-                alert('Some error occured')
+                errorMessage('Something went wrong')
+                // alert('Some error occured')
             })
     }
 
@@ -101,10 +89,13 @@ const ChapterTitleRight = () => {
             .then((res) => {
                 console.log(res.data)
                 getChaptersListApiCall();
-                updatedSuccessfully();
+                successfulMessage('Chapter edited Successfully');
+                dispatch(setChapterState(false));
+
             })
             .catch((err) => {
                 console.log(err)
+                errorMessage('Something went wrong')
                 // alert('Some error occured')
             })
     };
