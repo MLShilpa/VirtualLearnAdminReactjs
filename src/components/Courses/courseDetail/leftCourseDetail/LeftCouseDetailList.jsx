@@ -52,9 +52,9 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import Modal from "react-modal";
-import { toast } from "react-toastify";
 import axios from "axios";
 import { Base_Url } from "../../../../utils/baseUrl";
+import { errorMessage, successfulMessage } from "../../../toastMesaage/ToastMessage";
 
 
 const LeftCouseDetailList = () => {
@@ -99,31 +99,13 @@ const LeftCouseDetailList = () => {
     })
       .then((res) => {
         // alert(res)
-        toast.success("Course deleted successfully", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: false,
-          progress: undefined,
-          theme: "colored",
-        })
+        successfulMessage("Course deleted successfully")
         dispatch(setCourseId(""));
       })
       .catch((err) => {
         // alert(err.response.data)
         // alert('error')
-        toast.error("Course deletion failed", {
-          position: "top-left",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        errorMessage("Course deletion failed")
         console.log(err);
       });
 

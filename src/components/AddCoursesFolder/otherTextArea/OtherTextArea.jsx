@@ -31,9 +31,6 @@ const OtherTextArea = (props) => {
     overViewData?.overview?.courseVideo && props.setVideoType('URL')
   }, [overViewData])
 
-  // const [videoUrl, setVideoUrl] = useState()
-
-
 
   const dispatch = useDispatch()
 
@@ -64,9 +61,9 @@ const OtherTextArea = (props) => {
     )
       .then((data) => {
         console.log("data", data);
-        data?.url && props.setPreviewVideo(data?.url)
+        data?.url && props.setBrowseUrl(data?.url)
         data?.original_filename && setOriginalFileName(data?.original_filename + "." + data?.format)
-        data?.url && props.setVideoUrl("")
+        // data?.url && props.setVideoUrl("")
         data?.url && props.setVideoLink(link)
         setLoading(false)
         setLoadingMessage('')
@@ -118,7 +115,6 @@ const OtherTextArea = (props) => {
   const [outcome, setOutcome] = useState(overview.learningOutCome)
   const [require, setRequire] = useState(overview.requirements)
   const [diff, setDiff] = useState(overview.difficultyLevel)
-  const [keyWord, setKeyWord] = useState(overview.courseKeyword)
 
   // const [learningOutCome, setLearningOutCome] = useState(null)
   // const [difficultyLevel, setDifficultyLevel] = useState(null)
@@ -225,7 +221,7 @@ const OtherTextArea = (props) => {
             onChange={(e) => {
               // uploadVideoPreview(e)
               props.setVideoUrl(e.target.value)
-              props.setPreviewVideo(e.target.value)
+              props.setEnteredUrl(e.target.value)
               dispatch(storeoverViewVideo({ videoUpload: e.target.value }))
             }}
             placeholder="Enter the URL"
@@ -257,17 +253,14 @@ const OtherTextArea = (props) => {
               </div>
             </>)}
 
-        {props.previewVideo && props.previewVideo != null && (
-          <ReactPlayer
-            url={props.videoType === 'URL' ? props.videoUrl : props.videoType === 'Browse' ? (props.videoLink ? URL.createObjectURL(props.videoLink) : null) : null}
-            controls
-            className="react-player"
-            width="200px"
-            height="200px"
-          />
-        )}
+        <ReactPlayer
+          url={props.videoType === 'URL' ? props.videoUrl : props.videoType === 'Browse' ? props.browseUrl : null}
+          controls
+          className="react-player"
+          width="200px"
+          height="200px"
+        />
       </div>
-
 
       {/* </div> */}
       <div className="upload-difficultyLevel">
@@ -283,6 +276,7 @@ const OtherTextArea = (props) => {
                 props.setDifficultyLevel(e.target.value)
               }}
             >
+              <option>Select your option</option>
               <option value="Beginner"> Beginner</option>
               <option value="Advanced">Advanced</option>
             </select>
@@ -297,10 +291,10 @@ const OtherTextArea = (props) => {
             className="upload-inputField category"
             autoComplete="off"
             required
-            value={keyWord}
+            value={props.keyword}
             onChange={(e) => {
               dispatch(storecourseKeyword(e.target.value))
-              setKeyWord(e.target.value)
+              props.setKeyword(e.target.value)
             }}
           />
         </div>
