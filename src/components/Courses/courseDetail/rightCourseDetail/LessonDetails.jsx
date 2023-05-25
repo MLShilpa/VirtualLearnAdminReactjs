@@ -48,6 +48,11 @@ const LessonDetails = () => {
     setSelectedStatus(lessonData === "" ? "" : lessonData?.lessonDetails[0]?.lesson[0]?.type ? true : false);
     setSelectedType(lessonData === "" ? "" : lessonData?.lessonDetails[0]?.lesson[0]?.link[0] ? "URL" : "");
 
+    setLessonName(lessonData === "" ? "" : lessonData?.lessonDetails[0]?.lesson[0]?.lessonName);
+    setSelectedOption(lessonData === "" ? "" : lessonData?.lessonDetails[0]?.lesson[0]?.type);
+    // setSelectedUrl(lessonData === "" ? "" : lessonData?.lessonDetails[0]?.lesson[0]?.link[0])
+    setLessonId(lessonData === "" ? "" : lessonData?.lessonDetails[0]?.lesson[0]?._id)
+
   }, [lessonData])
 
 
@@ -65,15 +70,12 @@ const LessonDetails = () => {
       setSelectedVideoUrl(lessonData === "" ? "" : lessonData?.lessonDetails[0]?.lesson[0]?.link[0]);
     }
 
-  }, [lessonData])
+  }, [lessonData, selectedType])
 
-  useEffect(() => {
-    setLessonName(lessonData === "" ? "" : lessonData?.lessonDetails[0]?.lesson[0]?.lessonName);
-    setSelectedOption(lessonData === "" ? "" : lessonData?.lessonDetails[0]?.lesson[0]?.type);
-    // setSelectedUrl(lessonData === "" ? "" : lessonData?.lessonDetails[0]?.lesson[0]?.link[0])
-    setLessonId(lessonData === "" ? "" : lessonData?.lessonDetails[0]?.lesson[0]?._id)
+  // useEffect(() => {
 
-  }, [lessonData]);
+
+  // }, [lessonData]);
 
   const handleFile = (event) => {
     // const fileType = event.target.files[0].type;
@@ -191,7 +193,7 @@ const LessonDetails = () => {
     formData.append('lessonName', lessonName);
     formData.append('link', selectedUrl);
     formData.append('type', selectedOption);
-
+    console.log(chapId)
     try {
       const fetchedData = await axios(
         `${Base_Url}/api/v1/add_lessons`,
@@ -242,7 +244,7 @@ const LessonDetails = () => {
       )
       console.log("res", fetchedData);
       getChaptersListApiCall();
-      successfulMessage('Lesson added Successfully');
+      successfulMessage('Lesson edited Successfully');
       dispatch(setLessonState(false));
       return fetchedData;
     }

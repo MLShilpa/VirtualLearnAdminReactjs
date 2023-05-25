@@ -59,6 +59,8 @@ export const SortableItem = (props) => {
   const accState = useSelector((state) => state.addCourseState.accState);
   const courseId = useSelector((state) => state.addCourseState.courseId);
   const chapterData = useSelector((state) => state.overViewData.chapterData)
+  const courseChapterData = useSelector((state) => state.addCourseState.courseChapterData)
+  // console.log("gdfh", courseChapterData[0]?._id)
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -336,6 +338,8 @@ export const SortableItem = (props) => {
                     dispatch(setTestState(false));
                     dispatch(setLessonData(""))
                     dispatch(setEditState("save"));
+                    dispatch(setCourseState(false));
+                    dispatch(setSelectedChapterId(courseChapterData[0]?._id))
                     // alert("edit arrow presed")
                   }}
                 >
@@ -355,7 +359,7 @@ export const SortableItem = (props) => {
                           dispatch(setTestState(true));
                           dispatch(setLessonState(false));
                           dispatch(setChapterState(false));
-                          dispatch(setCourseState(false))
+                          dispatch(setCourseState(false));
                           // alert("edit arrow presed")
                         }}
                       >

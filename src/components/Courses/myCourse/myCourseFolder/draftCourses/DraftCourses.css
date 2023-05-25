@@ -1,13 +1,16 @@
   .emptyImageCourse img {
     width: 300px;
   }
+
   .DraftCourses-body {
     overflow: scroll;
     height: 100%;
   }
-  .DraftCourses-list-body{
-    min-height:calc( 70vh - 195.274px ) ;
-}
+
+  .DraftCourses-list-body {
+    min-height: calc(70vh - 195.274px);
+  }
+
   .DraftCourses-CourseList {
     position: relative;
     width: 100%;
@@ -17,17 +20,20 @@
     align-items: center;
     margin-bottom: 30px;
     gap: 1rem;
+    cursor: pointer;
   }
+
   .ReactModal__Overlay {
     background: rgb(0 0 0 / 35%) !important;
-}
+  }
+
   .DraftCourses-Thumbnail {
     position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
   }
-  
+
   .DraftCourses-thumbnail {
     position: relative;
     width: 134px;
@@ -36,26 +42,26 @@
     object-position: 10% 10%;
     border-radius: 3px;
   }
-  
+
   .DraftCourses-thumbnail-play {
     position: relative;
     right: 76.5px;
   }
-  
+
   .DraftCourses-Title {
     position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
-  
+
   }
-  
+
   .DraftCourses-titleContainer {
     position: relative;
     display: flex;
     flex-direction: column;
   }
-  
+
   .DraftCourses-titleContainer div {
     padding: 6px 0px;
     color: #1a1a1a;
@@ -64,7 +70,7 @@
     font-size: 20px;
     text-transform: capitalize;
   }
-  
+
   .DraftCourses-titleContainer .date-Container {
     font-style: normal;
     font-weight: 400;
@@ -75,13 +81,13 @@
 
   .DraftCourses-delete-courses {
     background: none;
-    outline:none;
-    border:none;
+    outline: none;
+    border: none;
     cursor: pointer;
     /* border-style: dashed; */
     /* border-color:red;s */
   }
-  
+
   .DraftCourses-delete-course-modal-content {
     display: flex;
     flex-direction: column;
@@ -91,7 +97,7 @@
     padding: 35px;
 
   }
-  
+
   .DraftCourses-delete-course-modal-content .DraftCourses-deleteCourse {
     font-style: normal;
     font-weight: 600;
@@ -100,7 +106,7 @@
     text-align: center;
     color: #1a1a1a;
   }
-  
+
   .DraftCourses-delete-course-modal-content .DraftCourses-deleteContent {
     font-style: normal;
     font-weight: 400;
@@ -109,24 +115,24 @@
     text-align: center;
     color: #1a1a1a;
   }
-  
+
   .DraftCourses-delete-course-modal-content .DraftCourses-buttons {
     /* display: flex;
     gap: 75px; */
-  
+
     display: flex;
     gap: 39px;
     margin-top: 18px;
-  
+
   }
-  
+
   .DraftCourses-delete-course-modal-content .DraftCourses-buttons button {
     width: 210px;
     height: 44px;
     border-radius: 6px;
     outline: none;
   }
-  
+
   .DraftCourses-delete-course-modal-content .DraftCourses-buttons .DraftCourses-cancel {
     border: 1px solid #d5d4dc !important;
     background: #ffffff;
@@ -137,7 +143,7 @@
     text-align: center;
     color: #111111;
   }
-  
+
   .DraftCourses-delete-course-modal-content .DraftCourses-buttons .DraftCourses-delete {
     border: none;
     background: rgba(9, 41, 99, 0.2);
@@ -148,7 +154,7 @@
     text-align: center;
     color: #092963;
   }
-  
+
   .DraftCourses-delete-course-modal {
     position: absolute;
     background: #ffffff;
@@ -159,15 +165,15 @@
     background: #fff;
     border-radius: 12px 12px;
   }
-  
+
   .studentList-container-1 {
-  
+
     padding: 0rem !important;
-  
+
   }
-  
-  
-  
+
+
+
   /* @media screen and (max-width: 1339px) {
     .delete-course-modal {
   
@@ -175,7 +181,7 @@
   
     }
   } */
-  
+
   @media screen and (max-width: 855px) {
     .DraftCourses-delete-course-modal {
       /* width: 400px !important;
@@ -183,67 +189,67 @@
       transform: translate(-50%, -50%);
     }
   }
-  
+
   @media screen and (max-width: 650px) {
     .DraftCourses-delete-course-modal {
       width: 400px !important;
       height: 270px !important;
       transform: translate(-50%, -50%);
     }
-  
+
     .DraftCourses-delete-course-modal-content .DraftCourses-buttons {
       gap: 11px !important;
     }
-  
+
     .DraftCourses-delete-course-modal-content .DraftCourses-buttons button {
       width: 159px !important;
     }
   }
-  
+
   @media screen and (max-width: 435px) {
     .DraftCourses-delete-course-modal {
       width: 260px !important;
       height: 270 !important;
       transform: translate(-50%, -50%);
     }
-  
+
     .DraftCourses-delete-course-modal-content .DraftCourses-deleteContent {
       font-size: 18px !important;
       line-height: 22px !important;
     }
-  
+
     .DraftCourses-delete-course-modal-content .DraftCourses-buttons button {
       width: 111px !important;
       height: 37px !important;
     }
-  
+
     .DraftCourses-delete-course-modal-content .DraftCourses-buttons {
       gap: 12px !important;
     }
   }
-  
-  
-  
+
+
+
   @media screen and (max-width: 628px) {
     .DraftCourses-Title {
       position: relative;
       display: flex;
-  
+
       align-items: flex-start;
       gap: 1rem;
     }
-  
+
     .DraftCourses-titleContainer div {
       font-size: 16px;
       padding: 0;
     }
-  
+
     .DraftCourses-titleContainer .date-Container {
       font-size: 16px;
     }
   }
-  
-  
+
+
   /* @media screen and (max-width: 951px) {
     .delete-course-modal {
       left: 66%;
@@ -267,15 +273,15 @@
       left: 67%;
     }
   } */
-  
+
   @media screen and (max-width: 500px) {}
-  
+
   @media screen and (max-width: 500px) {}
-  
+
   @media screen and (max-width: 500px) {}
-  
+
   @media screen and (max-width: 500px) {}
-  
+
   @media screen and (max-width: 500px) {}
 
 
@@ -289,37 +295,45 @@
     justify-content: center;
     color: var(--primaryClr);
   }
-  .DraftCourses-pagination-laoding{
+
+  .DraftCourses-pagination-laoding {
     bottom: 0;
     top: 0;
     left: 0;
     right: 0;
     position: absolute;
     margin-bottom: 50px;
-   
+
   }
-  .paginationBtns button:hover{
-        background: black,
+
+  .paginationBtns button:hover {
+    background: black,
   }
+
   .paginationBtns button {
-        cursor: pointer;
-      /* background: var(--secondaryClr); */
-      font-size: 16px;
-      height: 40px;
-      width: 10px;
-      color: var(--primaryClr);
-      border: none;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    cursor: pointer;
+    /* background: var(--secondaryClr); */
+    font-size: 16px;
+    height: 40px;
+    width: 10px;
+    color: var(--primaryClr);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .pagination a:hover:not(.active) {background-color: #ddd;}
+
+  .pagination a:hover:not(.active) {
+    background-color: #ddd;
+  }
+
   .paginationBtns button:disabled {
     opacity: 0.5;
     cursor: no-drop;
   }
-.DraftCourses-laoding{
+
+  .DraftCourses-laoding {
 
     display: flex;
     align-items: center;
@@ -327,5 +341,5 @@
     flex-direction: column;
     color: white;
     /* border-style: dashed; */
-    height:calc( 70vh - 195.274px ) ;
-}
+    height: calc(70vh - 195.274px);
+  }

@@ -100,6 +100,7 @@ const SortableItemLesson = (props) => {
       .then((res) => {
         console.log(res.data)
         dispatch(setLessonData(null))
+        dispatch(setLessonState(false))
         getChaptersListApiCall();
         successfulMessage("Lesson deleted successfully")
 

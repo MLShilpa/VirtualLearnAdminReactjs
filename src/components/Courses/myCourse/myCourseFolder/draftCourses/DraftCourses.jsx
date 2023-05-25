@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import { purple } from "@mui/material/colors";
 import Loading from "../../../../../utils/loading/loading";
-import { setAccState, setAddCourseState, setCourseChaptersAndOverviewDataNull, setCourseId } from "../../../../../redux/reducers/addCourseState";
+import { setAccState, setAddCourseState, setCourseChaptersAndOverviewDataNull, setCourseId, setSelectedChapterId } from "../../../../../redux/reducers/addCourseState";
 
 const theme = createTheme({
   palette: {
@@ -192,6 +192,7 @@ const DraftCourses = () => {
                         dispatch(setCourseId(res?._id))
                         dispatch(setCourseChaptersAndOverviewDataNull())
                         navigate("/DashBoard/MyCourses/CourseDetail");
+                        dispatch(setSelectedChapterId(""))
                       }}
                     >
                       <div className="DraftCourses-Title">
@@ -258,7 +259,6 @@ const DraftCourses = () => {
                             {/* {res?.createdAt.slice(11, 16)} */}
 
                             {istDateTime}
-
 
                           </div>
                           <aside
