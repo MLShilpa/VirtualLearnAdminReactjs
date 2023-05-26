@@ -12,16 +12,16 @@ const ToggleSwitch = (props) => {
     if(props.value){
       if (props.label === "option_1") {
         dispatch(setOption1State({ index: props.index, optionState: true }));
-        dispatch(correctAns({ index: props.index, label: props.label }));
+        dispatch(correctAns({ index: props.index, label: props.label, optionIndex:0 }));
       } else if (props.label === "option_2") {
         dispatch(setOption2State({ index: props.index, optionState: true }));
-        dispatch(correctAns({ index: props.index, label: props.label }));
+        dispatch(correctAns({ index: props.index, label: props.label,optionIndex:1 }));
       } else if (props.label === "option_3") {
         dispatch(setOption3State({ index: props.index, optionState: true }));
-        dispatch(correctAns({ index: props.index, label: props.label }));
+        dispatch(correctAns({ index: props.index, label: props.label,optionIndex:2 }));
       } else if (props.label === "option_4") {
         dispatch(setOption4State({ index: props.index, optionState: true }));
-        dispatch(correctAns({ index: props.index, label: props.label }));
+        dispatch(correctAns({ index: props.index, label: props.label,optionIndex:3 }));
       }
     } else {
 

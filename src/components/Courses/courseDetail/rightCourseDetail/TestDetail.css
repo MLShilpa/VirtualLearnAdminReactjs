@@ -26,6 +26,7 @@
 .TestDetail-containItem {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .TestDetail-head {
     font-style: normal;
@@ -167,7 +168,12 @@ input.TestDetail-question-options {
   letter-spacing: 0.5px;
 }
 
-
+.testDetail-deleteSvg{
+  fill: transparent;
+}
+.testDetail-deleteSvg:hover{
+  fill:#f9f9f9;
+}
 
 
 

@@ -2,7 +2,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteWithoutFill, testImage } from "../../../../assets/icons/svgIcons";
+import { deleteRed, testImage } from "../../../../assets/icons/svgIcons";
 import { setAccState, setChapterState, setCourseChapterData, setCourseId, setCourseState, setLessonState, setOverViewDataADC, setTestState, setEditState, setSelectedChapterId } from "../../../../redux/reducers/addCourseState";
 import { setChapterData, setLessonData } from "../../../../redux/reducers/overViewSlice";
 import { addIconWhite } from "../../../../utils/icons";
@@ -222,7 +222,7 @@ export const SortableItem = (props) => {
                   // alert("delete arrow presed")
                 }}
               >
-                {deleteWithoutFill}
+                {deleteRed("deleteSvg")}
               </div>
 
               <Modal
@@ -349,7 +349,7 @@ export const SortableItem = (props) => {
                     </div>
                     Add Lesson
                   </div>
-                  {props.items.test ? null : (
+                  {props.items?.Questions && props.items?.Questions.length > 0 ? null : (
                     <>
                       <div
                         className="leftCourseDetail-addBtn"
@@ -384,8 +384,7 @@ export const SortableItem = (props) => {
 
                       <div className="accordian-item-section-2-para-test">
                         <span className="accordian-item-chapter-title">
-                          {props.items?.Questions?.testTitle} bcju biew biweu iqb bci
-                          bciqa kquwB
+                          {props.items?.Questions?.testTitle}
                         </span>
 
                         <div className="accordian-item-section-2-buttons-test">
@@ -400,7 +399,7 @@ export const SortableItem = (props) => {
                                 // alert("delete  presed");
                               }}
                             >
-                              {deleteWithoutFill}
+                              {deleteRed("deleteSvg")}
                             </div>
                             <div
                               className="leftCourseDetail-edit"

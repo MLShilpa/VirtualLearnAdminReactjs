@@ -1,7 +1,7 @@
 import "./LeftCouseDetailList.css";
 import { NavLink, Outlet } from "react-router-dom";
 import {
-  deleteWithoutFill,
+  deleteRed,
   inactiveIcon,
   testImage,
   videoPlayActive,
@@ -221,7 +221,7 @@ const LeftCouseDetailList = () => {
                   // alert("delete pressed")
                 }}
               >
-                {deleteWithoutFill}
+                {deleteRed("deleteSvg")}
               </div>
               <Modal
                 isOpen={modalIsOpen}

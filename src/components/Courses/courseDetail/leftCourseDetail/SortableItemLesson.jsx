@@ -24,7 +24,7 @@ import {
   setEditState
 } from "../../../../redux/reducers/addCourseState";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteWithoutFill } from "../../../../assets/icons/svgIcons";
+import { deleteRed } from "../../../../assets/icons/svgIcons";
 import { setLessonData } from "../../../../redux/reducers/overViewSlice";
 import { getLesson, getCourseChaptersApi } from "../../../autherisation/auth";
 import axios from 'axios'
@@ -144,7 +144,7 @@ const SortableItemLesson = (props) => {
 
                 }}
               >
-                {deleteWithoutFill}
+             {deleteRed("deleteSvg")}
               </div>
               <div
                 className="leftCourseDetail-edit"
