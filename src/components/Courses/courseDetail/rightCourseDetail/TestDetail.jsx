@@ -22,11 +22,13 @@ import {
   optionThree,
   optionTwo,
   setPassingGrade,
+  setQuestionsList,
   setTestDuration,
   setToggleAndCorrAnsNull,
   storeTest,
   testQuestion,
 } from "../../../../redux/reducers/testSlice";
+import { deleteRed } from "../../../../assets/icons/svgIcons";
 const TestDetail = () => {
   const [accordian, setAccordian] = useState(false);
   const [counter, setCounter] = useState(0);
@@ -50,13 +52,15 @@ const TestDetail = () => {
   };
 
   const courseID = useSelector((state) => state.courseId.courseId);
-
-  // console.log("course Id new", courseID);
+  const chapterId = useSelector(
+    (state) => state.addCourseState.selectedChapterId
+  );
+  // console.log("course Id new", questionData);
 
   // useEffect(() => {
   //   axios
   //     .get(
-  //       `http://virtuallearnadmin-env.eba-vvpawj4n.ap-south-1.elasticbeanstalk.com/admin/chapterList?courseId=${courseID}`,
+  //       `{{URL}}/api/v1/chapter_questions?chapterId=${chapterId}`,
   //       {
   //         headers: {
   //           Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -75,11 +79,15 @@ const TestDetail = () => {
   //       //   progress: undefined,
   //       //   theme: 'colored',
   //       // })
+  //       // console.log('data', res.data.question.Questions)
   //       // console.log('data', res.data)
+  // if(res.data && res.data.question && res.data.question.Questions && res.data.question.Questions.length>0){
+  // dispatch(setQuestionsList(res.data.question.Questions))
+  // }
   //       setQandA(res.data);
   //       setChapterId(res.data[0].chapterId);
   //     });
-  // }, []);
+  // }, [chapterId]);
   // console.log("QandA", QandA);
 
   const questionHandler = (e) => {
@@ -94,8 +102,7 @@ const TestDetail = () => {
     //       data: {
     //         testDuration: duration,
     //         passingGrade: passing,
-    //         chapterId,
-    //         testName: chapterName,
+    //         _id:chapterId,
     //         Questions: questionData.Questions,
     //       },
     //     }
@@ -151,10 +158,10 @@ const TestDetail = () => {
                   maxLength={2}
                   onChange={(e) => {
                     if (Number(e.target.value) > 100) {
-                      dispatch(setTestDuration(100))
+                      dispatch(setTestDuration(100));
                       // setState(100);
                     } else {
-                      dispatch(setTestDuration("" + Number(e.target.value)))
+                      dispatch(setTestDuration("" + Number(e.target.value)));
                       // setState("" + Number(e.target.value));
                     }
                   }}
@@ -181,10 +188,10 @@ const TestDetail = () => {
                   maxLength={2}
                   onChange={(e) => {
                     if (Number(e.target.value) > 100) {
-                      dispatch(setPassingGrade(100))
+                      dispatch(setPassingGrade(100));
                       // setState(100)
                     } else {
-                      dispatch(setPassingGrade("" + Number(e.target.value)))
+                      dispatch(setPassingGrade("" + Number(e.target.value)));
                       // setState("" + Number(e.target.value));
                     }
                   }}
@@ -218,7 +225,7 @@ const TestDetail = () => {
                                     e.stopPropagation();
                                   }}
                                   multiple={true}
-                                  value={item?.questionName}
+                                  value={item?.question}
                                   type="text"
                                   placeholder="Question"
                                   autoComplete="off"
@@ -234,45 +241,42 @@ const TestDetail = () => {
                                   }}
                                 />
                               </div>
-                              {/* <div className="QandA-delete">
-                                    {" "}
+                              <div className="QandA-delete">
                                     <button
                                       type="button"
                                       className="TestDetail-button"
                                       onClick={() => {
                                         alert("delete");
                                         // dispatch(
-                                        //   deleteStatus({
-                                        //     index: index,
-                                        //     deleteStatus: true,
-                                        //   })
                                         // );
                                       }}
                                     >
                                       <svg
                                         width={37}
-                                        height={36}
+                                        height={37}
                                         fill="none"
                                         xmlns="http://www.w3.org/2000/svg"
                                       >
                                         <path
                                           d="M24.296 13.5v15H12.148v-15h12.148zm-2.278-9h-7.593L12.907 6H7.592v3h21.259V6h-5.315l-1.518-1.5zm5.314 6H9.111v18c0 1.65 1.366 3 3.037 3h12.148c1.67 0 3.037-1.35 3.037-3v-18z"
-                                          fill="#000"
+                                          fill="red"
                                         />
                                       </svg>
+                                      {/* {deleteRed("testDetail-deleteSvg")} */}
                                     </button>
-                                  </div> */}
+                                  </div>
                             </div>
                           </div>
                           <div className="TestDetail-question-container">
                             {" "}
                             <div className="TestDetail-options">
                               <input
+                                id="Option_1"
                                 type="text"
                                 className="TestDetail-question-options"
                                 placeholder="Option 1"
                                 required
-                                value={item?.option_1}
+                                value={item?.options[0].option}
                                 autoComplete="off"
                                 onChange={(e) => {
                                   dispatch(
@@ -290,17 +294,18 @@ const TestDetail = () => {
                               <ToggleSwitch
                                 label="option_1"
                                 index={index}
-                                toggleState={item?.option1_State}
-                                value={item?.option_1}
+                                toggleState={item?.options[0].isAnswer}
+                                value={item?.options[0].option}
                               />
                             </div>
                             <div className="TestDetail-options">
                               <input
+                                id="Option_2"
                                 type="text"
                                 className="TestDetail-question-options"
                                 placeholder="Option 2"
                                 required
-                                value={item?.option_2}
+                                value={item?.options[1].option}
                                 autoComplete="off"
                                 onChange={(e) => {
                                   dispatch(
@@ -318,17 +323,18 @@ const TestDetail = () => {
                               <ToggleSwitch
                                 label="option_2"
                                 index={index}
-                                toggleState={item?.option2_State}
-                                value={item?.option_2}
+                                toggleState={item?.options[1].isAnswer}
+                                value={item?.options[1].option}
                               />
                             </div>
                             <div className="TestDetail-options">
                               <input
+                                id="Option_3"
                                 type="text"
                                 className="TestDetail-question-options"
                                 placeholder="Option 3"
                                 required
-                                value={item?.option_3}
+                                value={item?.options[2].option}
                                 autoComplete="off"
                                 onChange={(e) => {
                                   dispatch(
@@ -346,8 +352,8 @@ const TestDetail = () => {
                               <ToggleSwitch
                                 label="option_3"
                                 index={index}
-                                toggleState={item?.option3_State}
-                                value={item?.option_3}
+                                toggleState={item?.options[2].isAnswer}
+                                value={item?.options[2].option}
                               />
                             </div>
                             <div className="TestDetail-options">
@@ -357,7 +363,7 @@ const TestDetail = () => {
                                 className="TestDetail-question-options"
                                 placeholder="Option 4"
                                 required
-                                value={item?.option_4}
+                                value={item?.options[3].option}
                                 autoComplete="off"
                                 onChange={(e) => {
                                   dispatch(
@@ -375,8 +381,8 @@ const TestDetail = () => {
                               <ToggleSwitch
                                 label="option_4"
                                 index={index}
-                                toggleState={item?.option4_State}
-                                value={item?.option_4}
+                                toggleState={item?.options[3].isAnswer}
+                                value={item?.options[3].option}
                               />
                             </div>
                           </div>
@@ -398,17 +404,26 @@ const TestDetail = () => {
                       // passingGrade: '75',
                       dispatch(
                         storeTest({
-                          questionName: "",
-                          option_1: "",
-                          option_2: "",
-                          option_3: "",
-                          option_4: "",
-                          option1_State: false,
-                          option2_State: false,
-                          option3_State: false,
-                          option4_State: false,
-                          correctAnswer: "",
-                          deleteStatus: false,
+                          question: "",
+                          options: [
+                            {
+                              option: "",
+                              isAnswer: false,
+                            },
+                            {
+                              option: "",
+                              isAnswer: false,
+                            },
+                            {
+                              option: "",
+                              isAnswer: false,
+                            },
+                            {
+                              option: "",
+                              isAnswer: false,
+                            },
+                          ],
+                          answer: "",
                         })
                       );
                     }}

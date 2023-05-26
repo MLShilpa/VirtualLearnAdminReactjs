@@ -180,7 +180,7 @@ const DummyFileRight = () => {
       )
       // console.log("res", fetchedData);
       getChaptersListApiCall();
-      successfulMessage('Course created successfully')
+      successfulMessage('Course edited successfully')
       dispatch(setCourseState(false));
       return fetchedData;
     } catch (err) {

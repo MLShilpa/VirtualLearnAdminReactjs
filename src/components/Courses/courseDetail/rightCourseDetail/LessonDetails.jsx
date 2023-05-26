@@ -65,7 +65,7 @@ const LessonDetails = () => {
       setSelectedVideoUrl(lessonData === "" ? "" : lessonData?.lessonDetails[0]?.lesson[0]?.link[0]);
     }
 
-  }, [lessonData])
+  }, [lessonData && selectedType])
 
   useEffect(() => {
     setLessonName(lessonData === "" ? "" : lessonData?.lessonDetails[0]?.lesson[0]?.lessonName);
@@ -476,3 +476,4 @@ const LessonDetails = () => {
 };
 
 export default LessonDetails;
+
