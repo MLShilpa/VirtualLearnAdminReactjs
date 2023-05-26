@@ -14,7 +14,11 @@ export const testSlice = createSlice({
   reducers: {
     storeTest: (state, action) => {
       state.Questions = [...state.Questions, action.payload];
-      console.log("state.Questions", state.Questions);
+      // console.log("state.Questions", state.Questions);
+    },
+    setQuestionsList: (state, action) => {
+      state.Questions = action.payload;
+      // console.log("state.Questions", state.Questions);
     },
     setTestId: (state, action) => {
       state.testId =action.payload;
@@ -26,64 +30,64 @@ export const testSlice = createSlice({
       state.passingGrade =action.payload;
     },
     testQuestion: (state, action) => {
-      state.Questions[action.payload.index].questionName =
+      state.Questions[action.payload.index].question =
         action.payload.question;
     },
     optionOne: (state, action) => {
-      state.Questions[action.payload.index].option_1 =
+        state.Questions[action.payload.index].options[0].option =
         action.payload.option_1;
     },
     optionTwo: (state, action) => {
-      state.Questions[action.payload.index].option_2 =
+        state.Questions[action.payload.index].options[1].option =
         action.payload.option_2;
     },
     optionThree: (state, action) => {
-      state.Questions[action.payload.index].option_3 =
+        state.Questions[action.payload.index].options[2].option =
         action.payload.option_3;
     },
     optionFour: (state, action) => {
-      state.Questions[action.payload.index].option_4 =
+        state.Questions[action.payload.index].options[3].option =
         action.payload.option_4;
+
     },
     correctAns: (state, action) => {
-      state.Questions[action.payload.index].correctAnswer =
-        state.Questions[action.payload.index][action.payload.label];
+        state.Questions[action.payload.index].answer =
+        state.Questions[action.payload.index].options[action.payload.optionIndex].option;
     },
     deleteStatus: (state, action) => {
       state.Questions[action.payload.index].deleteStatus =
         action.payload.deleteStatus;
     },
     setOption1State: (state, action) => {
-      state.Questions[action.payload.index].option1_State = action.payload.optionState;
-      state.Questions[action.payload.index].option2_State = false;
-      state.Questions[action.payload.index].option3_State = false;
-      state.Questions[action.payload.index].option4_State = false;
+      state.Questions[action.payload.index].options[0].isAnswer = action.payload.optionState;
+      state.Questions[action.payload.index].options[1].isAnswer = false;
+      state.Questions[action.payload.index].options[2].isAnswer = false;
+      state.Questions[action.payload.index].options[3].isAnswer = false;
     },
     setOption2State: (state, action) => {
-      state.Questions[action.payload.index].option1_State = false;
-      state.Questions[action.payload.index].option2_State = action.payload.optionState;
-      state.Questions[action.payload.index].option3_State = false;
-      state.Questions[action.payload.index].option4_State = false;
+      state.Questions[action.payload.index].options[0].isAnswer = false;
+      state.Questions[action.payload.index].options[1].isAnswer = action.payload.optionState;
+      state.Questions[action.payload.index].options[2].isAnswer = false;
+      state.Questions[action.payload.index].options[3].isAnswer = false;
     },
-    setOption3State: (state, action) => {
-      state.Questions[action.payload.index].option1_State = false;
-      state.Questions[action.payload.index].option2_State = false;
-      state.Questions[action.payload.index].option3_State = action.payload.optionState;
-      state.Questions[action.payload.index].option4_State = false;
+    setOption3State: (state, action) => {        
+      state.Questions[action.payload.index].options[0].isAnswer = false;
+      state.Questions[action.payload.index].options[1].isAnswer = false;
+      state.Questions[action.payload.index].options[2].isAnswer = action.payload.optionState;
+      state.Questions[action.payload.index].options[3].isAnswer = false;
     },
     setOption4State: (state, action) => {
-      state.Questions[action.payload.index].option1_State = false;
-      state.Questions[action.payload.index].option2_State = false;
-      state.Questions[action.payload.index].option3_State = false;
-      state.Questions[action.payload.index].option4_State = action.payload.optionState;
+      state.Questions[action.payload.index].options[0].isAnswer = false;
+      state.Questions[action.payload.index].options[1].isAnswer = false;
+      state.Questions[action.payload.index].options[2].isAnswer = false;
+      state.Questions[action.payload.index].options[3].isAnswer = action.payload.optionState;
     },
     setToggleAndCorrAnsNull:(state, action) => {
-      state.Questions[action.payload.index].option1_State = false;
-      state.Questions[action.payload.index].option2_State = false;
-      state.Questions[action.payload.index].option3_State = false;
-      state.Questions[action.payload.index].option4_State = false;
-      state.Questions[action.payload.index].correctAnswer = "";
-      // console.log("done")
+      state.Questions[action.payload.index].options[0].isAnswer = false;
+      state.Questions[action.payload.index].options[1].isAnswer = false;
+      state.Questions[action.payload.index].options[2].isAnswer = false;
+      state.Questions[action.payload.index].options[3].isAnswer = false;
+      state.Questions[action.payload.index].answer = "";
     },
     resetTestData: () => initialState,
   },
@@ -91,6 +95,7 @@ export const testSlice = createSlice({
 
 export const {
   storeTest,
+  setQuestionsList,
   setPassingGrade,
   setTestDuration,
   setTestId,

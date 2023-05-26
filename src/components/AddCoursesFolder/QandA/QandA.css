@@ -229,6 +229,16 @@ button.QandA-ButtonEdit {
   padding: 6px 61px;
 }
 
+.button.QandA-Button.disabled {
+  filter: blur(3px);
+  /* Additional styles for the disabled button */
+}
+
+.button.QandA-ButtonEdit.disabled {
+  filter: blur(3px);
+  /* Additional styles for the disabled button */
+}
+
 .QandA-buttonSave {
   display: flex;
   justify-content: flex-end;

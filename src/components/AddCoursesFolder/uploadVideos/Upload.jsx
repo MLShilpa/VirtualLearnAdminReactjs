@@ -24,7 +24,6 @@ import {
 import Loading from '../../../utils/loading/loading'
 import { chapterName, storechapter } from '../../../redux/reducers/chapterSlice'
 import { storecourseId } from '../../../redux/reducers/courseIdSlice'
-
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { addIcon } from '../../../utils/icons'

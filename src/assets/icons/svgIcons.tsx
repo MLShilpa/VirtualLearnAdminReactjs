@@ -64,12 +64,13 @@ export const testImage = (
   </svg>
 )
 
-export const deleteWithoutFill = (
+export const deleteRed = (deleteSvg: any) => {
+  return (
   <svg
     width={36}
     height={36}
     xmlns="http://www.w3.org/2000/svg"
-    className="deleteSvg"
+    className={deleteSvg}
   >
     <path
       d="M18 36c9.941 0 18-8.059 18-18S27.941 0 18 0 0 8.059 0 18s8.059 18 18 18z"
@@ -78,5 +79,5 @@ export const deleteWithoutFill = (
       d="M22 16v10h-8V16h8zm-1.5-6h-5l-1 1H11v2h14v-2h-3.5l-1-1zm3.5 4H12v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V14z"
       fill="red"
     />
-  </svg>
-)
+  </svg>)
+}

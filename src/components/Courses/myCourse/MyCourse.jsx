@@ -15,6 +15,7 @@ import {
   setAccState,
   setAddCourseState,
   setCourseId,
+  setEditState
 } from "../../../redux/reducers/addCourseState";
 const MyCourse = () => {
   const navigate = useNavigate();
@@ -57,20 +58,23 @@ const MyCourse = () => {
             className="myCourse-addBtn"
             to="CourseDetail"
             onClick={() => {
-                        dispatch(setAddCourseState())
-                        dispatch(setCourseId())
+              dispatch(setAddCourseState())
+              dispatch(setCourseId())
               console.log("pressed");
             }}
           >
             <div className="myCourse-addBtn-icon">{addIconWhite}</div>
-            <div className="myCourse-addText">Add Course</div>
+            <div className="myCourse-addText" onClick={() => {
+              dispatch(setEditState("save"));
+            }
+            }>Add Course</div>
           </NavLink>
-        </div>
+        </div >
 
         <div className="myCourse-body">
           <Outlet />
         </div>
-      </div>
+      </div >
       {/* </>:<>
     </>} */}
     </>

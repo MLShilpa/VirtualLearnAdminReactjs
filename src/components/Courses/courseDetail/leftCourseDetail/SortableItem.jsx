@@ -1,13 +1,14 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteWithoutFill, testImage } from "../../../../assets/icons/svgIcons";
-import { setAccState, setChapterState, setCourseChapterData, setCourseId, setCourseState, setLessonState, setOverViewDataADC, setTestState } from "../../../../redux/reducers/addCourseState";
+import { deleteRed, testImage } from "../../../../assets/icons/svgIcons";
+import { setAccState, setChapterState, setCourseChapterData, setCourseId, setCourseState, setLessonState, setOverViewDataADC, setTestState, setEditState, setSelectedChapterId } from "../../../../redux/reducers/addCourseState";
 import { setChapterData, setLessonData } from "../../../../redux/reducers/overViewSlice";
 import { addIconWhite } from "../../../../utils/icons";
+import Modal from "react-modal";
 import axios from 'axios'
-// import Card from "react-bootstrap/Card";
+import { errorMessage, successfulMessage } from "../../../toastMesaage/ToastMessage";
 import Container from "react-bootstrap/Container";
 import {
   DndContext,
@@ -29,6 +30,17 @@ import { resetTestData } from "../../../../redux/reducers/testSlice";
 import { Base_Url } from "../../../../utils/baseUrl";
 
 export const SortableItem = (props) => {
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   const {
     attributes,
     listeners,
@@ -54,14 +66,14 @@ export const SortableItem = (props) => {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
-  const [lessons, setLessons] = useState(
-    props.items.lesson
-  );
-  useEffect(()=>{
-    setLessons(props.items.lesson)
-  },[props &&props.items && props.items.lesson])
+  const [lessons, setLessons] = useState(props.items.lesson);
 
-  
+  useEffect(() => {
+
+    setLessons(props.items.lesson)
+
+  }, [props && props.items && props.items.lesson])
+
   function handleDragEndLesson(event) {
     // console.log("Drag end called");
     const { active, over } = event;
@@ -107,6 +119,7 @@ export const SortableItem = (props) => {
       }
       if (response && response.courseChapters) {
         dispatch(setCourseChapterData(response.courseChapters));
+
       }
     }
   };
@@ -138,9 +151,11 @@ export const SortableItem = (props) => {
         getChaptersListApiCall();
         dispatch(setChapterData(null))
         dispatch(setChapterState(false))
+        successfulMessage("Chapter deleted successfully")
       })
       .catch((err) => {
         console.log(err)
+        errorMessage("Chapter deletion failed")
         // alert('Some error occured')
       })
   };
@@ -170,7 +185,10 @@ export const SortableItem = (props) => {
             dispatch(setAccState(props.id1))
           }}
         >
-          <div className="course-accordian-heading">
+          <div className="course-accordian-heading" onClick={() => {
+            dispatch(setSelectedChapterId(props.items?._id))
+            // console.log(props.items?._id)
+          }}>
             <div className="course-accordian-container">
               <span className="course-accordian-container-title">
                 Chapter {props.id1 + 1} - {props.items.chapterName}{" "}
@@ -196,13 +214,60 @@ export const SortableItem = (props) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   // getChapterDetailApiCall(props.items, props.id1);
-                  deleteChapter(props.items, props.id1);
+                  openModal();
+                  // deleteChapter(props.items, props.id1);
 
                   // alert("delete arrow presed")
                 }}
               >
-                {deleteWithoutFill}
+                {deleteRed("deleteSvg")}
               </div>
+
+              <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                contentLabel="Example Modal"
+                ariaHideApp={false}
+                className="DraftCourses-delete-course-modal"
+                // overlayClassName="Overlay"
+                parentSelector={() =>
+                  document.querySelector("#root")
+                }
+              >
+                <div className="DraftCourses-delete-course-modal-content">
+                  <div className="DraftCourses-deleteCourse">
+                    Delete Course
+                  </div>
+                  <div className="DraftCourses-deleteContent">
+                    Are you sure you want to delete the course
+                    <strong style={{ textTransform: "capitalize" }}>
+                      {" "}
+                      {props.items.chapterName}
+                    </strong>{" "}
+                    from the Draft Courses ?
+                  </div>
+                  <div className="DraftCourses-buttons">
+                    <button
+                      onClick={closeModal}
+                      className="DraftCourses-cancel"
+                    >
+                      Cancel
+                    </button>
+
+                    <button
+                      className="DraftCourses-delete"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteChapter(props.items, props.id1);
+                        closeModal();
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </Modal>
+
               <div
                 className="leftCourseDetail-edit"
                 onClick={(e) => {
@@ -211,6 +276,7 @@ export const SortableItem = (props) => {
                   dispatch(setTestState(false));
                   dispatch(setLessonState(false));
                   dispatch(setCourseState(false));
+                  dispatch(setEditState("edit"));
                   getChapterDetailApiCall(props.items, props.id1);
                   // alert("edit presed")
                 }}
@@ -243,8 +309,8 @@ export const SortableItem = (props) => {
                       e.stopPropagation();
                     }}
                   >
-                    {lessons && lessons.length > 0 && 
-                        <SortableContext
+                    {lessons && lessons.length > 0 &&
+                      <SortableContext
                         items={lessons?.map((item) => item._id)}
                         strategy={verticalListSortingStrategy}
                       >
@@ -258,7 +324,6 @@ export const SortableItem = (props) => {
                         ))}
                       </SortableContext>
                     }
-                
                   </Container>
                 </DndContext>
                 <div
@@ -269,7 +334,8 @@ export const SortableItem = (props) => {
                     dispatch(setLessonState(true));
                     dispatch(setChapterState(false));
                     dispatch(setTestState(false));
-                    dispatch(setCourseState(false))
+                    dispatch(setLessonData(""))
+                    dispatch(setEditState("save"));
                     // alert("edit arrow presed")
                   }}
                 >
@@ -279,7 +345,7 @@ export const SortableItem = (props) => {
                     </div>
                     Add Lesson
                   </div>
-                  {props.items.test ? null : (
+                  {props.items?.Questions && props.items?.Questions.length > 0 ? null : (
                     <>
                       <div
                         className="leftCourseDetail-addBtn"
@@ -314,8 +380,7 @@ export const SortableItem = (props) => {
 
                       <div className="accordian-item-section-2-para-test">
                         <span className="accordian-item-chapter-title">
-                          {props.items?.Questions?.testTitle} bcju biew biweu iqb bci
-                          bciqa kquwB
+                          {props.items?.Questions?.testTitle}
                         </span>
 
                         <div className="accordian-item-section-2-buttons-test">
@@ -330,7 +395,7 @@ export const SortableItem = (props) => {
                                 // alert("delete  presed");
                               }}
                             >
-                              {deleteWithoutFill}
+                              {deleteRed("deleteSvg")}
                             </div>
                             <div
                               className="leftCourseDetail-edit"
