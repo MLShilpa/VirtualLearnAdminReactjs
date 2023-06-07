@@ -1,51 +1,51 @@
-import './QandA.css'
+import "./QandA.css";
 import {
   Accordion,
   AccordionItem,
   AccordionItemHeading,
   AccordionItemButton,
   AccordionItemPanel,
-} from 'react-accessible-accordion'
-import { useState, useEffect } from 'react'
-import 'react-accessible-accordion/dist/fancy-example.css'
-import ToggleSwitch from '../toggleSwitch/ToggleSwitch'
-import axios from 'axios'
+} from "react-accessible-accordion";
+import { useState, useEffect } from "react";
+import "react-accessible-accordion/dist/fancy-example.css";
+import ToggleSwitch from "../toggleSwitch/ToggleSwitch";
+import axios from "axios";
 import {
   deleteStatus,
   optionFour,
   optionOne,
   optionThree,
   optionTwo,
-  storeTest,
+  storeTests,
   testQuestion,
-} from '../../../redux/reducers/testSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import { reset } from '../../../redux/reducers/overViewSlice'
+} from "../../../redux/reducers/testSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { reset } from "../../../redux/reducers/overViewSlice";
 
 const QandA = () => {
-  const [accordian, setAccordian] = useState(false)
-  const [counter, setCounter] = useState(0)
-  const [answer, setAnswer] = useState('')
-  const [QandA, setQandA] = useState([])
+  const [accordian, setAccordian] = useState(false);
+  const [counter, setCounter] = useState(0);
+  const [answer, setAnswer] = useState("");
+  const [QandA, setQandA] = useState([]);
 
-  const [passing, setPassing] = useState('75')
-  const [duration, setDuration] = useState('00:07:00')
+  const [passing, setPassing] = useState("75");
+  const [duration, setDuration] = useState("00:07:00");
 
-  const dispatch = useDispatch()
-  const questionData = useSelector((state) => state.test)
+  const dispatch = useDispatch();
+  const questionData = useSelector((state) => state.test);
   const addNewHAndler = () => {
-    setCounter(counter + 1)
+    setCounter(counter + 1);
     // console.log(counter)
-  }
+  };
   const childToParent = (childdata) => {
-    setAnswer(childdata)
-  }
+    setAnswer(childdata);
+  };
 
-  const courseID = useSelector((state) => state.courseId.courseId)
+  const courseID = useSelector((state) => state.courseId.courseId);
 
-  console.log('course Id new', courseID)
+  console.log("course Id new", courseID);
 
   useEffect(() => {
     axios
@@ -53,9 +53,9 @@ const QandA = () => {
         `http://virtuallearnadmin-env.eba-vvpawj4n.ap-south-1.elasticbeanstalk.com/admin/chapterList?courseId=${courseID}`,
         {
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
           },
-        },
+        }
       )
       .then((res) => {
         // alert('data')
@@ -70,22 +70,22 @@ const QandA = () => {
         //   theme: 'colored',
         // })
         // console.log('data', res.data)
-        setQandA(res.data)
-        setChapterId(res.data[0].chapterId)
-      })
-  }, [])
-  console.log('QandA', QandA)
+        setQandA(res.data);
+        setChapterId(res.data[0].chapterId);
+      });
+  }, []);
+  console.log("QandA", QandA);
   const [chapterName, setChapterName] = useState(
-    QandA && QandA.length > 0 && QandA[0].chapterName,
-  )
+    QandA && QandA.length > 0 && QandA[0].chapterName
+  );
 
   useEffect(() => {
-    QandA && QandA.length > 0 && setChapterName(QandA[0].chapterName)
-  }, [QandA])
+    QandA && QandA.length > 0 && setChapterName(QandA[0].chapterName);
+  }, [QandA]);
 
   const [chapterId, setChapterId] = useState(
-    QandA && QandA.length > 0 && QandA[0].chapterId,
-  )
+    QandA && QandA.length > 0 && QandA[0].chapterId
+  );
 
   const questionHandler = (e) => {
     // alert('alert')
@@ -98,9 +98,9 @@ const QandA = () => {
         `http://virtuallearnadmin-env.eba-vvpawj4n.ap-south-1.elasticbeanstalk.com/admin/addTest`,
         {
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
           },
-          method: 'post',
+          method: "post",
           data: {
             testDuration: duration,
             passingGrade: passing,
@@ -108,28 +108,28 @@ const QandA = () => {
             testName: chapterName,
             questionRequests: questionData.questionRequests,
           },
-        },
+        }
       )
       .then((res) => {
-        console.log('overview result success', res)
+        console.log("overview result success", res);
         // alert(res && res.data && res.data.message && res.data.message)
-        toast.success('Test added successfully', {
-          position: 'top-center',
+        toast.success("Test added successfully", {
+          position: "top-center",
           autoClose: 5000,
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: 'colored',
-        })
-        dispatch(reset())
+          theme: "colored",
+        });
+        dispatch(reset());
       })
       .catch((err) => {
-        console.log('over view result error', err)
-        alert('Some error occured')
-      })
-  }
+        console.log("over view result error", err);
+        alert("Some error occured");
+      });
+  };
 
   return (
     <div>
@@ -137,22 +137,23 @@ const QandA = () => {
         <button
           className="QandA-addNewBtn"
           onClick={() => {
-            addNewHAndler()
+            addNewHAndler();
+            // console.log("Dgz");
             // testName: ''
 
             // testDuration: '00:10:00',
             // passingGrade: '75',
             dispatch(
-              storeTest({
-                questionName: '',
-                option_1: '',
-                option_2: '',
-                option_3: '',
-                option_4: '',
-                correctAnswer: '',
+              storeTests({
+                questionName: "",
+                option_1: "",
+                option_2: "",
+                option_3: "",
+                option_4: "",
+                correctAnswer: "",
                 deleteStatus: false,
-              }),
-            )
+              })
+            );
           }}
         >
           Add&nbsp;New&nbsp;+
@@ -163,7 +164,7 @@ const QandA = () => {
           action=""
           className="QandA-formController"
           onSubmit={(e) => {
-            questionHandler(e)
+            questionHandler(e);
           }}
         >
           <div className="container-form">
@@ -175,15 +176,15 @@ const QandA = () => {
                     name="chapter"
                     className="QandA-select"
                     onChange={(e) => {
-                      setChapterId(JSON.parse(e.target.value).id)
-                      setChapterName(JSON.parse(e.target.value).name)
+                      setChapterId(JSON.parse(e.target.value).id);
+                      setChapterName(JSON.parse(e.target.value).name);
                     }}
                   >
                     {QandA &&
                       QandA.length > 0 &&
                       QandA.map((ques, i) => {
                         // setChapterName(ques.chapterName)
-                        console.log('QandA log log', ques)
+                        console.log("QandA log log", ques);
 
                         return (
                           <option
@@ -193,18 +194,18 @@ const QandA = () => {
                             key={i}
                             name="chapter"
                             onChange={(e) => {
-                              setChapterId(ques.chapterId)
+                              setChapterId(ques.chapterId);
                             }}
                           >
                             Chapter {i + 1} - {ques.chapterName}
                           </option>
-                        )
+                        );
                       })}
                   </select>
                 </label>
               </div>
               <div className="QandA-rightSide">
-                Chapters:&nbsp;{QandA.length}{' '}
+                Chapters:&nbsp;{QandA.length}{" "}
               </div>
             </div>
 
@@ -222,11 +223,11 @@ const QandA = () => {
                               </div>
                               <div className="QandA-containerItem">
                                 <div className="QandA-containItem">
-                                  {' '}
+                                  {" "}
                                   <div className="QandA-head">
                                     <input
                                       onKeyDown={(e) => {
-                                        e.stopPropagation()
+                                        e.stopPropagation();
                                       }}
                                       type="text"
                                       placeholder="Question"
@@ -235,8 +236,8 @@ const QandA = () => {
                                       autoComplete="off"
                                       className={
                                         deleteStatus === true
-                                          ? 'QandA-inputText-success'
-                                          : 'QandA-inputText'
+                                          ? "QandA-inputText-success"
+                                          : "QandA-inputText"
                                       }
                                       required
                                       onChange={(e) => {
@@ -244,8 +245,8 @@ const QandA = () => {
                                           testQuestion({
                                             index: index,
                                             question: e.target.value,
-                                          }),
-                                        )
+                                          })
+                                        );
                                       }}
                                     />
                                   </div>
@@ -284,7 +285,7 @@ const QandA = () => {
                         </AccordionItemHeading>
                         <AccordionItemPanel>
                           <div className="question-container">
-                            {' '}
+                            {" "}
                             <div className="QandA-options">
                               <input
                                 type="text"
@@ -297,8 +298,8 @@ const QandA = () => {
                                     optionOne({
                                       index: index,
                                       option_1: e.target.value,
-                                    }),
-                                  )
+                                    })
+                                  );
                                 }}
                               />
 
@@ -316,8 +317,8 @@ const QandA = () => {
                                     optionTwo({
                                       index: index,
                                       option_2: e.target.value,
-                                    }),
-                                  )
+                                    })
+                                  );
                                 }}
                               />
 
@@ -335,8 +336,8 @@ const QandA = () => {
                                     optionThree({
                                       index: index,
                                       option_3: e.target.value,
-                                    }),
-                                  )
+                                    })
+                                  );
                                 }}
                               />
 
@@ -355,8 +356,8 @@ const QandA = () => {
                                     optionFour({
                                       index: index,
                                       option_4: e.target.value,
-                                    }),
-                                  )
+                                    })
+                                  );
                                 }}
                               />
 
@@ -367,7 +368,7 @@ const QandA = () => {
                       </AccordionItem>
                     </Accordion>
                   </div>
-                )
+                );
               })}
 
               <div className="QandA-buttonSave">
@@ -380,7 +381,7 @@ const QandA = () => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default QandA
+export default QandA;

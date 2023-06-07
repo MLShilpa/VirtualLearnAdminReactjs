@@ -62,7 +62,7 @@ button.QandA-button {
   font-family: ProximaNovaSoft-Regular;
 }
 
-.accordion__item+.accordion__item {
+.accordion__item + .accordion__item {
   border-top: none !important;
 }
 
@@ -227,6 +227,21 @@ button.QandA-ButtonEdit {
   color: #ffffff;
   cursor: pointer;
   padding: 6px 61px;
+}
+
+button.QandA-EditQuestion {
+  border: none;
+  background: #178d44;
+  border-radius: 3px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 35px;
+  color: #ffffff;
+  cursor: pointer;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 3px 24px;
 }
 
 .button.QandA-Button.disabled {

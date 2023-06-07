@@ -59,6 +59,7 @@
     border: 1px solid #d5d4dc;
     border-radius: 8px;
     width: 187px;
+    cursor: pointer;
 }
 
 .imgDropDown {
@@ -95,6 +96,7 @@
     overflow: auto;
     z-index: 1;
     top: 3.5rem;
+    /* cursor: pointer; */
 }
 
 .optionsDiv {

@@ -20,7 +20,7 @@ import {
   setOverViewDataADC,
   setTestState,
   setCourseId,
-  setEditState
+  setEditState,
 } from "../../../../redux/reducers/addCourseState";
 import {
   getChaptersLesonsApi,
@@ -54,8 +54,10 @@ import {
 import Modal from "react-modal";
 import axios from "axios";
 import { Base_Url } from "../../../../utils/baseUrl";
-import { errorMessage, successfulMessage } from "../../../toastMesaage/ToastMessage";
-
+import {
+  errorMessage,
+  successfulMessage,
+} from "../../../toastMesaage/ToastMessage";
 
 const LeftCouseDetailList = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -72,7 +74,7 @@ const LeftCouseDetailList = () => {
   // console.log("courseChapterData", courseChapterData);
   useEffect(() => {
     getChaptersListApiCall();
-    console.log("changed")
+    console.log("changed");
   }, [courseId]);
 
   const getChaptersListApiCall = async () => {
@@ -99,17 +101,20 @@ const LeftCouseDetailList = () => {
     })
       .then((res) => {
         // alert(res)
-        successfulMessage("Course deleted successfully")
+        dispatch(setChapterState(false));
+        dispatch(setCourseState(false));
+        dispatch(setLessonState(false));
+        dispatch(setTestState(false));
+        successfulMessage("Course deleted successfully");
         dispatch(setCourseId(""));
       })
       .catch((err) => {
         // alert(err.response.data)
         // alert('error')
-        errorMessage("Course deletion failed")
+        errorMessage("Course deletion failed");
         console.log(err);
       });
-
-  }
+  };
 
   // const getCourseDetailApiCall = async () => {
   //   const response = await getParticularCourses(courseId);
@@ -172,8 +177,8 @@ const LeftCouseDetailList = () => {
   // );
   const [chapters, setChapters] = useState(courseChapterData);
   useEffect(() => {
-    setChapters(courseChapterData)
-  }, [courseChapterData])
+    setChapters(courseChapterData);
+  }, [courseChapterData]);
   function handleDragEnd(event) {
     // console.log("Drag end called");
     const { active, over } = event;
@@ -230,21 +235,12 @@ const LeftCouseDetailList = () => {
                 ariaHideApp={false}
                 className="DraftCourses-delete-course-modal"
                 // overlayClassName="Overlay"
-                parentSelector={() =>
-                  document.querySelector("#root")
-                }
+                parentSelector={() => document.querySelector("#root")}
               >
                 <div className="DraftCourses-delete-course-modal-content">
-                  <div className="DraftCourses-deleteCourse">
-                    Delete Course
-                  </div>
+                  <div className="DraftCourses-deleteCourse">Delete Course</div>
                   <div className="DraftCourses-deleteContent">
                     Are you sure you want to delete the course
-                    <strong style={{ textTransform: "capitalize" }}>
-                      {" "}
-                      {overViewData?.title}
-                    </strong>{" "}
-                    from the Draft Courses ?
                   </div>
                   <div className="DraftCourses-buttons">
                     <button
@@ -258,10 +254,9 @@ const LeftCouseDetailList = () => {
                       className="DraftCourses-delete"
                       onClick={(e) => {
                         e.stopPropagation();
-                        deleteCourse(courseId)
+                        deleteCourse(courseId);
                         dispatch(setCourseState(false));
                         closeModal();
-
                       }}
                     >
                       Delete
@@ -305,24 +300,21 @@ const LeftCouseDetailList = () => {
                     e.stopPropagation();
                   }}
                 >
-                  {chapters && chapters.length > 0 &&
+                  {chapters && chapters.length > 0 && (
                     <SortableContext
                       items={chapters?.map((item) => item._id)}
                       strategy={verticalListSortingStrategy}
                     >
                       {chapters?.map((ele, id) => (
-
                         <SortableItem
                           key={ele._id}
                           id={ele._id}
                           items={ele}
                           id1={id}
                         />
-
                       ))}
                     </SortableContext>
-                  }
-
+                  )}
                 </Container>
               </DndContext>
             </div>

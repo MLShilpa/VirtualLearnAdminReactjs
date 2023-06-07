@@ -1,0 +1,138 @@
+.DraftCourses-delete-courses {
+  background: none;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  /* border-style: dashed; */
+  /* border-color:red;s */
+}
+
+.DraftCourses-delete-course-modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  /* height: 100%; */
+  align-items: center;
+  padding: 35px;
+}
+
+.DraftCourses-delete-course-modal-content .DraftCourses-deleteCourse {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+  text-align: center;
+  color: #1a1a1a;
+}
+
+.DraftCourses-delete-course-modal-content .DraftCourses-deleteContent {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32px;
+  text-align: center;
+  color: #1a1a1a;
+}
+
+.DraftCourses-delete-course-modal-content .DraftCourses-buttons {
+  /* display: flex;
+    gap: 75px; */
+
+  display: flex;
+  gap: 39px;
+  margin-top: 18px;
+}
+
+.DraftCourses-delete-course-modal-content .DraftCourses-buttons button {
+  width: 210px;
+  height: 44px;
+  border-radius: 6px;
+  outline: none;
+}
+
+.DraftCourses-delete-course-modal-content
+  .DraftCourses-buttons
+  .DraftCourses-cancel {
+  border: 1px solid #d5d4dc !important;
+  background: #ffffff;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 35px;
+  text-align: center;
+  color: #111111;
+}
+
+.DraftCourses-delete-course-modal-content
+  .DraftCourses-buttons
+  .DraftCourses-delete {
+  border: none;
+  background: rgba(9, 41, 99, 0.2);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 35px;
+  text-align: center;
+  color: #092963;
+}
+
+.DraftCourses-delete-course-modal {
+  position: absolute;
+  background: #ffffff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-30%, -50%);
+  font-family: var(--primaryFont);
+  background: #fff;
+  border-radius: 12px 12px;
+}
+
+.studentList-container-1 {
+  padding: 0rem !important;
+}
+
+@media screen and (max-width: 855px) {
+  .DraftCourses-delete-course-modal {
+    /* width: 400px !important;
+      height: 270px !important; */
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .DraftCourses-delete-course-modal {
+    width: 400px !important;
+    height: 270px !important;
+    transform: translate(-50%, -50%);
+  }
+
+  .DraftCourses-delete-course-modal-content .DraftCourses-buttons {
+    gap: 11px !important;
+  }
+
+  .DraftCourses-delete-course-modal-content .DraftCourses-buttons button {
+    width: 159px !important;
+  }
+}
+
+@media screen and (max-width: 435px) {
+  .DraftCourses-delete-course-modal {
+    width: 260px !important;
+    height: 270 !important;
+    transform: translate(-50%, -50%);
+  }
+
+  .DraftCourses-delete-course-modal-content .DraftCourses-deleteContent {
+    font-size: 18px !important;
+    line-height: 22px !important;
+  }
+
+  .DraftCourses-delete-course-modal-content .DraftCourses-buttons button {
+    width: 111px !important;
+    height: 37px !important;
+  }
+
+  .DraftCourses-delete-course-modal-content .DraftCourses-buttons {
+    gap: 12px !important;
+  }
+}
