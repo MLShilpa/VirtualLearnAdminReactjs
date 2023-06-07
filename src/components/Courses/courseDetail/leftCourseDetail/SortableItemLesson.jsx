@@ -21,17 +21,23 @@ import {
   setCourseState,
   setLessonState,
   setTestState,
-  setEditState
+  setEditState,
 } from "../../../../redux/reducers/addCourseState";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteRed } from "../../../../assets/icons/svgIcons";
 import { setLessonData } from "../../../../redux/reducers/overViewSlice";
 import { getLesson, getCourseChaptersApi } from "../../../autherisation/auth";
-import axios from 'axios'
+import axios from "axios";
 import { Base_Url } from "../../../../utils/baseUrl";
 import Modal from "react-modal";
-import { setCourseChapterData, setOverViewDataADC } from "../../../../redux/reducers/addCourseState";
-import { errorMessage, successfulMessage } from "../../../toastMesaage/ToastMessage";
+import {
+  setCourseChapterData,
+  setOverViewDataADC,
+} from "../../../../redux/reducers/addCourseState";
+import {
+  errorMessage,
+  successfulMessage,
+} from "../../../toastMesaage/ToastMessage";
 
 const SortableItemLesson = (props) => {
   const dispatch = useDispatch();
@@ -49,7 +55,6 @@ const SortableItemLesson = (props) => {
     transition,
     opacity: isDragging ? 0.5 : 1,
   };
-
 
   const getLessonDetailApiCall = async (ele, id) => {
     const response = await getLesson(ele._id);
@@ -70,7 +75,6 @@ const SortableItemLesson = (props) => {
     }
   };
 
-
   const [modalIsOpen, setIsOpen] = useState(false);
   const courseId = useSelector((state) => state.addCourseState.courseId);
 
@@ -82,34 +86,32 @@ const SortableItemLesson = (props) => {
     setIsOpen(false);
   }
 
-
   const deleteLesson = async (ele, id) => {
     axios
-      .request(
-        `${Base_Url}/api/v1/delete_lesson`,
-        {
-          method: 'delete',
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-          },
-          params: {
-            lessonId: `${ele._id}`
-          },
+      .request(`${Base_Url}/api/v1/delete_lesson`, {
+        method: "delete",
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
-      )
+        params: {
+          lessonId: `${ele._id}`,
+        },
+      })
       .then((res) => {
-        console.log(res.data)
-        dispatch(setLessonData(null))
-        dispatch(setLessonState(false))
+        console.log(res.data);
+        dispatch(setLessonData(null));
+        dispatch(setChapterState(false));
+        dispatch(setCourseState(false));
+        dispatch(setLessonState(false));
+        dispatch(setTestState(false));
         getChaptersListApiCall();
-        successfulMessage("Lesson deleted successfully")
-
+        successfulMessage("Lesson deleted successfully");
       })
       .catch((err) => {
-        console.log(err)
-        errorMessage("Lesson deletion failed")
+        console.log(err);
+        errorMessage("Lesson deletion failed");
         // alert('Some error occured')
-      })
+      });
   };
 
   return (
@@ -141,16 +143,15 @@ const SortableItemLesson = (props) => {
                   e.stopPropagation();
                   // alert("delete arrow presed")
                   openModal();
-
                 }}
               >
-             {deleteRed("deleteSvg")}
+                {deleteRed("deleteSvg")}
               </div>
               <div
                 className="leftCourseDetail-edit"
                 onClick={(e) => {
                   e.stopPropagation();
-                  getLessonDetailApiCall(props.items, props.id2)
+                  getLessonDetailApiCall(props.items, props.id2);
                   dispatch(setLessonState(true));
                   dispatch(setChapterState(false));
                   dispatch(setTestState(false));
@@ -171,27 +172,15 @@ const SortableItemLesson = (props) => {
               ariaHideApp={false}
               className="DraftCourses-delete-course-modal"
               // overlayClassName="Overlay"
-              parentSelector={() =>
-                document.querySelector("#root")
-              }
+              parentSelector={() => document.querySelector("#root")}
             >
               <div className="DraftCourses-delete-course-modal-content">
-                <div className="DraftCourses-deleteCourse">
-                  Delete Course
-                </div>
+                <div className="DraftCourses-deleteCourse">Delete Lesson</div>
                 <div className="DraftCourses-deleteContent">
-                  Are you sure you want to delete the course
-                  <strong style={{ textTransform: "capitalize" }}>
-                    {" "}
-                    {props.items.chapterName}
-                  </strong>{" "}
-                  from the Draft Courses ?
+                  Are you sure you want to delete the Lesson
                 </div>
                 <div className="DraftCourses-buttons">
-                  <button
-                    onClick={closeModal}
-                    className="DraftCourses-cancel"
-                  >
+                  <button onClick={closeModal} className="DraftCourses-cancel">
                     Cancel
                   </button>
 
@@ -208,8 +197,6 @@ const SortableItemLesson = (props) => {
                 </div>
               </div>
             </Modal>
-
-
           </div>
         </div>
       </div>
