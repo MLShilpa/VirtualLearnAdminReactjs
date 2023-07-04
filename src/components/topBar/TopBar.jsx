@@ -1,69 +1,69 @@
-import { useState } from 'react'
-import './TopBar.css'
-import Drawer from 'react-modern-drawer'
-import 'react-modern-drawer/dist/index.css'
-import Profile from '../profileDrawer/profile/Profile'
-import EditProfile from '../profileDrawer/editProfile/EditProfile'
+import { useState } from "react";
+import "./TopBar.css";
+import Drawer from "react-modern-drawer";
+import "react-modern-drawer/dist/index.css";
+import Profile from "../profileDrawer/profile/Profile";
+import EditProfile from "../profileDrawer/editProfile/EditProfile";
 
-import { useDispatch, useSelector } from 'react-redux'
-import ChangePassword from '../profileDrawer/changePassword/ChangePassword'
-import { showProfileFn } from '../../redux/showProfile'
-import { useLocation } from 'react-router-dom'
-import axios from 'axios'
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import { reset } from '../../redux/reducers/overViewSlice'
+import { useDispatch, useSelector } from "react-redux";
+import ChangePassword from "../profileDrawer/changePassword/ChangePassword";
+import { showProfileFn } from "../../redux/showProfile";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { reset } from "../../redux/reducers/overViewSlice";
 
 const TopBar = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   // const [profileModal, setProfileModal] = useState(true)
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   const toggleDrawer = () => {
-    setIsOpen((prevState) => !prevState)
-  }
-  const courseID = useSelector((state) => state.courseId.courseId)
+    setIsOpen((prevState) => !prevState);
+  };
+  const courseID = useSelector((state) => state.courseId.courseId);
 
   const publishHandler = () => {
     axios(
       `http://virtuallearnadmin-env.eba-vvpawj4n.ap-south-1.elasticbeanstalk.com/admin/publishToWeb?courseId=${courseID}`,
       {
-        method: 'put',
+        method: "put",
         headers: {
-          Accept: 'application/json, text/plain, */*',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
-      },
+      }
     )
       .then((res) => {
         toast.info(res && res.data && res.data.message, {
-          position: 'top-left',
+          position: "top-left",
           autoClose: 5000,
           hideProgressBar: true,
           closeOnClick: false,
           pauseOnHover: true,
           draggable: false,
           progress: undefined,
-          theme: 'colored',
-        })
-        console.log('publish', res)
-        dispatch(reset())
+          theme: "colored",
+        });
+        console.log("publish", res);
+        dispatch(reset());
       })
       .catch((err) => {
         // alert(err.response.data)
-        alert('Some error occured')
-      })
-  }
+        alert("Some error occured");
+      });
+  };
 
-  const location = useLocation()
+  const location = useLocation();
   console.log(
-    'location topbar',
-    location.pathname.split('/')[location.pathname.split('/').length - 1],
-  )
+    "location topbar",
+    location.pathname.split("/")[location.pathname.split("/").length - 1]
+  );
 
-  const editData = useSelector((state) => state.profile.data)
+  const editData = useSelector((state) => state.profile.data);
 
-  const showProfile = useSelector((state) => state.showProfile.show)
+  const showProfile = useSelector((state) => state.showProfile.show);
   return (
     <div>
       <div className="topBar-Container">
@@ -71,23 +71,23 @@ const TopBar = () => {
           <div className="topBar-addCourse">
             {
               {
-                dashBoard:"Dashboard",
-                main: 'Dashboard',
-                addCourses: 'Add Course',
-                MyCourses:"My Course",
-                myCourses:"My Course",
-                CourseDetail:"My Course",
-                certificate: 'Add Course',
-                QandA: 'Add Course',
-                upload: 'Add Course',
-                DraftCourses:"My Course",
-                PublishedCourses:"My Course",
-                viewAll: 'Recently Added Course',
-                studentList: 'Student List',
-                settings: 'Settings',
+                dashBoard: "Dashboard",
+                main: "Dashboard",
+                addCourses: "Add Course",
+                MyCourses: "My Course",
+                myCourses: "My Course",
+                CourseDetail: "My Course",
+                certificate: "Add Course",
+                QandA: "Add Course",
+                upload: "Add Course",
+                DraftCourses: "My Course",
+                PublishedCourses: "My Course",
+                viewAll: "Recently Added Course",
+                studentList: "Student List",
+                settings: "Settings",
               }[
-                location.pathname.split('/')[
-                  location.pathname.split('/').length - 1
+                location.pathname.split("/")[
+                  location.pathname.split("/").length - 1
                 ]
               ]
             }
@@ -111,8 +111,8 @@ const TopBar = () => {
             <div
               className="topBar-profile"
               onClick={() => {
-                toggleDrawer()
-                dispatch(showProfileFn('profile'))
+                toggleDrawer();
+                dispatch(showProfileFn("profile"));
               }}
               // onClick={() => {
               //   setProfileModal(false)
@@ -135,14 +135,14 @@ const TopBar = () => {
                   />
                 ) : (
                   <img
-                    src={require('../../assets/profile.png')}
+                    src={require("../../assets/profile.png")}
                     alt=""
                     className="profilee-next"
                   />
                 )}
               </div>
               <div className="topBar-profileText">
-                {' '}
+                {" "}
                 {editData &&
                   editData.data &&
                   editData.data.fullName &&
@@ -162,17 +162,17 @@ const TopBar = () => {
           <div className="topBar-drawerContainer">
             <div className="topBar-drawerClose">
               <img
-                src={require('../../assets/close@2x.png')}
+                src={require("../../assets/close@2x.png")}
                 alt=""
                 className="topbar-closeImg"
                 onClick={() => {
-                  toggleDrawer()
+                  toggleDrawer();
                 }}
               />
             </div>
-            {showProfile === 'profile' ? (
+            {showProfile === "profile" ? (
               <Profile />
-            ) : showProfile === 'edit' ? (
+            ) : showProfile === "edit" ? (
               <EditProfile />
             ) : (
               <ChangePassword />
@@ -181,7 +181,7 @@ const TopBar = () => {
         </div>
       </Drawer>
     </div>
-  )
-}
+  );
+};
 
-export default TopBar
+export default TopBar;

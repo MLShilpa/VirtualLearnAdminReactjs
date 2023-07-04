@@ -1,140 +1,147 @@
-import './EditProfile.css'
+import "./EditProfile.css";
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 
-import { profileAsyncThunk } from '../../../redux/reducers/profileSlice'
+import { profileAsyncThunk } from "../../../redux/reducers/profileSlice";
 
-import axios from 'axios'
-import { showProfileFn } from '../../../redux/showProfile'
+import axios from "axios";
+import { showProfileFn } from "../../../redux/showProfile";
 
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import { Base_Url } from "../../../utils/baseUrl"
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Base_Url } from "../../../utils/baseUrl";
 
 const EditProfile = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(profileAsyncThunk())
-  }, [])
+    dispatch(profileAsyncThunk());
+  }, []);
 
   const updatedSuccessfully = () =>
-    toast.success('Data Updated Successfully', {
-      position: 'top-left',
+    toast.success("Data Updated Successfully", {
+      position: "top-left",
       autoClose: 5000,
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: 'colored',
-    })
+      theme: "colored",
+    });
 
   const AlreadyExist = () =>
-    toast.warning('Incorrect Password', {
-      position: 'bottom-center',
+    toast.warning("Incorrect Password", {
+      position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: 'colored',
-    })
+      theme: "colored",
+    });
 
-  const editData = useSelector((state) => state.profile.data)
+  const editData = useSelector((state) => state.profile.data);
 
   const name =
     editData.data &&
     editData &&
     editData.data.Admin.name &&
     editData.data.Admin &&
-    editData.data.Admin.name
+    editData.data.Admin.name;
 
-  const [fullName, setfullName] = useState(name)
+  const [fullName, setfullName] = useState(name);
 
   const email =
     editData &&
     editData.data &&
     editData.data.Admin &&
     editData.data.Admin.email &&
-    editData.data.Admin.email
+    editData.data.Admin.email;
 
-  const [emailId, setEmailId] = useState(email)
+  const [emailId, setEmailId] = useState(email);
 
   const mobileNo =
     editData &&
     editData.data &&
     editData.data.Admin &&
     editData.data.Admin.phone &&
-    editData.data.Admin.phone
+    editData.data.Admin.phone;
 
-  const [mobile, setMobile] = useState(mobileNo)
-  const [image, setImage] = useState('')
+  const [mobile, setMobile] = useState(mobileNo);
+  const [image, setImage] = useState("");
   const loadFile = (e) => {
-    var image = document.getElementById('output')
+    var image = document.getElementById("output");
 
-    image.src = URL.createObjectURL(e.target.files[0])
-    setImage(e.target.files[0])
-  }
+    image.src = URL.createObjectURL(e.target.files[0]);
+    setImage(e.target.files[0]);
+  };
 
   const editProfileHandler = (e) => {
-    e.preventDefault()
-    const form = document.getElementById('form')
-    const formData = new FormData(form)
-    formData.append('name', fullName)
-    formData.append('phone', mobile)
-    image !== '' && formData.append('image', image)
+    e.preventDefault();
+    const form = document.getElementById("form");
+    const formData = new FormData(form);
+    formData.append("name", fullName);
+    formData.append("phone", mobile);
+    image !== "" && formData.append("image", image);
 
     axios
       .request(
         // `${Base_Url}/api/v1/update_profile`,
         {
-          method: 'post',
+          method: "post",
           url: `${Base_Url}/api/v1/update_profile`,
           headers: {
-            Accept: 'application/json, text/plain, */*',
+            Accept: "application/json, text/plain, */*",
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
           },
           data: formData,
-        },
+        }
       )
       .then((res) => {
         // if ((res && res.status && res.status) === 200) {
         console.log(res);
-        updatedSuccessfully()
-        dispatch(profileAsyncThunk())
-        dispatch(showProfileFn('profile'))
+        updatedSuccessfully();
+        dispatch(profileAsyncThunk());
+        dispatch(showProfileFn("profile"));
         // }
       })
       .catch((err) => {
-        if ((err && err.status && err.status) === 403 && (err && err.response && err.response.data && err.response.data.message && err.response.data.message) === 'Details already exists') {
+        if (
+          (err && err.status && err.status) === 403 &&
+          (err &&
+            err.response &&
+            err.response.data &&
+            err.response.data.message &&
+            err.response.data.message) === "Details already exists"
+        ) {
           AlreadyExist();
-          console.log('edit error', err)
+          console.log("edit error", err);
         }
         // alert('error')
-      })
-  }
+      });
+  };
 
   //
 
-  console.log(
-    'dkjhbu',
-    editData &&
-    editData.data &&
-    editData.data.Admin &&
-    editData.data.Admin.profile &&
-    editData.data.Admin.profile,
-  )
+  // console.log(
+  //   'dkjhbu',
+  //   editData &&
+  //   editData.data &&
+  //   editData.data.Admin &&
+  //   editData.data.Admin.profile &&
+  //   editData.data.Admin.profile,
+  // )
 
   return (
     <form
       id="form"
       onSubmit={(e) => {
-        editProfileHandler(e)
+        editProfileHandler(e);
       }}
     >
       <div className="editProfile-container">
@@ -143,7 +150,7 @@ const EditProfile = () => {
           <label class="-label" for="file">
             <span class="glyphicon glyphicon-camera"></span>
             <span className="editProfile-changeImg">
-              {' '}
+              {" "}
               {/* <svg
                 width={20}
                 height={20}
@@ -159,7 +166,7 @@ const EditProfile = () => {
                 />
               </svg> */}
               <img
-                src={require('../../../assets/camera.png')}
+                src={require("../../../assets/camera.png")}
                 className="editProfile-svg"
                 alt=""
               />
@@ -172,7 +179,7 @@ const EditProfile = () => {
             className="editProfile-inputType"
             accept="image/png, image/jpeg"
             onChange={(e) => {
-              loadFile(e)
+              loadFile(e);
             }}
           />
           {/* {editData && editData.data && editData.data.profilePhoto ? (
@@ -219,7 +226,7 @@ const EditProfile = () => {
                 type="text"
                 value={fullName}
                 onChange={(e) => {
-                  setfullName(e.target.value)
+                  setfullName(e.target.value);
                 }}
                 placeholder=" "
                 className="login-input editProfilr-color"
@@ -249,7 +256,7 @@ const EditProfile = () => {
                 type="text"
                 value={mobile}
                 onChange={(e) => {
-                  setMobile(e.target.value)
+                  setMobile(e.target.value);
                 }}
                 placeholder=" "
                 className="login-input editProfilr-color"
@@ -269,7 +276,7 @@ const EditProfile = () => {
         </div>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default EditProfile
+export default EditProfile;

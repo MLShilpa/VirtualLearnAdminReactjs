@@ -1,5 +1,5 @@
-import './Home.css'
-import { Outlet } from 'react-router-dom'
+import "./Home.css";
+import { Outlet } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -8,7 +8,7 @@ const Home = () => {
         <div className="home-logo">
           <div>
             <img
-              src={require('../../assets/img_virtuallearn logo_splash 2.png')}
+              src={require("../../assets/img_virtuallearn logo_splash 2.png")}
               alt=""
               className="home-logoImg"
             />
@@ -17,7 +17,7 @@ const Home = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

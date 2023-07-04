@@ -4,7 +4,12 @@ import axios from "axios";
 import { Base_Url } from "../../utils/baseUrl";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setCourseDetailDraft, setCourseDetailPublishedState, setDraftCoursesPageNum, setPublishedCoursesPageNum } from "../../redux/reducers/MyCourseStateSlice";
+import {
+  setCourseDetailDraft,
+  setCourseDetailPublishedState,
+  setDraftCoursesPageNum,
+  setPublishedCoursesPageNum,
+} from "../../redux/reducers/MyCourseStateSlice";
 
 const SideBar = () => {
   const location = useLocation();
@@ -34,7 +39,7 @@ const SideBar = () => {
               <div className="sideBar-Text">DashBoard</div>
             </div>
           </NavLink>
-          <NavLink to="addCourses" className="sideBar-linkNames">
+          {/* <NavLink to="addCourses" className="sideBar-linkNames">
             <div className="sideBar-DashBoardContainer">
               <div className="sideBar-Item">
                 <img
@@ -45,16 +50,17 @@ const SideBar = () => {
               </div>
               <div className="sideBar-Text">Add Courses</div>
             </div>
-          </NavLink>
+          </NavLink> */}
           <NavLink to="MyCourses" className="sideBar-linkNames">
-            <div className="sideBar-DashBoardContainer"
-            onClick={()=>{
-              dispatch(setDraftCoursesPageNum(1))
-              dispatch(setPublishedCoursesPageNum(1))
-              dispatch(setCourseDetailDraft(false))
-              dispatch(setCourseDetailPublishedState(false))
-              // dispatch(setMyCourseScreenState(1))
-            }}
+            <div
+              className="sideBar-DashBoardContainer"
+              onClick={() => {
+                dispatch(setDraftCoursesPageNum(1));
+                dispatch(setPublishedCoursesPageNum(1));
+                dispatch(setCourseDetailDraft(false));
+                dispatch(setCourseDetailPublishedState(false));
+                // dispatch(setMyCourseScreenState(1))
+              }}
             >
               <div className="sideBar-Item">
                 <img
@@ -66,7 +72,19 @@ const SideBar = () => {
               <div className="sideBar-Text">My Courses</div>
             </div>
           </NavLink>
-          <NavLink to="studentList" className="sideBar-linkNames">
+          <NavLink to="addCategory" className="sideBar-linkNames">
+            <div className="sideBar-DashBoardContainer">
+              <div className="sideBar-Item">
+                <img
+                  src={require("../../assets/icons/add video.png")}
+                  alt=""
+                  className="sideBar-navTools"
+                />
+              </div>
+              <div className="sideBar-Text">Add Category</div>
+            </div>
+          </NavLink>
+          {/* <NavLink to="studentList" className="sideBar-linkNames">
             <div className="sideBar-DashBoardContainer">
               <div className="sideBar-Item">
                 <img
@@ -77,7 +95,7 @@ const SideBar = () => {
               </div>
               <div className="sideBar-Text">Student List</div>
             </div>
-          </NavLink>
+          </NavLink> */}
           <NavLink to="settings" className="sideBar-linkNames">
             <div className="sideBar-DashBoardContainer">
               <div className="sideBar-Item">
@@ -103,12 +121,12 @@ const SideBar = () => {
                   },
                   data: {},
                 })
-                .then((res)=>{
-                  return res;
-                })
-                .catch((err) => {
-                  return err;
-                })
+                  .then((res) => {
+                    return res;
+                  })
+                  .catch((err) => {
+                    return err;
+                  });
                 sessionStorage.clear();
                 window.location.reload();
               }}

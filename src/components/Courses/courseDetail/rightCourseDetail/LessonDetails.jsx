@@ -53,6 +53,8 @@ const LessonDetails = () => {
   const lessonData = useSelector((state) => state.overViewData?.lessonData);
   const chapterData = useSelector((state) => state.overViewData.chapterData);
 
+  console.log(lessonData);
+
   useEffect(() => {
     setSelectedStatus(
       lessonData === ""
@@ -109,11 +111,7 @@ const LessonDetails = () => {
           : lessonData?.lessonDetails[0]?.lesson[0]?.link[0]
       );
     }
-  }, [lessonData, selectedType]);
-
-  // useEffect(() => {
-
-  // }, [lessonData]);
+  }, [lessonData, selectedOption, selectedType]);
 
   const handleFile = (event) => {
     // const fileType = event.target.files[0].type;
@@ -204,7 +202,7 @@ const LessonDetails = () => {
       setSelectedUrl(selectedPdfBrowse);
     } else if (selectedOption === "PDF" && selectedType === "URL") {
       setSelectedUrl(selectedPdfUrl);
-    } else if (selectedOption === "Weblink" && selectedType === "URL") {
+    } else if (selectedOption === "Weblink") {
       setSelectedUrl(selectedWebUrl);
     } else if (selectedOption === "PPT" && selectedType === "Browse") {
       setSelectedUrl(selectedPptBrowse);
@@ -235,6 +233,8 @@ const LessonDetails = () => {
     formData.append("lessonName", lessonName);
     formData.append("link", selectedUrl);
     formData.append("type", selectedOption);
+
+    // console.log(selectedUrl);
 
     try {
       const fetchedData = await axios(`${Base_Url}/api/v1/add_lessons`, {
