@@ -38,6 +38,7 @@ export const getCourseChaptersApi = async (id) => {
       options
     );
     if (response.data) {
+      // console.log(response.data);
       return response.data;
     }
   } catch (error) {
@@ -124,7 +125,7 @@ export const getLesson = async (id) => {
       options
     );
     if (response.data) {
-      // console.log(response.data)
+      console.log(response.data);
       return response.data;
     }
   } catch (error) {

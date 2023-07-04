@@ -23,7 +23,11 @@ import {
 } from "@mui/material";
 import { purple } from "@mui/material/colors";
 import Loading from "../../../../../utils/loading/loading";
-import { setAccState, setAddCourseState, setCourseId } from "../../../../../redux/reducers/addCourseState";
+import {
+  setAccState,
+  setAddCourseState,
+  setCourseId,
+} from "../../../../../redux/reducers/addCourseState";
 
 const theme = createTheme({
   palette: {
@@ -78,7 +82,7 @@ const PublishedCourses = () => {
       // console.log("courseDetailDraftState",courseDetailDraftState)
       axios
         .get(
-          `${Base_Url}/api/v1/get_draft_courses?page=${currentPageNum}&limit=4`,
+          `${Base_Url}/api/v1/get_published_courses?page=${currentPageNum}&limit=4`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -95,14 +99,14 @@ const PublishedCourses = () => {
         });
     } else {
       axios
-        .get(`${Base_Url}/api/v1/get_draft_courses?page=${page}&limit=4`, {
+        .get(`${Base_Url}/api/v1/get_published_courses?page=${page}&limit=4`, {
           headers: {
             Authorization: `Bearer ${sessionStorage.getItem("token")}`,
           },
         })
 
         .then((res) => {
-          // console.log("draftdata", res.data);
+          // console.log("publishdata", res.data);
           setPublishedData(res.data);
           setLoading(false);
         })
@@ -196,8 +200,8 @@ const PublishedCourses = () => {
                         // alert("pressed")
                         dispatch(setCourseDetailPublishedState(true));
                         dispatch(setPublishedCoursesPageNum(page));
-                        dispatch(setAddCourseState())
-                        dispatch(setCourseId(res?._id))
+                        dispatch(setAddCourseState());
+                        dispatch(setCourseId(res?._id));
                         navigate("/DashBoard/MyCourses/CourseDetail");
                       }}
                     >
@@ -282,7 +286,9 @@ const PublishedCourses = () => {
                                 </div>
                                 <div className="PublishedCourses-deleteContent">
                                   Are you sure you want to delete the course
-                                  <strong style={{ textTransform: "capitalize" }}>
+                                  <strong
+                                    style={{ textTransform: "capitalize" }}
+                                  >
                                     {" "}
                                     {toBeDeleted?.title}
                                   </strong>{" "}

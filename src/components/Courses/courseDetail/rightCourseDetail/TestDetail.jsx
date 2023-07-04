@@ -1,3 +1,4 @@
+/* eslint-disable no-const-assign */
 import React from "react";
 import "./TestDetail.css";
 import { useState, useEffect } from "react";
@@ -30,10 +31,16 @@ import {
 
 const TestDetail = () => {
   const questionData = useSelector((state) => state.test.Questions);
+  var testStatus = useSelector((state) => state.test.isTest);
   const chapterId = useSelector((state) => state.test.chapter);
   const courseId = useSelector((state) => state.addCourseState.courseId);
 
   console.log(questionData);
+  const [testName, setTestName] = useState(questionData?.question?.testName);
+  questionData?.question?.testName ? (testStatus = true) : (testStatus = false);
+  const [isMandatory, setIsMandatory] = useState(
+    questionData?.question?.testMandatory
+  );
   const [openModal, setOpenModal] = useState(false);
 
   function open() {
@@ -51,6 +58,7 @@ const TestDetail = () => {
   const options = useSelector((state) => state.test.options);
 
   const getChaptersListApiCall = async () => {
+    console.log("sffg");
     const response = await getCourseChaptersApi(courseId);
     if (response) {
       if (response && response.overview) {
@@ -118,8 +126,8 @@ const TestDetail = () => {
       })
       .then((res) => {
         if (res?.status === 200) {
-          getQuestionsListApiCall();
           getChaptersListApiCall();
+          getQuestionsListApiCall();
           // console.log("overview result success", res);
           close();
           successfulMessage("Question added Successfully");
@@ -131,6 +139,40 @@ const TestDetail = () => {
         // alert('Some error occured')
       });
   };
+
+  const handleTestName = async (e) => {
+    e.preventDefault();
+
+    await axios
+      .request({
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        method: "patch",
+        url: `${Base_Url}/api/v1/test_name`,
+        data: {
+          chapterId: chapterId,
+          testName: testName,
+          testMandatory: isMandatory,
+        },
+      })
+      .then((res) => {
+        if (res?.status === 200) {
+          getChaptersListApiCall();
+          getQuestionsListApiCall();
+          // testStatus = true;
+          // console.log("overview result success", res);
+          successfulMessage("Test Details Updated!");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        errorMessage("Something went wrong");
+        // alert('Some error occured')
+      });
+  };
+
   return (
     <div className="main-container">
       <div className="DummyFileRight-date-recentcourse">
@@ -195,18 +237,53 @@ const TestDetail = () => {
                 type="text"
                 placeholder="Test Title"
                 name="TestName"
+                value={testName}
                 className="upload-inputField title"
-                onChange={(e) => {}}
+                onChange={(e) => {
+                  setTestName(e.target.value);
+                }}
               />
             </div>
             <div className="MandatoryTest">
               <input
                 type="checkbox"
-                // checked={option.isAnswer}
-                // onChange={() => handleToggleOption(i)}
+                checked={isMandatory}
+                onChange={() => setIsMandatory(!isMandatory)}
               />
               <div className="">Make this test mandatory</div>
             </div>
+            {!testStatus && (
+              <button
+                type="submit"
+                className="QandA-Button"
+                id="save"
+                onClick={(e) => {
+                  console.log("zfzfsat", testName);
+                  testName === "" || testName === undefined
+                    ? errorMessage("Testname cannot be empty")
+                    : handleTestName(e);
+                  // ? handleTestName(e)
+                  // : errorMessage("Testname cannot be empty");
+                }}
+              >
+                Save
+              </button>
+            )}
+            {testStatus && (
+              <button
+                className="QandA-ButtonEdit"
+                id="edit"
+                onClick={(e) => {
+                  testName === "" || undefined
+                    ? errorMessage("Testname cannot be empty")
+                    : handleTestName(e);
+                  // ? handleTestName(e)
+                  // : errorMessage("Testname cannot be empty");
+                }}
+              >
+                Edit
+              </button>
+            )}
 
             <div className="TestDetail-accord-item-container ">
               {questionData &&
@@ -220,18 +297,21 @@ const TestDetail = () => {
                 ))}
 
               <div className="TestDetail-addNewContainer">
-                <button
-                  className="TestDetail-addNewBtn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    dispatch(setQuestion());
-                    dispatch(setOption());
-                    open();
-                  }}
-                >
-                  Add&nbsp;New&nbsp;+
-                </button>
+                {testStatus && (
+                  <button
+                    className="TestDetail-addNewBtn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      dispatch(setQuestion());
+                      dispatch(setOption());
+                      open();
+                    }}
+                  >
+                    Add&nbsp;New&nbsp;+
+                  </button>
+                )}
               </div>
+
               <Modal
                 isOpen={openModal}
                 onRequestClose={close}
@@ -287,6 +367,11 @@ const QuestionComponent = ({ question, index, modal }) => {
   function closeModal() {
     setIsOpen(false);
   }
+
+  // const findButtonStatus = () =>{
+  //   const changed = questionText !== defaultFname;
+  //   return changed ? false : true;
+  // }
 
   // const handleOptionChange = (index, value) => {
   //   const updatedOptions = [...options];
@@ -445,8 +530,9 @@ const QuestionComponent = ({ question, index, modal }) => {
                 onClick={(e) => {
                   checkValidity(e);
                 }}
+                // disabled={findButtonStatus}
               >
-                Edit
+                Save
               </button>
               <button
                 type="button"

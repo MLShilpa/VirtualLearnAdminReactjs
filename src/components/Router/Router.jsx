@@ -31,6 +31,7 @@ import SuperRequests from "../superAdmin/SuperRequests/SuperRequests";
 import ViewAll from "../viewAllHomePage/ViewAll";
 import ProtectedRoute from "./protecteRoute";
 import DummyFileRight from "../Courses/courseDetail/rightCourseDetail/DummyFileRight";
+import AddCategory from "../addCategory/AddCategory";
 
 const Router = () => {
   const authicate = localStorage.getItem("auth");
@@ -108,18 +109,16 @@ const Router = () => {
           <Route exact path="" element={<MainBoard />}></Route>
           <Route path="main" element={<MainBoard />}></Route>
           <Route path="viewAll" element={<ViewAll />} />
-          <Route path="addCourses" element={<AddCourse />}>
+          {/* <Route path="addCourses" element={<AddCourse />}>
             <Route path="" element={<Upload />} />
             <Route path="upload" element={<Upload />} />
             <Route path="QandA" element={<QandA />} />
             <Route path="certificate" element={<Certificate />} />
-          </Route>
+          </Route> */}
           <Route path="MyCourses" element={<Courses />}>
             <Route path="" element={<MyCourse />}>
               {/* <Route index element={<DraftCourses />} /> */}
-              <Route
-                exact
-                path="" element={<DraftCourses />} />
+              <Route exact path="" element={<DraftCourses />} />
               <Route path="PublishedCourses" element={<PublishedCourses />} />
             </Route>
             <Route path="myCourses" element={<MyCourse />}>
@@ -133,14 +132,11 @@ const Router = () => {
                 path="LeftCouseDetailList"
                 element={<LeftCouseDetailList />}
               />
-              <Route
-                path="RightDetailList"
-                element={<DummyFileRight />}
-              />
+              <Route path="RightDetailList" element={<DummyFileRight />} />
             </Route>
           </Route>
-
-          <Route path="studentList" element={<StudentList />} />
+          <Route path="addCategory" element={<AddCategory />} />
+          {/* <Route path="studentList" element={<StudentList />} /> */}
           <Route path="settings" element={<AdminPassword />} />
 
           <Route path="profile" element={<Profile />}>

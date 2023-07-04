@@ -8,6 +8,7 @@ const initialState = {
   chapter: "",
   questionText: "",
   options: [],
+  isTest: false,
 };
 
 export const testSlice = createSlice({
@@ -61,6 +62,11 @@ export const testSlice = createSlice({
         action.payload.deleteStatus;
     },
 
+    testStatus: (state, action) => {
+      state.isTest = action.payload;
+      // console.log(state.isTest);
+    },
+
     resetTestData: () => initialState,
   },
 });
@@ -87,6 +93,7 @@ export const {
   setChapter,
   setOption,
   setQuestion,
+  testStatus,
 } = testSlice.actions;
 export default testSlice;
 

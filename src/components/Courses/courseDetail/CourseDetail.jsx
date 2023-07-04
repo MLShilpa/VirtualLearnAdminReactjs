@@ -1,5 +1,5 @@
 import "./CourseDetail.css";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import DummyFileRight from "./rightCourseDetail/DummyFileRight";
 import LeftCouseDetailList from "./leftCourseDetail/LeftCouseDetailList";
 import { toast } from "react-toastify";
@@ -12,13 +12,18 @@ import LessonDetails from "./rightCourseDetail/LessonDetails";
 import ChapterTitleRight from "./rightCourseDetail/ChapterTitleRight";
 
 const CourseDetail = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const courseState = useSelector(state => state.addCourseState.courseState)
-  const lessonState = useSelector(state => state.addCourseState.lessonState)
-  const testState = useSelector(state => state.addCourseState.testState)
-  const chapterState = useSelector(state => state.addCourseState.chapterState)
+  const courseState = useSelector((state) => state.addCourseState.courseState);
+  const lessonState = useSelector((state) => state.addCourseState.lessonState);
+  const testState = useSelector((state) => state.addCourseState.testState);
+  const courseId = useSelector((state) => state.addCourseState.courseId);
+
+  const chapterState = useSelector(
+    (state) => state.addCourseState.chapterState
+  );
   const publishHandler = () => {
-    axios(`${Base_Url}api/v1/publish_web?_id=`, {
+    axios(`${Base_Url}/api/v1/publish_web?_id=${courseId}`, {
       method: "PATCH",
       headers: {
         Accept: "application/json, text/plain, */*",
@@ -37,8 +42,9 @@ const CourseDetail = () => {
           progress: undefined,
           theme: "colored",
         });
-        console.log("publish", res);
+        // console.log("publish", res);
         dispatch(reset());
+        navigate("/dashBoard/MyCourses/PublishedCourses");
       })
       .catch((err) => {
         // alert(err.response.data)
@@ -87,26 +93,26 @@ const CourseDetail = () => {
           <div className="courseDetail-Conatiner-Left">
             <LeftCouseDetailList />
           </div>
-          {courseState &&
+          {courseState && (
             <div className="courseDetail-Conatiner-Right">
-            <DummyFileRight />
+              <DummyFileRight />
             </div>
-          }
-          {lessonState &&
+          )}
+          {lessonState && (
             <div className="courseDetail-Conatiner-Right">
-            <LessonDetails/>
+              <LessonDetails />
             </div>
-          }
-          {chapterState &&
+          )}
+          {chapterState && (
             <div className="courseDetail-Conatiner-Right">
-            <ChapterTitleRight />
+              <ChapterTitleRight />
             </div>
-          }
-          {testState &&
+          )}
+          {testState && (
             <div className="courseDetail-Conatiner-Right">
-            <TestDetail />
+              <TestDetail />
             </div>
-          }
+          )}
         </div>
       </div>
     </div>

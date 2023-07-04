@@ -71,7 +71,7 @@ const LeftCouseDetailList = () => {
   const overViewData = useSelector(
     (state) => state.addCourseState.overViewData
   );
-  // console.log("courseChapterData", courseChapterData);
+
   useEffect(() => {
     getChaptersListApiCall();
     console.log("changed");
@@ -179,6 +179,9 @@ const LeftCouseDetailList = () => {
   useEffect(() => {
     setChapters(courseChapterData);
   }, [courseChapterData]);
+
+  // console.log(chapterData);
+
   function handleDragEnd(event) {
     // console.log("Drag end called");
     const { active, over } = event;
@@ -300,6 +303,7 @@ const LeftCouseDetailList = () => {
                     e.stopPropagation();
                   }}
                 >
+                  {/* {console.log(chapters)} */}
                   {chapters && chapters.length > 0 && (
                     <SortableContext
                       items={chapters?.map((item) => item._id)}

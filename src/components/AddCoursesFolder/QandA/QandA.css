@@ -231,7 +231,8 @@ button.QandA-ButtonEdit {
 
 button.QandA-EditQuestion {
   border: none;
-  background: #178d44;
+  /* background: #178d44; */
+  background: #ee5c4d;
   border-radius: 3px;
   font-style: normal;
   font-weight: 500;

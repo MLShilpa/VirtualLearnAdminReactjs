@@ -203,7 +203,7 @@ button.TestDetail-button {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
-  padding-top: 1rem;
+  padding: 1rem 0rem 1rem 0rem;
 }
 
 @media only screen and (max-width: 500px) {

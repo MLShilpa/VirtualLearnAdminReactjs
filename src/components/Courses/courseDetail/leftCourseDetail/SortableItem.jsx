@@ -15,7 +15,7 @@ import {
   setEditState,
   setSelectedChapterId,
 } from "../../../../redux/reducers/addCourseState";
-import { setChapter } from "../../../../redux/reducers/testSlice";
+import { setChapter, testStatus } from "../../../../redux/reducers/testSlice";
 import {
   setChapterData,
   setLessonData,
@@ -58,6 +58,15 @@ import ModalContainer from "../../../modalContainer/ModalContainer";
 
 export const SortableItem = (props) => {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpenTest, setIsOpenTest] = useState(false);
+
+  function openModalTest() {
+    setIsOpenTest(true);
+  }
+
+  function closeModalTest() {
+    setIsOpenTest(false);
+  }
 
   function openModal() {
     setIsOpen(true);
@@ -88,7 +97,6 @@ export const SortableItem = (props) => {
   const courseChapterData = useSelector(
     (state) => state.addCourseState.courseChapterData
   );
-  // console.log("gdfh", courseChapterData[0]?._id)
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -98,9 +106,11 @@ export const SortableItem = (props) => {
   );
   const [lessons, setLessons] = useState(props.items.lesson);
 
+  // console.log(lessons);
   useEffect(() => {
     setLessons(props.items.lesson);
   }, [props && props.items && props.items.lesson]);
+  // }, []);
 
   function handleDragEndLesson(event) {
     // console.log("Drag end called");
@@ -255,7 +265,7 @@ export const SortableItem = (props) => {
               dispatch(setLessonState(false));
               dispatch(setChapterState(false));
               dispatch(setTestState(false));
-              console.log(props.items?._id);
+              // console.log(props.items?._id);
             }}
           >
             <div className="course-accordian-container">
@@ -386,145 +396,152 @@ export const SortableItem = (props) => {
                     )}
                   </Container>
                 </DndContext>
-                <div
-                  className="leftCourseDetail-lessons-buttons"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    dispatch(setLessonData());
-                    dispatch(setLessonState(true));
-                    dispatch(setChapterState(false));
-                    dispatch(setTestState(false));
-                    dispatch(setLessonData(""));
-                    dispatch(setEditState("save"));
-                    dispatch(setCourseState(false));
-                    dispatch(setSelectedChapterId(courseChapterData[0]?._id));
-                    // alert("edit arrow presed")
-                  }}
-                >
-                  <div className="leftCourseDetail-addBtn">
-                    <div className="myCourse-addBtn-icon">{addIconWhite}</div>
-                    Add Lesson
+                {props.items && (
+                  <div
+                    className="leftCourseDetail-lessons-buttons"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      dispatch(setLessonData());
+                      dispatch(setLessonState(true));
+                      dispatch(setChapterState(false));
+                      dispatch(setTestState(false));
+                      dispatch(setLessonData(""));
+                      dispatch(setEditState("save"));
+                      dispatch(setCourseState(false));
+                      // dispatch(setSelectedChapterId(courseChapterData[0]?._id));
+                      dispatch(setSelectedChapterId(props.items?._id));
+
+                      // alert("edit arrow presed")
+                    }}
+                  >
+                    <div className="leftCourseDetail-addBtn">
+                      <div className="myCourse-addBtn-icon">{addIconWhite}</div>
+                      Add Lesson
+                    </div>
+                    {props.items?.testName && props.items?.testName ? null : (
+                      <>
+                        <div
+                          className="leftCourseDetail-addBtn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            dispatch(resetTestData());
+                            dispatch(setTestState(true));
+                            dispatch(setLessonState(false));
+                            dispatch(setChapterState(false));
+                            dispatch(setCourseState(false));
+                            dispatch(setChapter(props.items?._id));
+                            dispatch(testStatus(false));
+                            // console.log(props.items?._id);
+                            // alert("edit arrow presed")
+                          }}
+                        >
+                          <div className="myCourse-addBtn-icon">
+                            {addIconWhite}
+                          </div>
+                          Add Test
+                        </div>
+                      </>
+                    )}
                   </div>
-                  {props.items?.Questions &&
-                  props.items?.Questions.length > 0 ? null : (
-                    <>
-                      <div
-                        className="leftCourseDetail-addBtn"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          dispatch(resetTestData());
-                          dispatch(setTestState(true));
-                          dispatch(setLessonState(false));
-                          dispatch(setChapterState(false));
-                          dispatch(setCourseState(false));
-                          dispatch(setChapter(props.items?._id));
-                          // console.log(props.items?._id);
-                          // alert("edit arrow presed")
-                        }}
-                      >
-                        <div className="myCourse-addBtn-icon">
-                          {addIconWhite}
-                        </div>
-                        Add Test
+                )}
+                {/* {console.log(props?.items)} */}
+
+                {props.items?.testName && props.items?.testName !== "" && (
+                  <div className="accordian-item-test">
+                    <div
+                      className="accordian-item-section-2-test"
+                      onClick={() => {}}
+                    >
+                      <div className="accordian-item-chapter-number">
+                        {testImage}
                       </div>
-                    </>
-                  )}
-                </div>
 
-                {props.items?.Questions &&
-                  props.items?.Questions.length > 0 && (
-                    <div className="accordian-item-test">
-                      <div
-                        className="accordian-item-section-2-test"
-                        onClick={() => {}}
-                      >
-                        <div className="accordian-item-chapter-number">
-                          {testImage}
-                        </div>
+                      <div className="accordian-item-section-2-para-test">
+                        {/* <span className="accordian-item-chapter-title">
+                            {props.items?.testName}
+                          </span> */}
 
-                        <div className="accordian-item-section-2-para-test">
-                          <span className="accordian-item-chapter-title">
-                            {props.items?.Questions?.testTitle}
+                        <div className="accordian-item-section-2-buttons-test">
+                          <span className="accordian-item-chapter-duration">
+                            {/* {props.items?.Questions?.totalQuestions}{" "}
+                              questions */}
+                            {props.items?.testName}
                           </span>
 
-                          <div className="accordian-item-section-2-buttons-test">
-                            <span className="accordian-item-chapter-duration">
-                              {props.items?.Questions?.totalQuestions} questions
-                            </span>
-
-                            <div className="accordian-item-section-2-buttons">
-                              <div
-                                className="leftCourseDetail-delete"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  openModal();
-                                  // alert("delete  presed");
-                                }}
-                              >
-                                {deleteRed("deleteSvg")}
-                              </div>
-                              <div
-                                className="leftCourseDetail-edit"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  dispatch(setTestState(true));
-                                  dispatch(setLessonState(false));
-                                  dispatch(setChapterState(false));
-                                  dispatch(setCourseState(false));
-                                  getQuestionDetailApiCall(props.items?._id);
-                                  dispatch(setChapter(props.items?._id));
-                                  // console.log(props.items?._id);
-                                  // alert("edit presed");
-                                }}
-                              >
-                                <i class="fa-solid fa-pen-to-square fa-lg"></i>
-                              </div>
-
-                              <Modal
-                                isOpen={modalIsOpen}
-                                onRequestClose={closeModal}
-                                contentLabel="Example Modal"
-                                ariaHideApp={false}
-                                className="DraftCourses-delete-course-modal"
-                                // overlayClassName="Overlay"
-                                parentSelector={() =>
-                                  document.querySelector("#root")
-                                }
-                              >
-                                <div className="DraftCourses-delete-course-modal-content">
-                                  <div className="DraftCourses-deleteCourse">
-                                    Delete Test
-                                  </div>
-                                  <div className="DraftCourses-deleteContent">
-                                    Are you sure you want to delete the test
-                                  </div>
-                                  <div className="DraftCourses-buttons">
-                                    <button
-                                      onClick={closeModal}
-                                      className="DraftCourses-cancel"
-                                    >
-                                      Cancel
-                                    </button>
-
-                                    <button
-                                      className="DraftCourses-delete"
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        deleteTest(props.items?._id);
-                                        closeModal();
-                                      }}
-                                    >
-                                      Delete
-                                    </button>
-                                  </div>
-                                </div>
-                              </Modal>
+                          <div className="accordian-item-section-2-buttons">
+                            <div
+                              className="leftCourseDetail-delete"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openModalTest();
+                                // alert("delete  presed");
+                              }}
+                            >
+                              {deleteRed("deleteSvg")}
                             </div>
+                            <div
+                              className="leftCourseDetail-edit"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                dispatch(setTestState(true));
+                                dispatch(setLessonState(false));
+                                dispatch(setChapterState(false));
+                                dispatch(setCourseState(false));
+                                getQuestionDetailApiCall(props.items?._id);
+                                dispatch(setChapter(props.items?._id));
+                                dispatch(testStatus(true));
+                                // console.log(props.items?._id);
+                                // alert("edit presed");
+                              }}
+                            >
+                              <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                            </div>
+
+                            <Modal
+                              isOpen={modalIsOpenTest}
+                              onRequestClose={closeModalTest}
+                              contentLabel="Example Modal"
+                              ariaHideApp={false}
+                              className="DraftCourses-delete-course-modal"
+                              // overlayClassName="Overlay"
+                              parentSelector={() =>
+                                document.querySelector("#root")
+                              }
+                            >
+                              <div className="DraftCourses-delete-course-modal-content">
+                                <div className="DraftCourses-deleteCourse">
+                                  Delete Test
+                                </div>
+                                <div className="DraftCourses-deleteContent">
+                                  Are you sure you want to delete the test
+                                </div>
+                                <div className="DraftCourses-buttons">
+                                  <button
+                                    onClick={closeModalTest}
+                                    className="DraftCourses-cancel"
+                                  >
+                                    Cancel
+                                  </button>
+
+                                  <button
+                                    className="DraftCourses-delete"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      deleteTest(props.items?._id);
+                                      closeModalTest();
+                                    }}
+                                  >
+                                    Delete
+                                  </button>
+                                </div>
+                              </div>
+                            </Modal>
                           </div>
                         </div>
                       </div>
                     </div>
-                  )}
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -8,7 +8,10 @@ import {
 } from "../../../../../redux/reducers/MyCourseStateSlice";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { errorMessage, successfulMessage } from "../../../../toastMesaage/ToastMessage";
+import {
+  errorMessage,
+  successfulMessage,
+} from "../../../../toastMesaage/ToastMessage";
 import axios from "axios";
 import { Base_Url } from "../../../../../utils/baseUrl";
 import Modal from "react-modal";
@@ -22,7 +25,13 @@ import {
 } from "@mui/material";
 import { purple } from "@mui/material/colors";
 import Loading from "../../../../../utils/loading/loading";
-import { setAccState, setAddCourseState, setCourseChaptersAndOverviewDataNull, setCourseId, setSelectedChapterId } from "../../../../../redux/reducers/addCourseState";
+import {
+  setAccState,
+  setAddCourseState,
+  setCourseChaptersAndOverviewDataNull,
+  setCourseId,
+  setSelectedChapterId,
+} from "../../../../../redux/reducers/addCourseState";
 
 const theme = createTheme({
   palette: {
@@ -125,7 +134,7 @@ const DraftCourses = () => {
     })
       .then((res) => {
         // alert(res)
-        successfulMessage("Course deleted successfully")
+        successfulMessage("Course deleted successfully");
         setLoading(true);
         let num = currentPage;
         if (draftdata.data.length === 1) {
@@ -133,14 +142,11 @@ const DraftCourses = () => {
           dispatch(setDraftCoursesPageNum(currentPage - 1));
         }
         axios
-          .get(
-            `${Base_Url}/api/v1/get_draft_courses?page=${num}&limit=5`,
-            {
-              headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-              },
-            }
-          )
+          .get(`${Base_Url}/api/v1/get_draft_courses?page=${num}&limit=5`, {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          })
           .then((res) => {
             // console.log("currentPage",currentPage)
             setdraftdata(res?.data);
@@ -153,7 +159,7 @@ const DraftCourses = () => {
       .catch((err) => {
         // alert(err.response.data)
         // alert('error')
-        errorMessage("Course deletion failed")
+        errorMessage("Course deletion failed");
         console.log(err);
       });
   };
@@ -178,7 +184,10 @@ const DraftCourses = () => {
 
                 {draftdata?.data.map((res, i) => {
                   // {Data.map((res, i) => {
-                  const istDateTime = new Date(res?.createdAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+                  const istDateTime = new Date(res?.createdAt).toLocaleString(
+                    "en-IN",
+                    { timeZone: "Asia/Kolkata" }
+                  );
 
                   return (
                     <div
@@ -188,11 +197,11 @@ const DraftCourses = () => {
                         // alert("pressed")
                         dispatch(setCourseDetailDraft(true));
                         dispatch(setDraftCoursesPageNum(page));
-                        dispatch(setAddCourseState())
-                        dispatch(setCourseId(res?._id))
-                        dispatch(setCourseChaptersAndOverviewDataNull())
+                        dispatch(setAddCourseState());
+                        dispatch(setCourseId(res?._id));
+                        dispatch(setCourseChaptersAndOverviewDataNull());
                         navigate("/DashBoard/MyCourses/CourseDetail");
-                        dispatch(setSelectedChapterId(""))
+                        dispatch(setSelectedChapterId(""));
                       }}
                     >
                       <div className="DraftCourses-Title">
@@ -202,8 +211,7 @@ const DraftCourses = () => {
                             alt=""
                             className="DraftCourses-thumbnail"
                           />
-                          <div className="DraftCourses-thumbnail-play">
-
+                          {/* <div className="DraftCourses-thumbnail-play">
                             <svg
                               width={19}
                               height={19}
@@ -240,7 +248,7 @@ const DraftCourses = () => {
                                 />
                               </g>
                             </svg>
-                          </div>
+                          </div> */}
                         </div>
                         <div className="DraftCourses-titleContainer">
                           <div>{res?.title}</div>
@@ -257,9 +265,7 @@ const DraftCourses = () => {
                             {/* {Date(res?.createdAt)} */}
                             {/* {Date(res?.createdAt).slice(16, 21)} */}
                             {/* {res?.createdAt.slice(11, 16)} */}
-
                             {istDateTime}
-
                           </div>
                           <aside
                             className="DraftCourses-delete-modal"
@@ -284,7 +290,9 @@ const DraftCourses = () => {
                                 </div>
                                 <div className="DraftCourses-deleteContent">
                                   Are you sure you want to delete the course
-                                  <strong style={{ textTransform: "capitalize" }}>
+                                  <strong
+                                    style={{ textTransform: "capitalize" }}
+                                  >
                                     {" "}
                                     {toBeDeleted?.title}
                                   </strong>{" "}
