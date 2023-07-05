@@ -1,11 +1,11 @@
-import './AddCourse.css';
-import { NavLink, Outlet } from 'react-router-dom';
+import "./AddCourse.css";
+import { NavLink, Outlet } from "react-router-dom";
 
 const AddCourse = () => {
-  console.log('add course');
+  console.log("add course");
   return (
     <div className="studentList-containerAddCourse">
-      <div className="addcourse-container">
+      {/* <div className="addcourse-container">
         <NavLink to="upload" className="addCourse-navLink">
           Video&nbsp;Upload
         </NavLink>
@@ -18,7 +18,7 @@ const AddCourse = () => {
       </div>
       <div className="addcourse-body">
         <Outlet />
-      </div>
+      </div> */}
     </div>
   );
 };
